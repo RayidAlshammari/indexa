@@ -2,22 +2,21 @@ import { useCallback, useState } from "react";
 import { useForm } from "@tanstack/react-form";
 import { useMutation } from "@tanstack/react-query";
 import { createFileRoute, redirect, useNavigate } from "@tanstack/react-router";
-import { getAuth, getSignInUrl } from "@governance/auth";
 
+import { getAuth, getSignInUrl } from "@governance/auth";
 import { Button } from "@governance/ui/button";
 import {
   Field,
   FieldContent,
   FieldError,
-  FieldGroup,
   FieldLabel,
 } from "@governance/ui/field";
 import { Input } from "@governance/ui/input";
 import { toast } from "@governance/ui/toast";
 
 import { NDI_DOMAINS } from "~/lib/ndi-domains";
-import { useTRPC } from "~/lib/trpc";
 import { hasPermission, SUBMISSION_PERMISSIONS } from "~/lib/permissions";
+import { useTRPC } from "~/lib/trpc";
 
 const fileToBase64 = (file: File): Promise<string> => {
   return new Promise((resolve, reject) => {
@@ -35,30 +34,25 @@ const fileToBase64 = (file: File): Promise<string> => {
 };
 
 export const Route = createFileRoute("/submit")({
-  beforeLoad: async ({ location }) => {
+  beforeLoad: async () => {
     const auth = await getAuth();
-    
+
     // Check if user is authenticated
     if (!auth.user) {
       const signInUrl = await getSignInUrl();
       throw redirect({ href: signInUrl });
     }
-    
+
     // Check if user has write permission
     if (!hasPermission(auth.permissions, SUBMISSION_PERMISSIONS.WRITE)) {
-      throw redirect({ 
+      throw redirect({
         to: "/",
-        search: { error: "insufficient_permissions" }
+        search: { error: "insufficient_permissions" },
       });
     }
   },
   component: RouteComponent,
 });
-
-interface FileWithDomain {
-  file: File;
-  domainId: string;
-}
 
 function RouteComponent() {
   const navigate = useNavigate();

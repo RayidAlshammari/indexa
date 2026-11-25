@@ -67,13 +67,14 @@ jobs:
         with:
           enable-cache: true
 
-      - name: Install CPU PyTorch (Linux CI)
-        run: |
-          uv pip install --system torch==2.5.1+cpu \
-            --index-url https://download.pytorch.org/whl/cpu
-
       - name: Install dependencies
         run: uv sync --group dev
+
+      # Into the project venv: the runner's system Python is externally managed.
+      - name: Install CPU PyTorch (Linux CI)
+        run: |
+          uv pip install torch==2.5.1+cpu \
+            --index-url https://download.pytorch.org/whl/cpu
 
       - name: Ruff lint
         run: uv run ruff check .

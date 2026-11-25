@@ -41,7 +41,9 @@ function RouteComponent() {
                   Insufficient Permissions
                 </h3>
                 <p className="mt-1 text-sm text-red-700">
-                  You don't have the necessary permissions to access that page. Please contact your administrator if you believe this is an error.
+                  You don't have the necessary permissions to access that page.
+                  Please contact your administrator if you believe this is an
+                  error.
                 </p>
               </div>
             </div>

@@ -2,23 +2,23 @@ import { useQuery } from "@tanstack/react-query";
 import { createFileRoute, Link, redirect } from "@tanstack/react-router";
 import { getAuth } from "@workos/authkit-tanstack-react-start";
 
-import { useTRPC } from "~/lib/trpc";
 import { hasPermission, SUBMISSION_PERMISSIONS } from "~/lib/permissions";
+import { useTRPC } from "~/lib/trpc";
 
 export const Route = createFileRoute("/admin/ndi")({
   beforeLoad: async () => {
     const auth = await getAuth();
-    
+
     // Check if user is authenticated
     if (!auth.user) {
       throw redirect({ to: "/" });
     }
-    
+
     // Check if user has read permission
     if (!hasPermission(auth.permissions, SUBMISSION_PERMISSIONS.READ)) {
-      throw redirect({ 
+      throw redirect({
         to: "/",
-        search: { error: "insufficient_permissions" }
+        search: { error: "insufficient_permissions" },
       });
     }
   },

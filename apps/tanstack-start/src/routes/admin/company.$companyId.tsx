@@ -2,26 +2,27 @@ import { useState } from "react";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { createFileRoute, Link, redirect } from "@tanstack/react-router";
 import { getAuth } from "@workos/authkit-tanstack-react-start";
+
 import { toast } from "@governance/ui/toast";
 
 import { NDI_DOMAINS } from "~/lib/ndi-domains";
-import { useTRPC } from "~/lib/trpc";
 import { hasPermission, SUBMISSION_PERMISSIONS } from "~/lib/permissions";
+import { useTRPC } from "~/lib/trpc";
 
 export const Route = createFileRoute("/admin/company/$companyId")({
   beforeLoad: async () => {
     const auth = await getAuth();
-    
+
     // Check if user is authenticated
     if (!auth.user) {
       throw redirect({ to: "/" });
     }
-    
+
     // Check if user has read permission
     if (!hasPermission(auth.permissions, SUBMISSION_PERMISSIONS.READ)) {
-      throw redirect({ 
+      throw redirect({
         to: "/",
-        search: { error: "insufficient_permissions" }
+        search: { error: "insufficient_permissions" },
       });
     }
   },
@@ -121,14 +122,15 @@ function RouteComponent() {
     try {
       setIsRerunning(true);
       toast.info("Starting evaluation...");
-      
+
       await rerunEvaluation.mutateAsync({ id: companyId });
-      
+
       toast.success("Evaluation completed successfully!");
       await refetch();
     } catch (err) {
       console.error("Rerun failed:", err);
-      const errorMessage = err instanceof Error ? err.message : "Failed to rerun evaluation";
+      const errorMessage =
+        err instanceof Error ? err.message : "Failed to rerun evaluation";
       toast.error(errorMessage);
     } finally {
       setIsRerunning(false);
@@ -352,13 +354,13 @@ function RouteComponent() {
                       ? "The AI service is currently evaluating this submission. Please check back shortly."
                       : "This submission is waiting to be evaluated."}
                 </p>
-                
+
                 {/* Rerun Button - only show for failed submissions */}
                 {submission.status === "failed" && (
                   <button
                     onClick={handleRerun}
                     disabled={isRerunning}
-                    className="mt-4 bg-ndmo-blue-medium hover:bg-ndmo-blue-dark disabled:bg-ndmo-gray-medium flex items-center gap-2 rounded-lg px-4 py-2 text-sm font-semibold text-white transition-colors disabled:cursor-not-allowed"
+                    className="bg-ndmo-blue-medium hover:bg-ndmo-blue-dark disabled:bg-ndmo-gray-medium mt-4 flex items-center gap-2 rounded-lg px-4 py-2 text-sm font-semibold text-white transition-colors disabled:cursor-not-allowed"
                   >
                     {isRerunning ? (
                       <>

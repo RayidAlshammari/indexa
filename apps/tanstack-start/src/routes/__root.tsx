@@ -5,22 +5,21 @@ import type * as React from "react";
 import {
   createRootRouteWithContext,
   HeadContent,
+  Link,
   Outlet,
   Scripts,
-  ErrorComponent,
-  Link,
 } from "@tanstack/react-router";
 import { TanStackRouterDevtools } from "@tanstack/react-router-devtools";
 import { AuthKitProvider } from "@workos/authkit-tanstack-react-start/client";
 
 import type { AppRouter } from "@governance/api";
+import { Button } from "@governance/ui/button";
 import {
   themeDetectorScript,
   ThemeProvider,
   ThemeToggle,
 } from "@governance/ui/theme";
 import { Toaster } from "@governance/ui/toast";
-import { Button } from "@governance/ui/button";
 
 import appCss from "~/styles.css?url";
 import { Header } from "../component/layout/Header";
@@ -46,7 +45,10 @@ export const Route = createRootRouteWithContext<{
                 {error.message || "An unexpected error occurred"}
               </p>
             </div>
-            <Button asChild className="bg-ndmo-blue-medium hover:bg-ndmo-blue-dark">
+            <Button
+              asChild
+              className="bg-ndmo-blue-medium hover:bg-ndmo-blue-dark"
+            >
               <Link to="/">Go Home</Link>
             </Button>
           </div>

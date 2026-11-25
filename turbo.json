@@ -51,7 +51,8 @@
     "AUTH_SECRET",
     "PORT",
     "AI_SERVICE_URL",
-    "AI_SERVICE_KEY"
+    "AI_SERVICE_KEY",
+    "WORKOS_API_KEY"
   ],
   "globalPassThroughEnv": [
     "NODE_ENV",

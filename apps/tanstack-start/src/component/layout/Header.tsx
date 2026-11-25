@@ -28,7 +28,7 @@ export function Header() {
                   {user.email}
                 </span>
                 {permissions && permissions.length > 0 && (
-                  <span className="text-xs text-gray-500 font-mono">
+                  <span className="font-mono text-xs text-gray-500">
                     [{permissions.join(", ")}]
                   </span>
                 )}

@@ -1,4 +1,4 @@
-import { createFileRoute, Link, redirect } from "@tanstack/react-router";
+import { createFileRoute, redirect } from "@tanstack/react-router";
 import { getAuth } from "@workos/authkit-tanstack-react-start";
 
 import { IndexCard } from "~/component/index/IndexCard";
@@ -7,17 +7,17 @@ import { hasPermission, SUBMISSION_PERMISSIONS } from "~/lib/permissions";
 export const Route = createFileRoute("/admin/")({
   beforeLoad: async () => {
     const auth = await getAuth();
-    
+
     // Check if user is authenticated
     if (!auth.user) {
       throw redirect({ to: "/" });
     }
-    
+
     // Check if user has read permission
     if (!hasPermission(auth.permissions, SUBMISSION_PERMISSIONS.READ)) {
-      throw redirect({ 
+      throw redirect({
         to: "/",
-        search: { error: "insufficient_permissions" }
+        search: { error: "insufficient_permissions" },
       });
     }
   },
