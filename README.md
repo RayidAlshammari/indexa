@@ -60,7 +60,17 @@ The original web portal (TanStack Start, tRPC, Drizzle, WorkOS) and its v1 API a
 
 ## Evaluation
 
-<!-- EVALUATION-SUMMARY -->
+Tested on 40 items: all 20 PDP and DC specifications for two Saudi government entities, using their published policies. The gold labels were committed before any model ran.
+
+| Configuration | Agreement with gold | Critical over-claims | Cost per full 191-spec entity assessment |
+|---|---|---|---|
+| Indexa + Qwen3.8-27B | **85%** | 0 | ~$0.43 |
+| Indexa + gpt-oss-120b | 75% | 0 | ~$0.12 |
+| Indexa + gpt-oss-20b | 62.5% | 0 | ~$0.06 |
+| Indexa + ALLaM-2-7B | no usable output | — | — |
+| Original design, same Qwen model (30 items) | 33% | 0 | — |
+
+With both judges combined, and disagreements sent to a reviewer, 25 of 40 items were decided automatically at 92% agreement. The labels are a draft under specialist review.
 
 The full method, per-model results, failure analysis and the reviewable gold labels are in [`docs/EVALUATION.md`](docs/EVALUATION.md) and [`services/ai-service/eval/`](services/ai-service/eval).
 
