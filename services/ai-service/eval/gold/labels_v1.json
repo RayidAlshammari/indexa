@@ -1,6 +1,6 @@
 {
  "version": "v1-draft",
- "status": "DRAFT by Indexa (Claude) for specialist review. Not validated.",
+ "status": "AI-assisted DRAFT by the Indexa team for specialist review. Not validated.",
  "written_before_model_outputs": true,
  "rubric": {
   "met": "process spec: policy/procedure defines the requirement with its minimum elements; artifact spec: the artifact itself is in the evidence",

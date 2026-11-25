@@ -1,6 +1,6 @@
 # Indexa model evaluation, v1 (November 2026)
 
-**Status: draft.** The gold labels were written by Indexa (Claude) and are under review by a governance specialist with SDAIA experience. Every number below will be recomputed after that review, from the stored model outputs. No new model calls are needed for that.
+**Status: draft.** The gold labels are an AI-assisted draft by the Indexa team, written before any tested model ran, and are under review by a governance specialist with SDAIA experience. Every number below will be recomputed after that review, from the stored model outputs. No new model calls are needed for that.
 
 ## Result in one paragraph
 
@@ -12,7 +12,7 @@ On 40 entity-level items (20 NDMO specifications × 2 Saudi government entities)
 |---|---|
 | Entities | Ministry of Environment, Water and Agriculture (PDP policy v3.3, Data Classification policy v2.2, Privacy Notice v1.0; 95 pages)<br>Islamic University of Madinah (PDP policy v1.0, Data Classification policy v1.0; 25 pages) |
 | Specifications | All of PDP (10) and DC (10) |
-| Gold labels | Read in full and labelled before any model ran (commit `3344e1d`): 5 met / 25 partial / 10 not met; 31 clear, 9 borderline |
+| Gold labels | Read in full and labelled before any model ran (commit `6b9c75e`): 5 met / 25 partial / 10 not met; 31 clear, 9 borderline |
 | Rubric | *Process* specifications: a documented policy with the minimum elements is "met". *Artifact* specifications (plans, registers, assessments, delivered training, KPIs): a policy that only mandates the artifact is at most "partial". |
 | Same for every model | Same 6 BM25 excerpts (≤ 650 characters each, with page), same prompt, temperature 0 |
 | Retrieval | A gold evidence page was among the 6 excerpts for 26 of 30 items that have evidence (87%) |
