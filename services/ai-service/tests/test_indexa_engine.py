@@ -176,3 +176,22 @@ def test_keywords_cover_pdp_and_dc():
     for name in ("6_Personal_Data_Protection", "7_Data_Classification"):
         for c in load_controls(FRAMEWORK / f"{name}.json"):
             assert len(kw.get(c.control_id, [])) >= 10, c.control_id
+
+
+def test_quote_matching_grades():
+    from indexa.judge import match_quote
+
+    src = "يجب على مكتب إدارة البيانات إبالغ الجهات التنظيمية فورا ً ودون تأخير، بما ال يتجاوز 72 ساعة، من وقوع"
+    assert match_quote("إبالغ الجهات التنظيمية فورا ودون تأخير", src) == "exact"
+    # model silently drops a conjunction and repairs the broken PDF glyphs
+    assert (
+        match_quote("إبلاغ الجهات التنظيمية فورًا دون تأخير، بما لا يتجاوز 72 ساعة", src) == "near"
+    )
+    # elided quote: every fragment must be in the source
+    assert match_quote("يجب على مكتب إدارة البيانات ... بما ال يتجاوز 72 ساعة", src) == "exact"
+    assert (
+        match_quote("يجب على مكتب إدارة البيانات ... خلال أربع وعشرين ساعة عبر البوابة", src)
+        == "none"
+    )
+    # fabricated statement built from common words does not pass
+    assert match_quote("تلتزم الجهة بإجراء تدقيق داخلي سنوي على الامتثال", src) == "none"

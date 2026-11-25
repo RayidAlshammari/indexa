@@ -1,0 +1,1433 @@
+{
+ "runs": {
+  "new|openai/gpt-oss-120b": {
+   "items": {
+    "mewa|PDP.1.1": {
+     "decision": "partial",
+     "needs_review": false,
+     "reasons": [],
+     "n_cit": 1,
+     "n_ver": 1
+    },
+    "mewa|PDP.1.2": {
+     "decision": "not_met",
+     "needs_review": false,
+     "reasons": [],
+     "n_cit": 0,
+     "n_ver": 0
+    },
+    "mewa|PDP.2.1": {
+     "decision": "partial",
+     "needs_review": false,
+     "reasons": [],
+     "n_cit": 2,
+     "n_ver": 2
+    },
+    "mewa|PDP.3.2": {
+     "decision": "partial",
+     "needs_review": false,
+     "reasons": [],
+     "n_cit": 3,
+     "n_ver": 3
+    },
+    "mewa|PDP.3.1": {
+     "decision": "met",
+     "needs_review": false,
+     "reasons": [],
+     "n_cit": 1,
+     "n_ver": 1
+    },
+    "mewa|PDP.4.1": {
+     "decision": "partial",
+     "needs_review": false,
+     "reasons": [],
+     "n_cit": 5,
+     "n_ver": 5
+    },
+    "mewa|PDP.4.2": {
+     "decision": "partial",
+     "needs_review": false,
+     "reasons": [],
+     "n_cit": 3,
+     "n_ver": 3
+    },
+    "mewa|PDP.4.4": {
+     "decision": "not_met",
+     "needs_review": false,
+     "reasons": [],
+     "n_cit": 0,
+     "n_ver": 0
+    },
+    "mewa|PDP.5.1": {
+     "decision": "not_met",
+     "needs_review": false,
+     "reasons": [],
+     "n_cit": 0,
+     "n_ver": 0
+    },
+    "mewa|PDP.4.3": {
+     "decision": "partial",
+     "needs_review": false,
+     "reasons": [],
+     "n_cit": 2,
+     "n_ver": 2
+    },
+    "mewa|DC.1.1": {
+     "decision": "not_met",
+     "needs_review": false,
+     "reasons": [],
+     "n_cit": 0,
+     "n_ver": 0
+    },
+    "mewa|DC.1.2": {
+     "decision": "not_met",
+     "needs_review": false,
+     "reasons": [],
+     "n_cit": 0,
+     "n_ver": 0
+    },
+    "mewa|DC.3.1": {
+     "decision": "not_met",
+     "needs_review": false,
+     "reasons": [],
+     "n_cit": 0,
+     "n_ver": 0
+    },
+    "mewa|DC.3.2": {
+     "decision": "partial",
+     "needs_review": false,
+     "reasons": [],
+     "n_cit": 2,
+     "n_ver": 2
+    },
+    "mewa|DC.3.3": {
+     "decision": "partial",
+     "needs_review": true,
+     "reasons": [
+      "unverified quote"
+     ],
+     "n_cit": 3,
+     "n_ver": 2
+    },
+    "mewa|DC.3.4": {
+     "decision": "partial",
+     "needs_review": false,
+     "reasons": [],
+     "n_cit": 1,
+     "n_ver": 1
+    },
+    "mewa|DC.3.5": {
+     "decision": "partial",
+     "needs_review": false,
+     "reasons": [],
+     "n_cit": 2,
+     "n_ver": 2
+    },
+    "mewa|DC.4.1": {
+     "decision": "not_met",
+     "needs_review": false,
+     "reasons": [],
+     "n_cit": 0,
+     "n_ver": 0
+    },
+    "mewa|DC.5.1": {
+     "decision": "not_met",
+     "needs_review": false,
+     "reasons": [],
+     "n_cit": 0,
+     "n_ver": 0
+    },
+    "mewa|DC.2.1": {
+     "decision": "met",
+     "needs_review": false,
+     "reasons": [],
+     "n_cit": 5,
+     "n_ver": 5
+    },
+    "iu|PDP.1.1": {
+     "decision": "not_met",
+     "needs_review": false,
+     "reasons": [],
+     "n_cit": 0,
+     "n_ver": 0
+    },
+    "iu|PDP.1.2": {
+     "decision": "not_met",
+     "needs_review": false,
+     "reasons": [],
+     "n_cit": 0,
+     "n_ver": 0
+    },
+    "iu|PDP.2.1": {
+     "decision": "partial",
+     "needs_review": false,
+     "reasons": [],
+     "n_cit": 1,
+     "n_ver": 1
+    },
+    "iu|PDP.3.2": {
+     "decision": "partial",
+     "needs_review": false,
+     "reasons": [],
+     "n_cit": 3,
+     "n_ver": 3
+    },
+    "iu|PDP.3.1": {
+     "decision": "met",
+     "needs_review": false,
+     "reasons": [],
+     "n_cit": 1,
+     "n_ver": 1
+    },
+    "iu|PDP.4.1": {
+     "decision": "partial",
+     "needs_review": false,
+     "reasons": [],
+     "n_cit": 3,
+     "n_ver": 3
+    },
+    "iu|PDP.4.2": {
+     "decision": "partial",
+     "needs_review": false,
+     "reasons": [],
+     "n_cit": 2,
+     "n_ver": 2
+    },
+    "iu|PDP.4.4": {
+     "decision": "partial",
+     "needs_review": false,
+     "reasons": [],
+     "n_cit": 2,
+     "n_ver": 2
+    },
+    "iu|PDP.5.1": {
+     "decision": "not_met",
+     "needs_review": false,
+     "reasons": [],
+     "n_cit": 0,
+     "n_ver": 0
+    },
+    "iu|PDP.4.3": {
+     "decision": "partial",
+     "needs_review": false,
+     "reasons": [],
+     "n_cit": 2,
+     "n_ver": 2
+    },
+    "iu|DC.1.1": {
+     "decision": "not_met",
+     "needs_review": false,
+     "reasons": [],
+     "n_cit": 0,
+     "n_ver": 0
+    },
+    "iu|DC.1.2": {
+     "decision": "not_met",
+     "needs_review": false,
+     "reasons": [],
+     "n_cit": 0,
+     "n_ver": 0
+    },
+    "iu|DC.3.1": {
+     "decision": "partial",
+     "needs_review": false,
+     "reasons": [],
+     "n_cit": 1,
+     "n_ver": 1
+    },
+    "iu|DC.3.2": {
+     "decision": "partial",
+     "needs_review": true,
+     "reasons": [
+      "unverified quote"
+     ],
+     "n_cit": 2,
+     "n_ver": 1
+    },
+    "iu|DC.3.3": {
+     "decision": "partial",
+     "needs_review": false,
+     "reasons": [],
+     "n_cit": 2,
+     "n_ver": 2
+    },
+    "iu|DC.3.4": {
+     "decision": "partial",
+     "needs_review": false,
+     "reasons": [],
+     "n_cit": 2,
+     "n_ver": 2
+    },
+    "iu|DC.3.5": {
+     "decision": "not_met",
+     "needs_review": false,
+     "reasons": [],
+     "n_cit": 0,
+     "n_ver": 0
+    },
+    "iu|DC.4.1": {
+     "decision": "not_met",
+     "needs_review": false,
+     "reasons": [],
+     "n_cit": 0,
+     "n_ver": 0
+    },
+    "iu|DC.5.1": {
+     "decision": "not_met",
+     "needs_review": false,
+     "reasons": [],
+     "n_cit": 0,
+     "n_ver": 0
+    },
+    "iu|DC.2.1": {
+     "decision": "partial",
+     "needs_review": false,
+     "reasons": [],
+     "n_cit": 3,
+     "n_ver": 3
+    }
+   },
+   "telemetry": {
+    "calls": 47,
+    "errors": 7,
+    "errors_note": "7 calls exhausted rate-limit retries on the first pass and were re-run",
+    "prompt_tokens": 68577,
+    "completion_tokens": 23500,
+    "median_ms": 1757,
+    "finish": {
+     "stop": 40
+    },
+    "max_tokens": 3000
+   },
+   "v1_routing": {
+    "needs_review": 11,
+    "citations": 54,
+    "verified": 37
+   }
+  },
+  "new|openai/gpt-oss-20b": {
+   "items": {
+    "mewa|PDP.1.1": {
+     "decision": "not_met",
+     "needs_review": false,
+     "reasons": [],
+     "n_cit": 0,
+     "n_ver": 0
+    },
+    "mewa|PDP.1.2": {
+     "decision": "not_met",
+     "needs_review": false,
+     "reasons": [],
+     "n_cit": 0,
+     "n_ver": 0
+    },
+    "mewa|PDP.2.1": {
+     "decision": "partial",
+     "needs_review": false,
+     "reasons": [],
+     "n_cit": 2,
+     "n_ver": 2
+    },
+    "mewa|PDP.3.2": {
+     "decision": "not_met",
+     "needs_review": false,
+     "reasons": [],
+     "n_cit": 0,
+     "n_ver": 0
+    },
+    "mewa|PDP.3.1": {
+     "decision": "met",
+     "needs_review": false,
+     "reasons": [],
+     "n_cit": 2,
+     "n_ver": 2
+    },
+    "mewa|PDP.4.1": {
+     "decision": "not_met",
+     "needs_review": true,
+     "reasons": [
+      "unparseable model output"
+     ],
+     "n_cit": 0,
+     "n_ver": 0
+    },
+    "mewa|PDP.4.2": {
+     "decision": "partial",
+     "needs_review": true,
+     "reasons": [
+      "unverified quote"
+     ],
+     "n_cit": 4,
+     "n_ver": 3
+    },
+    "mewa|PDP.4.4": {
+     "decision": "not_met",
+     "needs_review": false,
+     "reasons": [],
+     "n_cit": 0,
+     "n_ver": 0
+    },
+    "mewa|PDP.5.1": {
+     "decision": "not_met",
+     "needs_review": false,
+     "reasons": [],
+     "n_cit": 0,
+     "n_ver": 0
+    },
+    "mewa|PDP.4.3": {
+     "decision": "not_met",
+     "needs_review": false,
+     "reasons": [],
+     "n_cit": 0,
+     "n_ver": 0
+    },
+    "mewa|DC.1.1": {
+     "decision": "not_met",
+     "needs_review": false,
+     "reasons": [],
+     "n_cit": 0,
+     "n_ver": 0
+    },
+    "mewa|DC.1.2": {
+     "decision": "not_met",
+     "needs_review": false,
+     "reasons": [],
+     "n_cit": 0,
+     "n_ver": 0
+    },
+    "mewa|DC.3.1": {
+     "decision": "not_met",
+     "needs_review": false,
+     "reasons": [],
+     "n_cit": 0,
+     "n_ver": 0
+    },
+    "mewa|DC.3.2": {
+     "decision": "partial",
+     "needs_review": false,
+     "reasons": [],
+     "n_cit": 2,
+     "n_ver": 2
+    },
+    "mewa|DC.3.3": {
+     "decision": "partial",
+     "needs_review": false,
+     "reasons": [],
+     "n_cit": 1,
+     "n_ver": 1
+    },
+    "mewa|DC.3.4": {
+     "decision": "partial",
+     "needs_review": false,
+     "reasons": [],
+     "n_cit": 2,
+     "n_ver": 2
+    },
+    "mewa|DC.3.5": {
+     "decision": "not_met",
+     "needs_review": false,
+     "reasons": [],
+     "n_cit": 0,
+     "n_ver": 0
+    },
+    "mewa|DC.4.1": {
+     "decision": "not_met",
+     "needs_review": false,
+     "reasons": [],
+     "n_cit": 0,
+     "n_ver": 0
+    },
+    "mewa|DC.5.1": {
+     "decision": "not_met",
+     "needs_review": false,
+     "reasons": [],
+     "n_cit": 0,
+     "n_ver": 0
+    },
+    "mewa|DC.2.1": {
+     "decision": "met",
+     "needs_review": false,
+     "reasons": [],
+     "n_cit": 5,
+     "n_ver": 5
+    },
+    "iu|PDP.1.1": {
+     "decision": "not_met",
+     "needs_review": false,
+     "reasons": [],
+     "n_cit": 0,
+     "n_ver": 0
+    },
+    "iu|PDP.1.2": {
+     "decision": "not_met",
+     "needs_review": false,
+     "reasons": [],
+     "n_cit": 0,
+     "n_ver": 0
+    },
+    "iu|PDP.2.1": {
+     "decision": "not_met",
+     "needs_review": false,
+     "reasons": [],
+     "n_cit": 0,
+     "n_ver": 0
+    },
+    "iu|PDP.3.2": {
+     "decision": "partial",
+     "needs_review": false,
+     "reasons": [],
+     "n_cit": 3,
+     "n_ver": 3
+    },
+    "iu|PDP.3.1": {
+     "decision": "met",
+     "needs_review": false,
+     "reasons": [],
+     "n_cit": 1,
+     "n_ver": 1
+    },
+    "iu|PDP.4.1": {
+     "decision": "partial",
+     "needs_review": false,
+     "reasons": [],
+     "n_cit": 5,
+     "n_ver": 5
+    },
+    "iu|PDP.4.2": {
+     "decision": "partial",
+     "needs_review": false,
+     "reasons": [],
+     "n_cit": 2,
+     "n_ver": 2
+    },
+    "iu|PDP.4.4": {
+     "decision": "partial",
+     "needs_review": false,
+     "reasons": [],
+     "n_cit": 2,
+     "n_ver": 2
+    },
+    "iu|PDP.5.1": {
+     "decision": "not_met",
+     "needs_review": false,
+     "reasons": [],
+     "n_cit": 0,
+     "n_ver": 0
+    },
+    "iu|PDP.4.3": {
+     "decision": "partial",
+     "needs_review": false,
+     "reasons": [],
+     "n_cit": 2,
+     "n_ver": 2
+    },
+    "iu|DC.1.1": {
+     "decision": "not_met",
+     "needs_review": false,
+     "reasons": [],
+     "n_cit": 0,
+     "n_ver": 0
+    },
+    "iu|DC.1.2": {
+     "decision": "not_met",
+     "needs_review": false,
+     "reasons": [],
+     "n_cit": 0,
+     "n_ver": 0
+    },
+    "iu|DC.3.1": {
+     "decision": "not_met",
+     "needs_review": false,
+     "reasons": [],
+     "n_cit": 0,
+     "n_ver": 0
+    },
+    "iu|DC.3.2": {
+     "decision": "partial",
+     "needs_review": false,
+     "reasons": [],
+     "n_cit": 3,
+     "n_ver": 3
+    },
+    "iu|DC.3.3": {
+     "decision": "partial",
+     "needs_review": false,
+     "reasons": [],
+     "n_cit": 3,
+     "n_ver": 3
+    },
+    "iu|DC.3.4": {
+     "decision": "not_met",
+     "needs_review": false,
+     "reasons": [],
+     "n_cit": 0,
+     "n_ver": 0
+    },
+    "iu|DC.3.5": {
+     "decision": "not_met",
+     "needs_review": false,
+     "reasons": [],
+     "n_cit": 0,
+     "n_ver": 0
+    },
+    "iu|DC.4.1": {
+     "decision": "not_met",
+     "needs_review": false,
+     "reasons": [],
+     "n_cit": 0,
+     "n_ver": 0
+    },
+    "iu|DC.5.1": {
+     "decision": "not_met",
+     "needs_review": false,
+     "reasons": [],
+     "n_cit": 0,
+     "n_ver": 0
+    },
+    "iu|DC.2.1": {
+     "decision": "not_met",
+     "needs_review": true,
+     "reasons": [
+      "unparseable model output"
+     ],
+     "n_cit": 0,
+     "n_ver": 0
+    }
+   },
+   "telemetry": {
+    "calls": 40,
+    "errors": 0,
+    "prompt_tokens": 68577,
+    "completion_tokens": 26296,
+    "median_ms": 1207,
+    "finish": {
+     "stop": 39,
+     "length": 1
+    },
+    "max_tokens": 2000
+   }
+  },
+  "new|qwen/qwen3.8-27b": {
+   "items": {
+    "mewa|PDP.1.1": {
+     "decision": "partial",
+     "needs_review": false,
+     "reasons": [],
+     "n_cit": 2,
+     "n_ver": 2
+    },
+    "mewa|PDP.1.2": {
+     "decision": "not_met",
+     "needs_review": false,
+     "reasons": [],
+     "n_cit": 0,
+     "n_ver": 0
+    },
+    "mewa|PDP.2.1": {
+     "decision": "partial",
+     "needs_review": false,
+     "reasons": [],
+     "n_cit": 3,
+     "n_ver": 3
+    },
+    "mewa|PDP.3.2": {
+     "decision": "partial",
+     "needs_review": false,
+     "reasons": [],
+     "n_cit": 3,
+     "n_ver": 3
+    },
+    "mewa|PDP.3.1": {
+     "decision": "met",
+     "needs_review": false,
+     "reasons": [],
+     "n_cit": 2,
+     "n_ver": 2
+    },
+    "mewa|PDP.4.1": {
+     "decision": "met",
+     "needs_review": false,
+     "reasons": [],
+     "n_cit": 3,
+     "n_ver": 3
+    },
+    "mewa|PDP.4.2": {
+     "decision": "partial",
+     "needs_review": false,
+     "reasons": [],
+     "n_cit": 2,
+     "n_ver": 2
+    },
+    "mewa|PDP.4.4": {
+     "decision": "partial",
+     "needs_review": false,
+     "reasons": [],
+     "n_cit": 2,
+     "n_ver": 2
+    },
+    "mewa|PDP.5.1": {
+     "decision": "partial",
+     "needs_review": false,
+     "reasons": [],
+     "n_cit": 2,
+     "n_ver": 2
+    },
+    "mewa|PDP.4.3": {
+     "decision": "partial",
+     "needs_review": false,
+     "reasons": [],
+     "n_cit": 2,
+     "n_ver": 2
+    },
+    "mewa|DC.1.1": {
+     "decision": "partial",
+     "needs_review": false,
+     "reasons": [],
+     "n_cit": 2,
+     "n_ver": 2
+    },
+    "mewa|DC.1.2": {
+     "decision": "partial",
+     "needs_review": false,
+     "reasons": [],
+     "n_cit": 2,
+     "n_ver": 2
+    },
+    "mewa|DC.3.1": {
+     "decision": "not_met",
+     "needs_review": false,
+     "reasons": [],
+     "n_cit": 0,
+     "n_ver": 0
+    },
+    "mewa|DC.3.2": {
+     "decision": "partial",
+     "needs_review": false,
+     "reasons": [],
+     "n_cit": 2,
+     "n_ver": 2
+    },
+    "mewa|DC.3.3": {
+     "decision": "partial",
+     "needs_review": true,
+     "reasons": [
+      "unverified quote"
+     ],
+     "n_cit": 2,
+     "n_ver": 1
+    },
+    "mewa|DC.3.4": {
+     "decision": "partial",
+     "needs_review": false,
+     "reasons": [],
+     "n_cit": 2,
+     "n_ver": 2
+    },
+    "mewa|DC.3.5": {
+     "decision": "partial",
+     "needs_review": true,
+     "reasons": [
+      "unverified quote"
+     ],
+     "n_cit": 2,
+     "n_ver": 1
+    },
+    "mewa|DC.4.1": {
+     "decision": "not_met",
+     "needs_review": false,
+     "reasons": [],
+     "n_cit": 0,
+     "n_ver": 0
+    },
+    "mewa|DC.5.1": {
+     "decision": "partial",
+     "needs_review": false,
+     "reasons": [],
+     "n_cit": 2,
+     "n_ver": 2
+    },
+    "mewa|DC.2.1": {
+     "decision": "met",
+     "needs_review": false,
+     "reasons": [],
+     "n_cit": 3,
+     "n_ver": 3
+    },
+    "iu|PDP.1.1": {
+     "decision": "partial",
+     "needs_review": false,
+     "reasons": [],
+     "n_cit": 2,
+     "n_ver": 2
+    },
+    "iu|PDP.1.2": {
+     "decision": "not_met",
+     "needs_review": false,
+     "reasons": [],
+     "n_cit": 0,
+     "n_ver": 0
+    },
+    "iu|PDP.2.1": {
+     "decision": "partial",
+     "needs_review": false,
+     "reasons": [],
+     "n_cit": 1,
+     "n_ver": 1
+    },
+    "iu|PDP.3.2": {
+     "decision": "partial",
+     "needs_review": false,
+     "reasons": [],
+     "n_cit": 2,
+     "n_ver": 2
+    },
+    "iu|PDP.3.1": {
+     "decision": "met",
+     "needs_review": false,
+     "reasons": [],
+     "n_cit": 1,
+     "n_ver": 1
+    },
+    "iu|PDP.4.1": {
+     "decision": "partial",
+     "needs_review": false,
+     "reasons": [],
+     "n_cit": 3,
+     "n_ver": 3
+    },
+    "iu|PDP.4.2": {
+     "decision": "partial",
+     "needs_review": false,
+     "reasons": [],
+     "n_cit": 3,
+     "n_ver": 3
+    },
+    "iu|PDP.4.4": {
+     "decision": "partial",
+     "needs_review": false,
+     "reasons": [],
+     "n_cit": 2,
+     "n_ver": 2
+    },
+    "iu|PDP.5.1": {
+     "decision": "partial",
+     "needs_review": false,
+     "reasons": [],
+     "n_cit": 2,
+     "n_ver": 2
+    },
+    "iu|PDP.4.3": {
+     "decision": "partial",
+     "needs_review": false,
+     "reasons": [],
+     "n_cit": 1,
+     "n_ver": 1
+    },
+    "iu|DC.1.1": {
+     "decision": "partial",
+     "needs_review": false,
+     "reasons": [],
+     "n_cit": 2,
+     "n_ver": 2
+    },
+    "iu|DC.1.2": {
+     "decision": "not_met",
+     "needs_review": false,
+     "reasons": [],
+     "n_cit": 0,
+     "n_ver": 0
+    },
+    "iu|DC.3.1": {
+     "decision": "partial",
+     "needs_review": false,
+     "reasons": [],
+     "n_cit": 1,
+     "n_ver": 1
+    },
+    "iu|DC.3.2": {
+     "decision": "partial",
+     "needs_review": false,
+     "reasons": [],
+     "n_cit": 2,
+     "n_ver": 2
+    },
+    "iu|DC.3.3": {
+     "decision": "partial",
+     "needs_review": false,
+     "reasons": [],
+     "n_cit": 2,
+     "n_ver": 2
+    },
+    "iu|DC.3.4": {
+     "decision": "partial",
+     "needs_review": false,
+     "reasons": [],
+     "n_cit": 2,
+     "n_ver": 2
+    },
+    "iu|DC.3.5": {
+     "decision": "partial",
+     "needs_review": false,
+     "reasons": [],
+     "n_cit": 2,
+     "n_ver": 2
+    },
+    "iu|DC.4.1": {
+     "decision": "not_met",
+     "needs_review": false,
+     "reasons": [],
+     "n_cit": 0,
+     "n_ver": 0
+    },
+    "iu|DC.5.1": {
+     "decision": "partial",
+     "needs_review": false,
+     "reasons": [],
+     "n_cit": 1,
+     "n_ver": 1
+    },
+    "iu|DC.2.1": {
+     "decision": "met",
+     "needs_review": false,
+     "reasons": [],
+     "n_cit": 3,
+     "n_ver": 3
+    }
+   },
+   "telemetry": {
+    "calls": 40,
+    "errors": 0,
+    "prompt_tokens": 66356,
+    "completion_tokens": 9083,
+    "median_ms": 858,
+    "finish": {
+     "stop": 40
+    },
+    "max_tokens": 3000
+   }
+  },
+  "new|allam-2-7b": {
+   "items": {
+    "mewa|PDP.1.1": {
+     "decision": "not_met",
+     "needs_review": true,
+     "reasons": [
+      "unparseable model output"
+     ],
+     "n_cit": 0,
+     "n_ver": 0
+    },
+    "mewa|PDP.1.2": {
+     "decision": "not_met",
+     "needs_review": true,
+     "reasons": [
+      "unparseable model output"
+     ],
+     "n_cit": 0,
+     "n_ver": 0
+    },
+    "mewa|PDP.2.1": {
+     "decision": "not_met",
+     "needs_review": true,
+     "reasons": [
+      "unparseable model output"
+     ],
+     "n_cit": 0,
+     "n_ver": 0
+    },
+    "mewa|PDP.3.2": {
+     "decision": "not_met",
+     "needs_review": true,
+     "reasons": [
+      "unparseable model output"
+     ],
+     "n_cit": 0,
+     "n_ver": 0
+    },
+    "mewa|PDP.3.1": {
+     "decision": "not_met",
+     "needs_review": true,
+     "reasons": [
+      "unparseable model output"
+     ],
+     "n_cit": 0,
+     "n_ver": 0
+    },
+    "mewa|PDP.4.1": {
+     "decision": "not_met",
+     "needs_review": true,
+     "reasons": [
+      "unparseable model output"
+     ],
+     "n_cit": 0,
+     "n_ver": 0
+    },
+    "mewa|PDP.4.2": {
+     "decision": "not_met",
+     "needs_review": true,
+     "reasons": [
+      "unparseable model output"
+     ],
+     "n_cit": 0,
+     "n_ver": 0
+    },
+    "mewa|PDP.4.4": {
+     "decision": "not_met",
+     "needs_review": true,
+     "reasons": [
+      "unparseable model output"
+     ],
+     "n_cit": 0,
+     "n_ver": 0
+    },
+    "mewa|PDP.5.1": {
+     "decision": "not_met",
+     "needs_review": true,
+     "reasons": [
+      "unparseable model output"
+     ],
+     "n_cit": 0,
+     "n_ver": 0
+    },
+    "mewa|PDP.4.3": {
+     "decision": "not_met",
+     "needs_review": true,
+     "reasons": [
+      "unparseable model output"
+     ],
+     "n_cit": 0,
+     "n_ver": 0
+    },
+    "mewa|DC.1.1": {
+     "decision": "not_met",
+     "needs_review": true,
+     "reasons": [
+      "unparseable model output"
+     ],
+     "n_cit": 0,
+     "n_ver": 0
+    },
+    "mewa|DC.1.2": {
+     "decision": "not_met",
+     "needs_review": true,
+     "reasons": [
+      "unparseable model output"
+     ],
+     "n_cit": 0,
+     "n_ver": 0
+    },
+    "mewa|DC.3.1": {
+     "decision": "not_met",
+     "needs_review": true,
+     "reasons": [
+      "unparseable model output"
+     ],
+     "n_cit": 0,
+     "n_ver": 0
+    },
+    "mewa|DC.3.2": {
+     "decision": "not_met",
+     "needs_review": true,
+     "reasons": [
+      "unparseable model output"
+     ],
+     "n_cit": 0,
+     "n_ver": 0
+    },
+    "mewa|DC.3.3": {
+     "decision": "not_met",
+     "needs_review": true,
+     "reasons": [
+      "unparseable model output"
+     ],
+     "n_cit": 0,
+     "n_ver": 0
+    },
+    "mewa|DC.3.4": {
+     "decision": "not_met",
+     "needs_review": true,
+     "reasons": [
+      "unparseable model output"
+     ],
+     "n_cit": 0,
+     "n_ver": 0
+    },
+    "mewa|DC.3.5": {
+     "decision": "not_met",
+     "needs_review": true,
+     "reasons": [
+      "unparseable model output"
+     ],
+     "n_cit": 0,
+     "n_ver": 0
+    },
+    "mewa|DC.4.1": {
+     "decision": "not_met",
+     "needs_review": true,
+     "reasons": [
+      "unparseable model output"
+     ],
+     "n_cit": 0,
+     "n_ver": 0
+    },
+    "mewa|DC.5.1": {
+     "decision": "not_met",
+     "needs_review": true,
+     "reasons": [
+      "unparseable model output"
+     ],
+     "n_cit": 0,
+     "n_ver": 0
+    },
+    "mewa|DC.2.1": {
+     "decision": "not_met",
+     "needs_review": true,
+     "reasons": [
+      "unparseable model output"
+     ],
+     "n_cit": 0,
+     "n_ver": 0
+    },
+    "iu|PDP.1.1": {
+     "decision": "not_met",
+     "needs_review": true,
+     "reasons": [
+      "unparseable model output"
+     ],
+     "n_cit": 0,
+     "n_ver": 0
+    },
+    "iu|PDP.1.2": {
+     "decision": "not_met",
+     "needs_review": true,
+     "reasons": [
+      "unparseable model output"
+     ],
+     "n_cit": 0,
+     "n_ver": 0
+    },
+    "iu|PDP.2.1": {
+     "decision": "not_met",
+     "needs_review": true,
+     "reasons": [
+      "unparseable model output"
+     ],
+     "n_cit": 0,
+     "n_ver": 0
+    },
+    "iu|PDP.3.2": {
+     "decision": "not_met",
+     "needs_review": true,
+     "reasons": [
+      "unparseable model output"
+     ],
+     "n_cit": 0,
+     "n_ver": 0
+    },
+    "iu|PDP.3.1": {
+     "decision": "not_met",
+     "needs_review": true,
+     "reasons": [
+      "unparseable model output"
+     ],
+     "n_cit": 0,
+     "n_ver": 0
+    },
+    "iu|PDP.4.1": {
+     "decision": "not_met",
+     "needs_review": true,
+     "reasons": [
+      "unparseable model output"
+     ],
+     "n_cit": 0,
+     "n_ver": 0
+    },
+    "iu|PDP.4.2": {
+     "decision": "not_met",
+     "needs_review": true,
+     "reasons": [
+      "unparseable model output"
+     ],
+     "n_cit": 0,
+     "n_ver": 0
+    },
+    "iu|PDP.4.4": {
+     "decision": "not_met",
+     "needs_review": true,
+     "reasons": [
+      "unparseable model output"
+     ],
+     "n_cit": 0,
+     "n_ver": 0
+    },
+    "iu|PDP.5.1": {
+     "decision": "not_met",
+     "needs_review": true,
+     "reasons": [
+      "unparseable model output"
+     ],
+     "n_cit": 0,
+     "n_ver": 0
+    },
+    "iu|PDP.4.3": {
+     "decision": "not_met",
+     "needs_review": true,
+     "reasons": [
+      "unparseable model output"
+     ],
+     "n_cit": 0,
+     "n_ver": 0
+    },
+    "iu|DC.1.1": {
+     "decision": "not_met",
+     "needs_review": true,
+     "reasons": [
+      "unparseable model output"
+     ],
+     "n_cit": 0,
+     "n_ver": 0
+    },
+    "iu|DC.1.2": {
+     "decision": "not_met",
+     "needs_review": true,
+     "reasons": [
+      "unparseable model output"
+     ],
+     "n_cit": 0,
+     "n_ver": 0
+    },
+    "iu|DC.3.1": {
+     "decision": "not_met",
+     "needs_review": true,
+     "reasons": [
+      "unparseable model output"
+     ],
+     "n_cit": 0,
+     "n_ver": 0
+    },
+    "iu|DC.3.2": {
+     "decision": "not_met",
+     "needs_review": true,
+     "reasons": [
+      "unparseable model output"
+     ],
+     "n_cit": 0,
+     "n_ver": 0
+    },
+    "iu|DC.3.3": {
+     "decision": "not_met",
+     "needs_review": true,
+     "reasons": [
+      "unparseable model output"
+     ],
+     "n_cit": 0,
+     "n_ver": 0
+    },
+    "iu|DC.3.4": {
+     "decision": "not_met",
+     "needs_review": true,
+     "reasons": [
+      "unparseable model output"
+     ],
+     "n_cit": 0,
+     "n_ver": 0
+    },
+    "iu|DC.3.5": {
+     "decision": "not_met",
+     "needs_review": true,
+     "reasons": [
+      "unparseable model output"
+     ],
+     "n_cit": 0,
+     "n_ver": 0
+    },
+    "iu|DC.4.1": {
+     "decision": "not_met",
+     "needs_review": true,
+     "reasons": [
+      "unparseable model output"
+     ],
+     "n_cit": 0,
+     "n_ver": 0
+    },
+    "iu|DC.5.1": {
+     "decision": "not_met",
+     "needs_review": true,
+     "reasons": [
+      "unparseable model output"
+     ],
+     "n_cit": 0,
+     "n_ver": 0
+    },
+    "iu|DC.2.1": {
+     "decision": "not_met",
+     "needs_review": true,
+     "reasons": [
+      "unparseable model output"
+     ],
+     "n_cit": 0,
+     "n_ver": 0
+    }
+   },
+   "telemetry": {
+    "calls": 40,
+    "errors": 0,
+    "prompt_tokens": 62683,
+    "completion_tokens": 45158,
+    "median_ms": 1119,
+    "finish": {
+     "length": 36,
+     "stop": 4
+    },
+    "max_tokens": 1200,
+    "context_window": 4096
+   }
+  },
+  "orig|qwen/qwen3.8-27b": {
+   "items": {
+    "mewa|PDP.1.1": {
+     "decision": "not_met",
+     "not_evaluated": true
+    },
+    "mewa|PDP.1.2": {
+     "decision": "not_met",
+     "not_evaluated": true
+    },
+    "mewa|PDP.2.1": {
+     "decision": "not_met",
+     "not_evaluated": true
+    },
+    "mewa|PDP.3.2": {
+     "decision": "not_met",
+     "not_evaluated": true
+    },
+    "mewa|PDP.3.1": {
+     "decision": "not_met",
+     "not_evaluated": true
+    },
+    "mewa|PDP.4.1": {
+     "decision": "not_met",
+     "not_evaluated": true
+    },
+    "mewa|PDP.4.2": {
+     "decision": "not_met",
+     "not_evaluated": true
+    },
+    "mewa|PDP.4.4": {
+     "decision": "not_met",
+     "not_evaluated": true
+    },
+    "mewa|PDP.5.1": {
+     "decision": "not_met",
+     "not_evaluated": true
+    },
+    "mewa|PDP.4.3": {
+     "decision": "not_met",
+     "not_evaluated": true
+    },
+    "mewa|DC.1.1": {
+     "decision": "not_met"
+    },
+    "mewa|DC.1.2": {
+     "decision": "not_met"
+    },
+    "mewa|DC.3.1": {
+     "decision": "not_met"
+    },
+    "mewa|DC.3.2": {
+     "decision": "met"
+    },
+    "mewa|DC.3.3": {
+     "decision": "not_met"
+    },
+    "mewa|DC.3.4": {
+     "decision": "met"
+    },
+    "mewa|DC.3.5": {
+     "decision": "not_met"
+    },
+    "mewa|DC.4.1": {
+     "decision": "not_met"
+    },
+    "mewa|DC.5.1": {
+     "decision": "not_met"
+    },
+    "mewa|DC.2.1": {
+     "decision": "met"
+    },
+    "iu|PDP.1.1": {
+     "decision": "not_met"
+    },
+    "iu|PDP.1.2": {
+     "decision": "not_met"
+    },
+    "iu|PDP.2.1": {
+     "decision": "not_met"
+    },
+    "iu|PDP.3.2": {
+     "decision": "not_met"
+    },
+    "iu|PDP.3.1": {
+     "decision": "not_met"
+    },
+    "iu|PDP.4.1": {
+     "decision": "not_met"
+    },
+    "iu|PDP.4.2": {
+     "decision": "not_met"
+    },
+    "iu|PDP.4.4": {
+     "decision": "not_met"
+    },
+    "iu|PDP.5.1": {
+     "decision": "not_met"
+    },
+    "iu|PDP.4.3": {
+     "decision": "not_met"
+    },
+    "iu|DC.1.1": {
+     "decision": "not_met"
+    },
+    "iu|DC.1.2": {
+     "decision": "not_met"
+    },
+    "iu|DC.3.1": {
+     "decision": "not_met"
+    },
+    "iu|DC.3.2": {
+     "decision": "not_met"
+    },
+    "iu|DC.3.3": {
+     "decision": "not_met"
+    },
+    "iu|DC.3.4": {
+     "decision": "not_met"
+    },
+    "iu|DC.3.5": {
+     "decision": "not_met"
+    },
+    "iu|DC.4.1": {
+     "decision": "not_met"
+    },
+    "iu|DC.5.1": {
+     "decision": "not_met"
+    },
+    "iu|DC.2.1": {
+     "decision": "met"
+    }
+   },
+   "telemetry": {
+    "calls": 5,
+    "errors": 2,
+    "errors_note": "mewa_pdp and mewa_notice: request too large for the 8,000 TPM limit",
+    "prompt_tokens": 19441,
+    "completion_tokens": 3392,
+    "median_ms": 2929,
+    "finish": {
+     "stop": 3
+    },
+    "max_tokens": 4000
+   }
+  }
+ }
+}

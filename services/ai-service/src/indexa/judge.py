@@ -10,6 +10,7 @@ from __future__ import annotations
 import json
 import re
 from dataclasses import asdict, dataclass, field
+from difflib import SequenceMatcher
 
 from .controls import Control
 from .documents import Chunk
@@ -54,6 +55,41 @@ def build_messages(control: Control, excerpts: list[Chunk], max_chars: int = 650
     return [{"role": "system", "content": SYSTEM_PROMPT}, {"role": "user", "content": user}]
 
 
+MIN_QUOTE = 8  # squashed characters; shorter fragments prove nothing
+NEAR_RATIO = 0.9  # share of the quote found, in order, inside one compact source window
+
+
+def match_quote(quote: str, source: str) -> str:
+    """How a quote relates to its source: "exact", "near" or "none".
+
+    "exact": the normalised quote is a substring of the normalised source.
+    "near":  at least 90% of it appears in order inside a window no longer than
+             1.3x the quote (a dropped conjunction, a corrected PDF glyph).
+    Quotes elided with "..." are checked fragment by fragment; the weakest wins.
+    """
+    src = squash(source)
+    parts = [squash(x) for x in re.split(r"\.{3,}|…", quote or "")]
+    parts = [x for x in parts if len(x) >= MIN_QUOTE]
+    if not parts:
+        return "none"
+    grades = []
+    for q in parts:
+        if q in src:
+            grades.append("exact")
+            continue
+        blocks = [
+            b
+            for b in SequenceMatcher(None, q, src, autojunk=False).get_matching_blocks()
+            if b.size >= 4
+        ]
+        matched = sum(b.size for b in blocks)
+        span = (blocks[-1].b + blocks[-1].size - blocks[0].b) if blocks else 0
+        grades.append(
+            "near" if blocks and matched / len(q) >= NEAR_RATIO and span <= 1.3 * len(q) else "none"
+        )
+    return "none" if "none" in grades else ("near" if "near" in grades else "exact")
+
+
 @dataclass
 class Citation:
     excerpt: str
@@ -61,6 +97,7 @@ class Citation:
     doc_title: str = ""
     page: int = 0
     verified: bool = False
+    match: str = "none"  # exact | near | none
 
 
 @dataclass
@@ -122,18 +159,17 @@ def parse_judgement(control: Control, raw: str, excerpts: list[Chunk]) -> Judgem
         quote = str(ev.get("quote", "")).strip()
         cit = Citation(excerpt=label, quote=quote)
         m = re.fullmatch(r"E(\d+)", label)
+        # The cited excerpt first; the model sometimes cites the wrong number for a real quote.
+        order = list(excerpts)
         if m and 1 <= int(m.group(1)) <= len(excerpts):
-            src = excerpts[int(m.group(1)) - 1]
-            cit.doc_title, cit.page = src.doc_title, src.page
-            q = squash(quote)
-            cit.verified = len(q) >= 8 and q in squash(src.text)
-        if not cit.verified:
-            # The model sometimes cites the wrong excerpt number for a real quote.
-            q = squash(quote)
-            for src in excerpts:
-                if len(q) >= 8 and q in squash(src.text):
-                    cit.doc_title, cit.page, cit.verified = src.doc_title, src.page, True
-                    break
+            order.insert(0, excerpts[int(m.group(1)) - 1])
+        graded = [(match_quote(quote, src.text), src) for src in order]
+        best = next((g for g in graded if g[0] == "exact"), None) or next(
+            (g for g in graded if g[0] == "near"), None
+        )
+        if best:
+            cit.match, cit.verified = best[0], True
+            cit.doc_title, cit.page = best[1].doc_title, best[1].page
         citations.append(cit)
     if decision != "not_met" and not any(c.verified for c in citations):
         reasons.append("no verifiable quote supports the decision")

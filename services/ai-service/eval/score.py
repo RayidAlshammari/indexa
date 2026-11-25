@@ -27,8 +27,8 @@ def load_gold(path: Path = HERE / "gold" / "labels_v1.json") -> dict[str, dict]:
     return {f"{x['entity']}|{x['control_id']}": x for x in labels}
 
 
-def score_run(items: dict[str, dict], gold: dict[str, dict]) -> dict:
-    keys = sorted(gold)
+def score_run(items: dict[str, dict], gold: dict[str, dict], subset: list[str] | None = None) -> dict:
+    keys = sorted(subset or [k for k in gold if not items.get(k, {}).get("not_evaluated")])
     g = [gold[k]["label"] for k in keys]
     p = [items.get(k, {}).get("decision", "not_met") for k in keys]
     out = summarize(g, p)
@@ -55,17 +55,6 @@ def score_run(items: dict[str, dict], gold: dict[str, dict]) -> dict:
         out["unparseable"] = sum(
             "unparseable model output" in items[k].get("reasons", []) for k in keys
         )
-        hits = tot = 0
-        for k in keys:
-            if gold[k]["label"] == "not_met" or not items[k].get("pages"):
-                continue
-            gp = gold_pages(gold[k]["evidence"])
-            if not gp:
-                continue
-            got = {x.split(":")[0].split("_")[1] + x.split(":")[1] for x in items[k]["pages"]}
-            tot += 1
-            hits += bool(gp & got)
-        out["evidence_recall_at_6"] = hits / tot if tot else None
     out["errors"] = [
         {"item": k, "gold": gold[k]["label"], "pred": p[i], "certainty": gold[k]["certainty"]}
         for i, k in enumerate(keys)
@@ -77,10 +66,34 @@ def score_run(items: dict[str, dict], gold: dict[str, dict]) -> dict:
 def main() -> None:
     data = json.loads(Path(sys.argv[1]).read_text(encoding="utf-8"))
     gold = load_gold()
-    result = {}
+    result = {"all_items": {}, "paired_subsets": {}}
     for key, run in data["runs"].items():
-        result[key] = score_run(run["items"], gold) | {"telemetry": run.get("telemetry", {})}
+        result["all_items"][key] = score_run(run["items"], gold) | {"telemetry": run.get("telemetry", {})}
+    # Runs that could not cover every item are compared with the others on the
+    # same items only, so the comparison is like for like.
+    for key, run in data["runs"].items():
+        missing = [k for k, v in run["items"].items() if v.get("not_evaluated")]
+        if not missing:
+            continue
+        subset = [k for k in gold if k not in missing]
+        result["paired_subsets"][key] = {
+            other: score_run(r["items"], gold, subset) for other, r in data["runs"].items()
+        }
+    result["retrieval"] = retrieval_recall(gold)
     json.dump(result, sys.stdout, ensure_ascii=False, indent=1)
+
+
+def retrieval_recall(gold: dict[str, dict]) -> dict:
+    """Share of met/partial items where a gold evidence page is among the six retrieved excerpts."""
+    ret = json.loads((HERE / "runs" / "retrieval_v1.json").read_text(encoding="utf-8"))
+    hits, misses = 0, []
+    scored = [k for k, g in gold.items() if g["label"] != "not_met" and gold_pages(g["evidence"])]
+    for k in scored:
+        if gold_pages(gold[k]["evidence"]) & set(ret[k]):
+            hits += 1
+        else:
+            misses.append(k)
+    return {"items": len(scored), "recall_at_6": hits / len(scored), "misses": misses}
 
 
 if __name__ == "__main__":
