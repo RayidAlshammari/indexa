@@ -27,7 +27,9 @@ def load_gold(path: Path = HERE / "gold" / "labels_v1.json") -> dict[str, dict]:
     return {f"{x['entity']}|{x['control_id']}": x for x in labels}
 
 
-def score_run(items: dict[str, dict], gold: dict[str, dict], subset: list[str] | None = None) -> dict:
+def score_run(
+    items: dict[str, dict], gold: dict[str, dict], subset: list[str] | None = None
+) -> dict:
     keys = sorted(subset or [k for k in gold if not items.get(k, {}).get("not_evaluated")])
     g = [gold[k]["label"] for k in keys]
     p = [items.get(k, {}).get("decision", "not_met") for k in keys]
@@ -68,7 +70,9 @@ def main() -> None:
     gold = load_gold()
     result = {"all_items": {}, "paired_subsets": {}}
     for key, run in data["runs"].items():
-        result["all_items"][key] = score_run(run["items"], gold) | {"telemetry": run.get("telemetry", {})}
+        result["all_items"][key] = score_run(run["items"], gold) | {
+            "telemetry": run.get("telemetry", {})
+        }
     # Runs that could not cover every item are compared with the others on the
     # same items only, so the comparison is like for like.
     for key, run in data["runs"].items():
