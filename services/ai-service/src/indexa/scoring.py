@@ -33,7 +33,11 @@ def domain_scores(controls: list[Control], judgements: dict[str, Judgement]) -> 
     out = []
     for domain, cs in by_domain.items():
         total = sum(c.weight for c in cs) or 1.0
-        got = sum(c.weight * CREDIT[judgements[c.control_id].decision] for c in cs if c.control_id in judgements)
+        got = sum(
+            c.weight * CREDIT[judgements[c.control_id].decision]
+            for c in cs
+            if c.control_id in judgements
+        )
         decisions = [judgements[c.control_id] for c in cs if c.control_id in judgements]
         out.append(
             DomainScore(

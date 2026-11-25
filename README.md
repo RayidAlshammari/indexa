@@ -1,247 +1,116 @@
-# Governance Agent
+# Indexa
 
-AI-assisted compliance evaluation for data-governance frameworks. Organizations upload governance documentation (policies, registers, audit reports) organized by domain; a LangGraph agent evaluates each file against the relevant framework controls using RAG-backed retrieval, then produces a structured assessment and PDF report.
+**مستشار جاهزية المؤشرات الحكومية** · *Government index readiness advisor* (الاسم مبدئي)
 
-Built for **NDMO / NDI** (National Data Index) style assessments, with a web portal for authenticated submissions and an admin dashboard for reviewing results.
+Indexa reads an entity's own evidence (policies, procedures, registers, reports) and tells it, specification by specification, where it stands against the **NDMO Data Management and Personal Data Protection Standards** that the **National Data Index (NDI)** assesses. Every finding cites the exact sentence and page it rests on, the citation is checked against the source by code, and anything the model is unsure of goes to a human reviewer instead of into the score.
 
----
-
-## Problem
-
-Manual compliance assessments against large regulatory frameworks are slow, inconsistent, and hard to scale. Reviewers must cross-reference dozens of documents against hundreds of controls, often spread across PDFs, spreadsheets, and policy files in multiple formats.
-
-## Solution
-
-Governance Agent automates the document-to-control evaluation loop:
-
-1. **Framework setup** — Extract structured controls from framework PDFs (LLM) and index them in a vector database alongside source passages (RAG).
-2. **Submission** — Applicants upload files per governance domain through a permission-gated web portal.
-3. **Agent evaluation** — A LangGraph workflow processes each file: retrieve control definitions from Qdrant, reason over document content with a Groq-hosted LLM, emit per-control decisions.
-4. **Reporting** — Results are stored in PostgreSQL and exported as a PDF compliance report.
+> Indexa gives an **indicative readiness score**. The official NDI methodology is not public, so the score is clearly labelled as indicative and never presented as a prediction of the official result.
 
 ---
 
-## Architecture
+## بالعربي باختصار
+
+- **المشكلة:** الجهات الحكومية تستعد لقياس مؤشر البيانات الوطني يدوياً، فتراجع عشرات الوثائق مقابل 191 مواصفة. يستغرق ذلك أسابيع من وقت المستشارين، والنتيجة تختلف من مقيّم لآخر.
+- **الحل:** يقيّم Indexa كل مواصفة على **كل** وثائق الجهة مجتمعة. يخرج بقرار (مستوفى / جزئي / غير مستوفى)، ومعه اقتباس حرفي ورقم الصفحة يتحقق منهما الكود، وما ينقص لاستيفاء المواصفة. ثم يرتب الفجوات حسب أولوية NDMO، ويقارن بين دورات القياس.
+- **الحوكمة أولاً:** أي قرار بلا اقتباس متحقق منه، أو بثقة منخفضة، يُحال لمراجع بشري. هكذا لا يدخل في النتيجة شيء لا يمكن تتبعه.
+- **السيادة:** طبقة النماذج تعمل مع أي خدمة متوافقة مع OpenAI: Groq، أو HUMAIN، أو Azure، أو خادم vLLM داخل الجهة. البحث عن الأدلة (BM25) يعمل محلياً على المعالج دون تنزيل نماذج، وبلا قاعدة بيانات متجهات.
+
+---
+
+## How an assessment works
 
 ```
-┌─────────────────────────────────────────────────────────────────────────┐
-│  TanStack Start frontend  (port 5001)                                   │
-│  WorkOS AuthKit · RBAC · domain-based file upload · admin dashboard   │
-└───────────────────────────────┬─────────────────────────────────────────┘
-                                │ tRPC
-┌───────────────────────────────▼─────────────────────────────────────────┐
-│  @governance/api  ·  Drizzle ORM  ·  PostgreSQL                       │
-└───────────────────────────────┬─────────────────────────────────────────┘
-                                │ OpenAPI client + AI_SERVICE_KEY
-┌───────────────────────────────▼─────────────────────────────────────────┐
-│  AI Service — FastAPI  (port 5000)                                      │
-│  ┌──────────────┐  ┌──────────────┐  ┌──────────────────────────────┐ │
-│  │ Extraction   │  │ RAG          │  │ LangGraph evaluation agent   │ │
-│  │ OpenRouter   │  │ Qdrant       │  │ Groq LLM + tool calling      │ │
-│  │ GPT-4.1      │  │ Gemma embed  │  │ per-file control assessment  │ │
-│  └──────────────┘  └──────────────┘  └──────────────────────────────┘ │
-└───────────────────────────────┬─────────────────────────────────────────┘
+Entity evidence (PDF/DOCX/...)                NDMO catalogue (191 specifications)
+        │ page-level text, Arabic repair                │ cleaned text, priority, evidence type,
+        ▼                                               ▼ bilingual retrieval vocabulary
+  page-anchored chunks ──► BM25 index ◄── one query per specification
+                                │ top excerpts with doc + page
+                                ▼
+                 LLM judge (one specification at a time)
+                 JSON: decision · confidence · rationale (AR) · quotes · missing elements
                                 │
-                    ┌───────────┴───────────┐
-                    │  Qdrant  (port 6333)    │
-                    │  Postgres (port 5432)   │
-                    └─────────────────────────┘
+                                ▼
+         quote verification (normalised substring match against the excerpt)
+         routing: unverified quote / low confidence / parse failure → human review
+                                │
+                                ▼
+   indicative score (P1=3, P2=2, P3=1 · met=1, partial=0.5) · gaps ranked by score gain
+   cycle-over-cycle comparison · JSON + Markdown report · API
 ```
 
-Canonical code map: [`services/ai-service/src/ARCHITECTURE.md`](services/ai-service/src/ARCHITECTURE.md)
+**Evidence types.** Some specifications ask for a *process* (a documented, approved procedure is enough). Others ask for an *artifact*: an assessment, a plan, a register, delivered training, an audit report. For those, a policy that only *mandates* the artifact is at most "partial". This one rule is the biggest difference between a readiness tool and a keyword matcher, and it is the commonest way entities over-estimate their readiness.
 
----
+## What changed from the original Governance-Agent
 
-## Tech stack
+Indexa started as a fork of [Governance-Agent](https://github.com/AFAskar/Governance-Agent) (MIT; history and notice kept). The evaluation core was rebuilt after a review found design issues that a readiness tool cannot have:
 
-| Layer | Technology |
-|-------|------------|
-| Monorepo | pnpm workspaces, Turborepo, Node 22 |
-| Frontend | TanStack Start, React 19, Tailwind, Radix |
-| Web API | tRPC, Drizzle ORM, PostgreSQL 15 |
-| Auth | WorkOS AuthKit, permission-based RBAC |
-| AI service | Python 3.13, FastAPI, uv |
-| Agent | LangGraph, Groq (`llama-3.3-70b-versatile`) |
-| Extraction LLM | OpenRouter → `openai/gpt-4.1` |
-| RAG | Qdrant, Google EmbeddingGemma-300M |
-| Documents | pdfplumber, python-docx, python-pptx, pandas |
-| Infra | Docker Compose |
+| Original | Indexa |
+|---|---|
+| Each file judged on its own, so a policy is marked "not compliant" for things another document covers | Each specification judged once against **all** of the entity's evidence |
+| Only the first 15,000 characters of each file are read | Whole documents, chunked by page |
+| All of a domain's controls answered in one reply, capped at 25 per domain | One focused judgement per specification, with no cap |
+| Vector RAG over the *framework*, none over the *evidence* | Retrieval over the evidence, with page citations |
+| Binary Compliant / Not compliant | met · partial · not met, plus the missing elements |
+| No citations, no verification | Verbatim quotes, checked against the source by code |
+| No score, no gap ranking, no comparison between cycles | Indicative priority-weighted score, ranked gaps, cycle diff |
+| Groq + OpenRouter + WorkOS + an 8 GB server (torch, embeddings, Qdrant) | Engine in pure Python; any OpenAI-compatible model, including in-Kingdom or on-premise |
+| Control text polluted by PDF table residue ("Version History …") | Cleaned catalogue with priority and evidence type |
 
----
+The original web portal (TanStack Start, tRPC, Drizzle, WorkOS) and its v1 API are still in the repository. The new engine is exposed alongside them as `POST /api/v2/assessments` and as a CLI.
 
-## AI workflow
+## Evaluation
 
-### Framework extraction (one-time setup)
+<!-- EVALUATION-SUMMARY -->
 
-```
-Framework PDFs  →  text extraction  →  LLM (OpenRouter)  →  control JSON per section
-                                                              →  index JSON cards + PDF chunks in Qdrant
-```
+The full method, per-model results, failure analysis and the reviewable gold labels are in [`docs/EVALUATION.md`](docs/EVALUATION.md) and [`services/ai-service/eval/`](services/ai-service/eval).
 
-Each control has exactly five fields: `id`, `description`, `calculation`, `threshold`, `scale`.
-
-### Evaluation agent (per submission)
-
-```
-Uploaded files  →  text extraction (PDF/DOCX/PPTX/CSV/XLSX)
-               →  resolve domain ID → control IDs (from framework section JSON)
-               →  for each file:
-                     LLM + tools:
-                       get_control_ids_for_file(field_id)
-                       retrieve_control_details(control_id)  ← RAG
-                     →  per-control decision + rationale
-               →  PDF report
-```
-
-Decisions use either a maturity scale (`Leader` … `Unacceptable`) when the control defines a `scale`, or `Compliant` / `Not Compliant` otherwise.
-
-### RAG retrieval
-
-Hybrid index per framework (`{name}_rag` collection):
-
-- **JSON cards** — exact lookup by `control_id` (structured control definition)
-- **PDF chunks** — semantic search over framework source text (supporting context)
-
-The agent calls `retrieve_control_details` once per control ID.
-
----
-
-## Features
-
-- Multi-format document ingestion (PDF, DOCX, PPTX, CSV, XLSX)
-- Domain-organized submissions (12 NDI governance domains)
-- RAG-grounded per-control evaluation via LangGraph tool loop
-- PDF compliance report generation
-- WorkOS authentication with role permissions (`submissions:read|write|delete`)
-- Admin dashboard for submission review and evaluation rerun
-- Docker Compose stack for local and demo deployment
-- API key protection on AI service endpoints
-
----
-
-## Screenshots
-
-<!-- Replace with actual screenshots before publishing -->
-| Submission form | Admin dashboard | Evaluation report |
-|-----------------|-----------------|-------------------|
-| _screenshot pending_ | _screenshot pending_ | _screenshot pending_ |
-
----
-
-## Quick start (Docker)
-
-**Prerequisites:** Docker, Docker Compose, API keys for Groq and OpenRouter.
-
-```bash
-# 1. Configure environment
-cp example.env .env
-# Edit .env: set GROQ_API_KEY, OPENROUTER_API_KEY, POSTGRES_PASSWORD, AI_SERVICE_KEY, WORKOS_* 
-
-# 2. Start the stack
-docker compose up --build
-
-# 3. Open the app
-# Frontend:  http://localhost:5001
-# AI API:    http://localhost:5000/api/docs
-# Qdrant UI: http://localhost:6333/dashboard
-```
-
-Before running evaluations, index a framework (see [AI service README](services/ai-service/README.md)).
-
----
-
-## Local development
-
-### Web (Node)
-
-```bash
-pnpm install
-cp example.env .env.local   # configure POSTGRES_URL, WORKOS_*, AI_SERVICE_URL
-pnpm db:push                # apply Drizzle schema
-pnpm dev                    # starts all workspaces via Turbo
-```
-
-### AI service (Python / uv)
+## Quick start (engine only)
 
 ```bash
 cd services/ai-service
-uv sync --group dev
-cp ../../example.env .env     # or export keys manually
+pip install httpx pdfplumber
+export INDEXA_LLM_BASE_URL=https://api.groq.com/openai/v1   # or HUMAIN / Azure / your vLLM
+export INDEXA_LLM_API_KEY=...                               # never commit keys
+export INDEXA_LLM_MODEL=openai/gpt-oss-120b
 
-# Run API (requires GROQ_API_KEY, OPENROUTER_API_KEY, HF_TOKEN)
-uv run python run.py
+PYTHONPATH=src python -m indexa.cli --entity "My Entity" \
+  --domains 6_Personal_Data_Protection,7_Data_Classification \
+  --out report evidence/*.pdf            # writes report.json and report.md
 
-# Lint and test
-uv run ruff check .
-uv run ruff format --check .
-uv run pytest
+PYTHONPATH=src pytest -q tests/test_indexa_engine.py -o addopts=""   # no network, no model
 ```
 
-Regenerate the TypeScript OpenAPI client after API changes:
+API: run the service (`uv run python run.py`) and `POST /api/v2/assessments` with `entity_name`, `domains` and `files` (multipart). It needs the same `INDEXA_LLM_*` variables and the existing `AI_SERVICE_KEY` header.
 
-```bash
-pnpm ai-service:generate   # AI service must be running on :8000
-```
-
----
-
-## Repository structure
+## Repository map
 
 ```
-Governance-Agent/
-├── apps/tanstack-start/       # Web frontend + tRPC route handlers
-├── packages/
-│   ├── api/                   # tRPC routers, generated AI client
-│   ├── auth/                  # WorkOS AuthKit
-│   ├── db/                    # Drizzle schema (submissions, reports)
-│   └── ui/                    # Shared components
-├── services/ai-service/       # FastAPI + LangGraph + RAG
-│   ├── src/{api,agent,core,rag,embeddings,processing}
-│   └── tests/
-├── docs/                      # RBAC setup, demo environment guide
-├── docker-compose.yml
-├── example.env
-└── turbo.json
+services/ai-service/
+├── src/indexa/              # the assessment engine (pure Python)
+│   ├── text.py              # Arabic/English normalisation, tokenisation
+│   ├── documents.py         # page-anchored chunks, PDF Arabic repair
+│   ├── retrieval.py         # BM25 evidence retrieval
+│   ├── controls.py          # catalogue loading, cleaning, priority, evidence type
+│   ├── judge.py             # prompt, JSON parsing, quote verification, review routing
+│   ├── scoring.py           # indicative score, ranked gaps, cycle comparison
+│   ├── engine.py            # entity assessment
+│   ├── llm.py               # OpenAI-compatible provider client
+│   ├── evaluation.py        # agreement metrics + original-design baseline
+│   └── cli.py
+├── config/frameworks/NDI/   # NDMO catalogue (12 domains)
+├── config/keywords/         # bilingual retrieval vocabularies (reviewable data)
+├── eval/                    # gold labels, runs, scoring, engine fingerprint
+└── src/api/routers/assessments.py   # POST /api/v2/assessments
+apps/, packages/             # original web portal (unchanged)
+docs/EVALUATION.md           # model comparison report
 ```
 
----
+## Limits
 
-## Evaluation workflow (end-to-end)
-
-1. **Admin** sets up the framework: upload section PDFs via `POST /api/v1/frameworks/setup`, then index with `index_framework("NDI")`.
-2. **Applicant** signs in (WorkOS), opens `/submit`, enters company name, uploads files per domain.
-3. **Backend** stores submission in Postgres, forwards files + domain IDs to the AI service.
-4. **Agent** resolves each domain to its control IDs, evaluates every file, writes `data/reports/{id}.pdf`.
-5. **Admin** reviews results at `/admin/ndi`, can rerun an evaluation from stored file content.
-
----
-
-## Environment variables
-
-See [`example.env`](example.env) for the full list. Required for a working stack:
-
-| Variable | Purpose |
-|----------|---------|
-| `GROQ_API_KEY` | Evaluation agent LLM |
-| `OPENROUTER_API_KEY` | Framework control extraction |
-| `HF_TOKEN` | Embedding model download (first run / Docker build) |
-| `AI_SERVICE_KEY` | Shared secret between web backend and AI service |
-| `QDRANT_URL` | Vector database (`http://vector_db:6333` in Docker) |
-| `POSTGRES_*` | Application database |
-| `WORKOS_*` | Authentication |
-
----
-
-## Future work
-
-- Async job queue for long-running evaluations (status polling already modeled in the DB)
-- Object storage for uploads instead of base64 in Postgres
-- Evaluation quality benchmark (golden document set with expected decisions)
-- Wire deterministic NDI scoring (`src/Tools/oe.py`) into report aggregation
-- Streaming per-file progress to the UI during agent runs
-
----
+- Covers the PDP and DC domains end to end today. The other ten domains load from the same catalogue, but their evidence types and vocabularies still need specialist review.
+- The gold labels are a first draft by Indexa, under review by a governance specialist with SDAIA experience. They were committed before any model ran.
+- Policies alone rarely prove "met" for artifact specifications. Indexa says so instead of guessing.
 
 ## License
 
-[MIT](LICENSE)
+MIT. See [LICENSE](LICENSE). Original work © Governance Agent Contributors; Indexa changes © Indexa contributors.

@@ -1,8 +1,8 @@
 """Engine tests: no network, no model. A scripted fake LLM stands in for the provider."""
 
 import asyncio
-import re
 import json
+import re
 from pathlib import Path
 
 from indexa.controls import Control, clean_description, load_controls
@@ -149,3 +149,30 @@ def test_provider_failure_is_flagged():
 
     a = asyncio.run(assess("demo", [ctrl()], [POLICY], broken))
     assert a.judgements["PDP.1.1"].needs_review
+
+
+def test_metrics_and_original_baseline_parsing():
+    from indexa.evaluation import aggregate_files, cohen_kappa, parse_original, summarize
+
+    gold = ["met", "partial", "not_met", "not_met"]
+    assert cohen_kappa(gold, gold) == 1.0
+    s = summarize(gold, ["met", "met", "met", "not_met"])
+    assert s["over_claim"] == 2 and s["critical_over_claim"] == 1 and s["accuracy"] == 0.5
+    f1 = parse_original(
+        '```json\n{"control_decisions":[{"control_id":"PDP.3.1","decision":"Compliant"},{"control_id":"DC.1.2","decision":"Not Compliant"}]}\n```'
+    )
+    f2 = {"DC.1.2": "met"}
+    assert aggregate_files([f1, f2], ["PDP.3.1", "DC.1.2", "X"]) == {
+        "PDP.3.1": "met",
+        "DC.1.2": "met",
+        "X": "not_met",
+    }
+
+
+def test_keywords_cover_pdp_and_dc():
+    from indexa.keywords import load_keywords
+
+    kw = load_keywords()
+    for name in ("6_Personal_Data_Protection", "7_Data_Classification"):
+        for c in load_controls(FRAMEWORK / f"{name}.json"):
+            assert len(kw.get(c.control_id, [])) >= 10, c.control_id

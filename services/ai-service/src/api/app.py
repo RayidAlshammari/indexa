@@ -13,7 +13,7 @@ from fastapi.responses import JSONResponse
 from starlette.middleware.base import BaseHTTPMiddleware
 
 from src.api.models import ExtractionError
-from src.api.routers import evaluations, frameworks, health
+from src.api.routers import assessments, evaluations, frameworks, health
 from src.api.security import require_api_key, warn_if_unprotected
 
 logger = logging.getLogger(__name__)
@@ -97,6 +97,7 @@ app.add_middleware(SecurityHeadersMiddleware)
 app.include_router(health.router)
 app.include_router(frameworks.router, dependencies=[Depends(require_api_key)])
 app.include_router(evaluations.router, dependencies=[Depends(require_api_key)])
+app.include_router(assessments.router, dependencies=[Depends(require_api_key)])
 
 
 @app.exception_handler(ExtractionError)

@@ -83,3 +83,19 @@ jobs:
 
       - name: Pytest
         run: uv run pytest -q
+
+  indexa-engine:
+    # The assessment engine is pure Python (no torch, no vector DB), so it is
+    # tested on its own in seconds.
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: services/ai-service
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install pytest httpx ruff
+      - run: ruff check src/indexa eval tests/test_indexa_engine.py
+      - run: PYTHONPATH=src pytest -q tests/test_indexa_engine.py -o addopts=""

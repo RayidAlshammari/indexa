@@ -31,7 +31,9 @@ class ChatClient:
         max_tokens: int = 900,
         timeout: float = 90.0,
     ):
-        self.base_url = (base_url or os.getenv("INDEXA_LLM_BASE_URL") or DEFAULTS["base_url"]).rstrip("/")
+        self.base_url = (
+            base_url or os.getenv("INDEXA_LLM_BASE_URL") or DEFAULTS["base_url"]
+        ).rstrip("/")
         self.api_key = api_key or os.getenv("INDEXA_LLM_API_KEY") or os.getenv("GROQ_API_KEY", "")
         self.model = model or os.getenv("INDEXA_LLM_MODEL") or DEFAULTS["model"]
         self.temperature, self.max_tokens = temperature, max_tokens

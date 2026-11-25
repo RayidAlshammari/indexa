@@ -12,8 +12,10 @@ from __future__ import annotations
 import re
 import unicodedata
 
-_DIACRITICS = re.compile(r"[ؐ-ًؚ-ٰٟۖ-ۭ]")
-_TATWEEL = "ـ"
+_DIACRITICS = re.compile(
+    r"[\u0610-\u061a\u064b-\u065f\u0670\u06d6-\u06ed]"
+)  # escaped: combining marks reorder when copied
+_TATWEEL = "\u0640"
 _TOKEN = re.compile(r"[ء-ي٠-٩]+|[a-z0-9]+")
 
 _AR_PREFIXES = ("وال", "بال", "كال", "فال", "لل", "ال")

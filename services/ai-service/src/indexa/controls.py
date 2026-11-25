@@ -23,13 +23,25 @@ PRIORITY_WEIGHT = {"P1": 3.0, "P2": 2.0, "P3": 1.0}
 #               mandates it is at most "partial"; "met" needs the artifact itself.
 # Drafted by Indexa for specialist review; extend per domain as catalogues are onboarded.
 EVIDENCE_KIND = {
-    "PDP.1.1": "artifact", "PDP.1.2": "artifact", "PDP.2.1": "artifact",
-    "PDP.3.1": "process", "PDP.3.2": "process", "PDP.4.1": "process",
-    "PDP.4.2": "process", "PDP.4.3": "artifact", "PDP.4.4": "artifact",
+    "PDP.1.1": "artifact",
+    "PDP.1.2": "artifact",
+    "PDP.2.1": "artifact",
+    "PDP.3.1": "process",
+    "PDP.3.2": "process",
+    "PDP.4.1": "process",
+    "PDP.4.2": "process",
+    "PDP.4.3": "artifact",
+    "PDP.4.4": "artifact",
     "PDP.5.1": "artifact",
-    "DC.1.1": "artifact", "DC.1.2": "artifact", "DC.2.1": "process",
-    "DC.3.1": "artifact", "DC.3.2": "artifact", "DC.3.3": "artifact",
-    "DC.3.4": "artifact", "DC.3.5": "artifact", "DC.4.1": "artifact",
+    "DC.1.1": "artifact",
+    "DC.1.2": "artifact",
+    "DC.2.1": "process",
+    "DC.3.1": "artifact",
+    "DC.3.2": "artifact",
+    "DC.3.3": "artifact",
+    "DC.3.4": "artifact",
+    "DC.3.5": "artifact",
+    "DC.4.1": "artifact",
     "DC.5.1": "artifact",
 }
 
