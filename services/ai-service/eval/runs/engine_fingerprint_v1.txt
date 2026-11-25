@@ -1,8 +1,12 @@
+# AST fingerprints (eval/engine_fingerprint.py) of the code that produced runs/predictions_v1.json
+# Model calls ran with judge v1; routing was recomputed from the stored raw outputs with judge v2
+# (quote verifier: exact + near-exact + elided fragments). Decisions are identical under v1 and v2.
 text        0f0c7ee68b
 documents   1fc20b0174
 retrieval   e43cc291a8
 controls    e365ae9e77
-judge       02bd5a2c1b
+judge(v1)   02bd5a2c1b
+judge(v2)   6c8cca89c6   # = current repository version
 scoring     44af94993b
 engine      ea9ca9a910
 evaluation  88da5358a4
