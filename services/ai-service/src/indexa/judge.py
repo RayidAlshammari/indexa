@@ -148,6 +148,8 @@ class Judgement:
     restates_requirement: bool = False
     specific_details: list[str] = field(default_factory=list)
     defers_to_regulator: bool = False
+    template_copy: float = 0.0
+    decision_before_template_rule: str = ""
     raw: str = ""
 
     def to_dict(self) -> dict:
@@ -166,6 +168,31 @@ def _extract_json(raw: str) -> dict | None:
         return json.loads(raw[start : end + 1])
     except json.JSONDecodeError:
         return None
+
+
+def apply_template_rule(j: Judgement, index) -> Judgement:
+    """Copied national-template text is not implementation: downgrade to not_met.
+
+    Applies when the decision is met or partial and every verified quote is
+    template text. A single entity-specific quote keeps the model's decision.
+    """
+    if not index or j.decision == "not_met":
+        return j
+    verified = [c for c in j.citations if c.verified]
+    if not verified:
+        return j
+    ratios = [index.copy_ratio(c.quote) for c in verified]
+    j.template_copy = max(ratios)
+    if all(r >= TEMPLATE_COPY_THRESHOLD for r in ratios):
+        j.decision_before_template_rule = j.decision
+        j.decision = "not_met"
+        j.restates_requirement = True
+        j.review_reasons.append("evidence is copied from a national template")
+        j.needs_review = True
+    return j
+
+
+TEMPLATE_COPY_THRESHOLD = 0.7
 
 
 def parse_judgement(control: Control, raw: str, excerpts: list[Chunk]) -> Judgement:

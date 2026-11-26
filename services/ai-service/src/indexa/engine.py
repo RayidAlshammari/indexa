@@ -14,7 +14,7 @@ from dataclasses import dataclass, field
 
 from .controls import Control
 from .documents import Chunk, Document, chunk_document
-from .judge import Judgement, build_messages, parse_judgement
+from .judge import Judgement, apply_template_rule, build_messages, parse_judgement
 from .retrieval import BM25Index
 from .scoring import domain_scores, prioritised_gaps
 
@@ -45,6 +45,7 @@ async def assess(
     *,
     top_k: int = 6,
     concurrency: int = 4,
+    templates=None,
 ) -> Assessment:
     index = build_index(documents)
     sem = asyncio.Semaphore(concurrency)
@@ -59,7 +60,7 @@ async def assess(
                 j = Judgement(c.control_id, "not_met", 0.0, "", needs_review=True)
                 j.review_reasons = [f"model call failed: {e}"]
                 return j
-            return parse_judgement(c, raw, ex)
+            return apply_template_rule(parse_judgement(c, raw, ex), templates)
 
     results = await asyncio.gather(*(one(c) for c in controls))
     judgements = {j.control_id: j for j in results}

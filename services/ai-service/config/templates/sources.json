@@ -1,0 +1,6 @@
+{
+ "_about": "Public national templates that entities copy into their own policies. Downloaded at first use and cached; never committed. Add a source to widen copy detection.",
+ "sources": [
+  {"id": "sdaia_ndmo_policies_ar", "title": "سياسات حوكمة البيانات الوطنية (مكتب إدارة البيانات الوطنية)", "url": "https://sdaia.gov.sa/ndmo/Files/PoliciesAr.pdf"}
+ ]
+}

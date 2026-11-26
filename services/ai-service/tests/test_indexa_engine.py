@@ -234,3 +234,37 @@ def test_criteria_load_and_reach_the_prompt():
     c = ctrl()
     c.criteria = crit["PDP.3.1"]
     assert "Acceptance criteria" in build_messages(c, [])[1]["content"]
+
+
+def test_template_copy_downgrades_copied_evidence():
+    from indexa.judge import apply_template_rule
+    from indexa.templates import TemplateIndex
+
+    template = "يجب على الجهة إبلاغ الجهات التنظيمية فورا ودون تأخير بما لا يتجاوز 72 ساعة من وقوع أو اكتشاف أي حادثة تسريب"
+    idx = TemplateIndex([template])
+    copied = "يجب على الجامعة إبالغ الجهات التنظيمية فورا ً ودون تأخير، بما ال يتجاوز 72 ساعة، من وقوع أو اكتشاف أي حادثة تسريب"
+    own = "يرفع مركز العمليات الأمنية بلاغ الحادثة عبر منصة سدايا ويعتمده وكيل الجامعة للتحول الرقمي خلال ست ساعات"
+    assert idx.copy_ratio(copied) >= 0.7 and idx.copy_ratio(own) < 0.2
+    ex = chunk_document(Document("d", "t", [copied + "\n" + own]))
+    raw = json.dumps(
+        {
+            "decision": "met",
+            "confidence": 0.9,
+            "rationale": "x",
+            "evidence": [{"excerpt": "E1", "quote": copied[:80]}],
+        },
+        ensure_ascii=False,
+    )
+    j = apply_template_rule(parse_judgement(ctrl(), raw, ex), idx)
+    assert j.decision == "not_met" and j.decision_before_template_rule == "met"
+    raw2 = json.dumps(
+        {
+            "decision": "met",
+            "confidence": 0.9,
+            "rationale": "x",
+            "evidence": [{"excerpt": "E1", "quote": copied[:80]}, {"excerpt": "E1", "quote": own}],
+        },
+        ensure_ascii=False,
+    )
+    j2 = apply_template_rule(parse_judgement(ctrl(), raw2, ex), idx)
+    assert j2.decision == "met"
