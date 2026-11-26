@@ -11,9 +11,15 @@ model can be swapped by configuration without touching the engine.
 
 from __future__ import annotations
 
+import asyncio
 import os
+import random
 
 import httpx
+
+
+class RequestTooLarge(RuntimeError):
+    """The provider refused the request size (Groq: prompt + max_tokens above the TPM limit)."""
 
 DEFAULTS = {
     "base_url": "https://api.groq.com/openai/v1",
@@ -46,16 +52,18 @@ class ChatClient:
             "temperature": self.temperature,
             "max_tokens": self.max_tokens,
         }
-        for attempt in range(4):
+        attempts = 10  # free tiers rate-limit hard; waiting is cheaper than a failed judgement
+        for attempt in range(attempts):
             r = await self._client.post(
                 f"{self.base_url}/chat/completions",
                 json=body,
                 headers={"Authorization": f"Bearer {self.api_key}"},
             )
-            if r.status_code == 429 and attempt < 3:
-                import asyncio
-
-                await asyncio.sleep(float(r.headers.get("retry-after", 2 * (attempt + 1))))
+            if r.status_code == 413:
+                raise RequestTooLarge(r.text[:300])
+            if r.status_code in (429, 500, 502, 503) and attempt < attempts - 1:
+                wait = float(r.headers.get("retry-after") or min(30, 2 * (attempt + 1)))
+                await asyncio.sleep(wait + random.uniform(0.5, 2.0))
                 continue
             r.raise_for_status()
             return r.json()["choices"][0]["message"]["content"] or ""

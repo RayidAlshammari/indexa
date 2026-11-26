@@ -323,3 +323,29 @@ def test_server_serves_bundled_sample_report(tmp_path, monkeypatch):
     c = TestClient(server.app)
     assert c.get("/api/reports/mewa").json() == {"entity": "x"}
     assert c.get("/api/reports/iu").status_code == 202
+
+
+def test_engine_shrinks_evidence_when_request_too_large():
+    import asyncio
+
+    from indexa.controls import Control
+    from indexa.documents import Document
+    from indexa.engine import assess
+    from indexa.llm import RequestTooLarge
+
+    sizes = []
+
+    async def llm(messages):
+        n = messages[1]["content"].count("[E")
+        sizes.append(n)
+        if n > 3:
+            raise RequestTooLarge("Request too large for model")
+        return '{"decision": "not_met", "confidence": 0.9, "rationale": "x", "evidence": []}'
+
+    pages = [f"سياسة حماية البيانات الشخصية البند {i} " * 30 for i in range(8)]
+    doc = Document("doc1", "سياسة", pages)
+    c = Control("PDP.1.1", "t", "حماية البيانات الشخصية", "P1", "6_PDP", ["البيانات"], "process", {})
+    res = asyncio.run(assess("e", [c], [doc], llm))
+    j = res.judgements["PDP.1.1"]
+    assert sizes[0] > 3 and sizes[-1] <= 3
+    assert not any("model call failed" in r for r in j.review_reasons)

@@ -15,6 +15,7 @@ from dataclasses import dataclass, field
 from .controls import Control
 from .documents import Chunk, Document, chunk_document
 from .judge import Judgement, apply_template_rule, build_messages, parse_judgement
+from .llm import RequestTooLarge
 from .retrieval import BM25Index
 from .scoring import domain_scores, prioritised_gaps
 
@@ -54,13 +55,27 @@ async def assess(
     async def one(c: Control) -> Judgement:
         async with sem:
             ex = excerpts[c.control_id]
-            try:
-                raw = await llm(build_messages(c, ex))
-            except Exception as e:  # provider error: never silently "not met"
+            # Shrink the evidence when a provider caps request size, best excerpts first.
+            for keep, chars in ((len(ex), 650), (4, 550), (3, 450)):
+                shown = ex[:keep]
+                try:
+                    raw = await llm(build_messages(c, shown, max_chars=chars))
+                    break
+                except RequestTooLarge as e:
+                    err: Exception = e
+                    continue
+                except Exception as e:  # provider error: never silently "not met"
+                    err = e
+                    shown = None
+                    break
+            else:
+                shown = None
+            if shown is None:
                 j = Judgement(c.control_id, "not_met", 0.0, "", needs_review=True)
-                j.review_reasons = [f"model call failed: {e}"]
+                j.review_reasons = [f"model call failed: {err}"]
                 return j
-            return apply_template_rule(parse_judgement(c, raw, ex), templates)
+            excerpts[c.control_id] = shown
+            return apply_template_rule(parse_judgement(c, raw, shown), templates)
 
     results = await asyncio.gather(*(one(c) for c in controls))
     judgements = {j.control_id: j for j in results}
