@@ -236,11 +236,11 @@ torch, vector DB, auth provider or database.
 
 ## Hugging Face Spaces (free)
 
-The free CPU Space (2 vCPU, 16 GB RAM) runs the Indexa service without a card.
+Free Spaces run the Gradio SDK on ZeroGPU hardware (Docker Spaces are paid). `deploy/huggingface/app.py` downloads this repository at startup and serves the FastAPI app on port 7860, so a **Restart** of the Space deploys the latest commit on main.
 
-1. Create a Space: SDK **Docker**, template **Blank**, hardware **CPU basic (free)**, visibility **Public**.
-2. Add the two files from `deploy/huggingface/` (`Dockerfile`, `README.md`) to the Space. The Dockerfile clones this repository at build time, so later deploys only need **Settings → Factory rebuild**.
+1. Create a Space: SDK **Gradio**, template **Blank**, hardware **ZeroGPU (free)**, visibility **Public**.
+2. Put `deploy/huggingface/app.py`, `requirements.txt` and `README.md` in the Space.
 3. In **Settings → Variables and secrets** add `INDEXA_LLM_API_KEY` (secret), `INDEXA_LLM_BASE_URL`, `INDEXA_LLM_MODEL`, and optionally `INDEXA_DEMO_TOKEN` (secret).
 4. Open `https://<user>-<space>.hf.space/health`; `model_configured` should be `true`.
 
-Free Spaces sleep after 48 hours without traffic and their disk is not persistent, so cached reports are rebuilt after a restart.
+Free Spaces sleep after 48 hours without traffic and their disk is not persistent, so cached reports are rebuilt after a restart. `deploy/huggingface/Dockerfile` is the equivalent for a paid Docker Space.
