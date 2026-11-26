@@ -310,3 +310,16 @@ def test_improvement_plan_is_parsed_and_gaps_carry_points():
     js = {"A": j, "B": Judgement("B", "met", 1, "")}
     (g,) = prioritised_gaps(cs, js)
     assert g["points"] == 75.0 and g["actions"][0] == "أعدّ خطة"
+
+
+def test_server_serves_bundled_sample_report(tmp_path, monkeypatch):
+    from fastapi.testclient import TestClient
+
+    from indexa import server
+
+    monkeypatch.setattr(server, "DATA", tmp_path / "cache")
+    monkeypatch.setattr(server, "BUNDLED", tmp_path)
+    (tmp_path / "mewa.json").write_text('{"entity": "x"}', encoding="utf-8")
+    c = TestClient(server.app)
+    assert c.get("/api/reports/mewa").json() == {"entity": "x"}
+    assert c.get("/api/reports/iu").status_code == 202

@@ -31,6 +31,8 @@ from .templates import load_template_index
 ROOT = Path(__file__).resolve().parents[2]
 FRAMEWORK = ROOT / "config" / "frameworks" / "NDI"
 DATA = Path(os.getenv("INDEXA_DATA_DIR", str(Path.home() / ".cache" / "indexa")))
+# Sample reports shipped with the code, so the demo answers at once on hosts without a disk.
+BUNDLED = ROOT / "config" / "reports"
 DOMAINS = ["6_Personal_Data_Protection", "7_Data_Classification"]
 MAX_FILES, MAX_BYTES = 20, 25 * 1024 * 1024
 
@@ -130,9 +132,9 @@ async def run_sample(sample_id: str, x_demo_token: str | None = Header(default=N
 def report(key: str) -> JSONResponse:
     if not key.replace("-", "").replace("_", "").isalnum():
         raise HTTPException(400, "bad key")
-    f = DATA / f"{key}.json"
-    if f.exists():
-        return JSONResponse(json.loads(f.read_text(encoding="utf-8")))
+    for f in (DATA / f"{key}.json", BUNDLED / f"{key}.json"):
+        if f.exists():
+            return JSONResponse(json.loads(f.read_text(encoding="utf-8")))
     return JSONResponse(_runs.get(key, {"status": "none"}), status_code=202)
 
 
