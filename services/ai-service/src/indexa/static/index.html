@@ -514,6 +514,7 @@ function mount(id) {
 /* ---------------- routes ---------------- */
 async function route() {
   closeDrawer();
+  document.title = 'Indexa | اعرف درجتك قبل أن تُقاس';
   const h = location.hash.replace(/^#\/?/, '');
   const [name, arg] = h.split('/');
   if (name === 'start') return start();

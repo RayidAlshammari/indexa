@@ -87,7 +87,15 @@ async def assess(
                 j.review_reasons = [f"model call failed: {err}"]
                 return j
             excerpts[c.control_id] = shown
-            return apply_template_rule(parse_judgement(c, raw, shown), templates)
+            j = parse_judgement(c, raw, shown)
+            if "unparseable model output" in j.review_reasons:  # one retry: usually a cut-off reply
+                try:
+                    j = parse_judgement(
+                        c, await llm(build_messages(c, shown, max_chars=chars)), shown
+                    )
+                except Exception:  # keep the first, flagged judgement
+                    pass
+            return apply_template_rule(j, templates)
 
     results = await asyncio.gather(*(one(c) for c in controls))
     judgements = {j.control_id: j for j in results}

@@ -162,7 +162,13 @@ async def _run(key: str, entity: str, docs: list[Document]) -> None:
 
 @app.get("/health")
 def health() -> dict:
-    return {"ok": True, "model_configured": bool(os.getenv("INDEXA_LLM_API_KEY"))}
+    return {
+        "ok": True,
+        "model_configured": bool(os.getenv("INDEXA_LLM_API_KEY")),
+        "templates": "not loaded yet"
+        if _templates is None
+        else len(getattr(_templates, "shingles", []) or []),
+    }
 
 
 @app.get("/")
