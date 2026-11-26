@@ -321,7 +321,11 @@ def test_server_serves_bundled_sample_report(tmp_path, monkeypatch):
     monkeypatch.setattr(server, "BUNDLED", tmp_path)
     (tmp_path / "mewa.json").write_text('{"entity": "x"}', encoding="utf-8")
     c = TestClient(server.app)
-    assert c.get("/api/reports/mewa").json() == {"entity": "x"}
+    body = c.get("/api/reports/mewa").json()
+    assert body["entity"] == "x" and body["index"]["id"] == "NDI"
+    assert body["catalogue"]["PDP.1.1"]["domain_name"] == "حماية البيانات الشخصية"
+    assert body["catalogue"]["PDP.3.1"]["title"] == "الإبلاغ عن تسرب البيانات"
+    assert body["catalogue"]["PDP.3.1"]["title_en"] == "Data Breach Notification"
     assert c.get("/api/reports/iu").status_code == 202
 
 

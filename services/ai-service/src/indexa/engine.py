@@ -47,12 +47,24 @@ async def assess(
     top_k: int = 6,
     concurrency: int = 4,
     templates=None,
+    on_progress: Callable[[int, int], None] | None = None,
 ) -> Assessment:
     index = build_index(documents)
     sem = asyncio.Semaphore(concurrency)
     excerpts = {c.control_id: [ch for ch, _ in index.search(c.query, k=top_k)] for c in controls}
 
+    done = 0
+
     async def one(c: Control) -> Judgement:
+        nonlocal done
+        try:
+            return await _one(c)
+        finally:
+            done += 1
+            if on_progress:
+                on_progress(done, len(controls))
+
+    async def _one(c: Control) -> Judgement:
         async with sem:
             ex = excerpts[c.control_id]
             # Shrink the evidence when a provider caps request size, best excerpts first.

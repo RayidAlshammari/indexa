@@ -3,158 +3,797 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Indexa · مستشار جاهزية المؤشرات الحكومية</title>
+<title>Indexa | اعرف درجتك قبل أن تُقاس</title>
+<meta name="description" content="يقرأ Indexa وثائق جهتك ويحكم على كل مواصفة في مؤشر البيانات الوطني بدليل مقتبس ورقم صفحة، ثم يعطيك خطة مرتبة لرفع الدرجة.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Readex+Pro:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
-  :root { --ink:#0f1f1c; --muted:#5b6b67; --line:#e3e8e6; --bg:#f7f9f8; --card:#fff; --brand:#0d6b58; --brand2:#e7f3ef;
-          --met:#1f7a4d; --met-bg:#e5f4ec; --part:#9a6a00; --part-bg:#fdf3dc; --not:#a33a2f; --not-bg:#fbe9e6; }
-  * { box-sizing: border-box; }
-  body { margin:0; font-family:'IBM Plex Sans Arabic', system-ui, sans-serif; background:var(--bg); color:var(--ink); line-height:1.7; }
-  .wrap { max-width:1080px; margin:0 auto; padding:0 20px; }
-  header { background:var(--ink); color:#fff; padding:44px 0 36px; }
-  header .tag { display:inline-block; font-size:13px; padding:3px 10px; border:1px solid #ffffff40; border-radius:20px; color:#cfe7df; }
-  h1 { font-size:34px; margin:12px 0 6px; font-weight:700; letter-spacing:-.5px; }
-  header p { color:#c9d6d2; max-width:720px; margin:0; }
-  section { margin:28px 0; }
-  h2 { font-size:20px; margin:0 0 12px; }
-  .grid { display:grid; gap:14px; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); }
-  .card { background:var(--card); border:1px solid var(--line); border-radius:12px; padding:18px; }
-  .num { font-size:30px; font-weight:700; color:var(--brand); }
-  .muted { color:var(--muted); font-size:14px; }
-  button, .btn { font:inherit; border:0; border-radius:8px; padding:9px 16px; cursor:pointer; background:var(--brand); color:#fff; }
-  button.ghost { background:var(--brand2); color:var(--brand); }
-  button:disabled { opacity:.5; cursor:default; }
-  input[type=text] { font:inherit; padding:8px 10px; border:1px solid var(--line); border-radius:8px; width:100%; }
-  .row { display:flex; gap:10px; align-items:center; flex-wrap:wrap; }
-  .badge { font-size:13px; font-weight:600; padding:2px 10px; border-radius:20px; white-space:nowrap; }
-  .met { color:var(--met); background:var(--met-bg); } .partial { color:var(--part); background:var(--part-bg); } .not_met { color:var(--not); background:var(--not-bg); }
-  .spec { border-top:1px solid var(--line); padding:14px 0; }
-  .spec h3 { font-size:16px; margin:0; }
-  blockquote { margin:8px 0; padding:8px 12px; background:#f2f5f4; border-right:3px solid var(--brand); border-radius:6px; font-size:14px; }
-  .src { font-size:12px; color:var(--muted); }
-  .flag { font-size:12px; color:var(--not); }
-  .bar { height:8px; background:#e9eeec; border-radius:6px; overflow:hidden; margin-top:8px; }
-  .bar > i { display:block; height:100%; background:var(--brand); }
-  table { width:100%; border-collapse:collapse; font-size:14px; }
-  td, th { text-align:right; padding:8px; border-bottom:1px solid var(--line); }
-  footer { color:var(--muted); font-size:13px; padding:30px 0 50px; }
-  #status { font-size:14px; color:var(--muted); }
+:root{
+  --paper:#F6F7F4; --sheet:#FFFFFF; --ink:#14212B; --ink-2:#3E4C57; --ink-3:#6B7781;
+  --rule:#DCE1DC; --rule-2:#C9D0CA;
+  --ledger:#0D5C4A; --ledger-2:#0A4A3B; --ledger-tint:#E4EFEA;
+  --marker:#F3D650; --marker-soft:rgba(243,214,80,.55);
+  --met:#1E7A56; --met-bg:#E3F1EA; --partial:#9A6A12; --partial-bg:#FBF0D6;
+  --gap:#B0412E; --gap-bg:#F8E5E0; --review:#4F55C9; --review-bg:#E9EAFB;
+  --ui:"Readex Pro", system-ui, sans-serif; --doc:"Amiri", "Times New Roman", serif;
+  --r-s:6px; --r-m:10px;
+  --s1:4px; --s2:8px; --s3:12px; --s4:16px; --s5:24px; --s6:32px; --s7:48px; --s8:72px; --s9:112px;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--ui);font-weight:400;font-size:16px;line-height:1.7;-webkit-font-smoothing:antialiased}
+a{color:inherit}
+button,input,select{font:inherit;color:inherit}
+:focus-visible{outline:3px solid var(--ledger);outline-offset:2px;border-radius:4px}
+.wrap{max-width:1180px;margin:0 auto;padding:0 var(--s5)}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+[hidden]{display:none!important}
+
+/* ---------- header ---------- */
+.top{position:sticky;top:0;z-index:20;background:rgba(246,247,244,.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--rule)}
+.top .wrap{display:flex;align-items:center;gap:var(--s5);height:64px}
+.brand{display:flex;align-items:baseline;gap:var(--s3);text-decoration:none}
+.brand b{font-weight:700;font-size:22px;letter-spacing:-.01em;direction:ltr}
+.brand b i{font-style:normal;color:var(--ledger)}
+.brand span{font-size:13px;color:var(--ink-3)}
+.top nav{margin-inline-start:auto;display:flex;align-items:center;gap:var(--s5);font-size:15px}
+.top nav a{text-decoration:none;color:var(--ink-2)}
+.top nav a:hover{color:var(--ink)}
+.top nav a.btn-primary,.top nav a.btn-primary:hover{color:#fff}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:var(--s2);border:0;border-radius:var(--r-s);padding:11px 20px;font-weight:500;font-size:15px;cursor:pointer;text-decoration:none;transition:background .15s}
+.btn-primary{background:var(--ledger);color:#fff}
+.btn-primary:hover{background:var(--ledger-2)}
+.btn-quiet{background:transparent;color:var(--ink);box-shadow:inset 0 0 0 1.5px var(--rule-2)}
+.btn-quiet:hover{box-shadow:inset 0 0 0 1.5px var(--ink-3)}
+.btn[disabled]{opacity:.45;cursor:not-allowed}
+
+/* ---------- hero ---------- */
+.hero{padding:var(--s8) 0 var(--s8)}
+.hero .wrap{display:grid;grid-template-columns:1fr 1.05fr;gap:var(--s8);align-items:center}
+.hero h1{font-weight:600;font-size:clamp(40px,5.6vw,68px);line-height:1.15;letter-spacing:-.015em;margin:0 0 var(--s5)}
+.hero p.lead{font-size:19px;color:var(--ink-2);max-width:34em;margin:0 0 var(--s6)}
+.hero .ctas{display:flex;gap:var(--s3);flex-wrap:wrap}
+.hero .fine{margin-top:var(--s5);font-size:13px;color:var(--ink-3)}
+
+/* the evidence sheet: the one memorable element */
+.sheet{position:relative;background:var(--sheet);border:1px solid var(--rule);border-radius:var(--r-m);padding:var(--s6) var(--s6) var(--s5);box-shadow:0 1px 0 var(--rule),0 24px 48px -28px rgba(20,33,43,.35)}
+.sheet .doc-head{display:flex;justify-content:space-between;font-size:12px;color:var(--ink-3);border-bottom:1px solid var(--rule);padding-bottom:var(--s3);margin-bottom:var(--s4)}
+.sheet .doc{font-family:var(--doc);font-size:21px;line-height:2;color:#2A353E}
+.sheet .doc p{margin:0 0 var(--s3)}
+.hl{background-image:linear-gradient(var(--marker-soft),var(--marker-soft));background-repeat:no-repeat;background-size:0% 62%;background-position:100% 78%;padding:0 2px;border-radius:2px}
+.play .hl{animation:mark 1.4s .5s cubic-bezier(.6,.1,.2,1) forwards}
+@keyframes mark{to{background-size:100% 62%}}
+.note{margin-top:var(--s5);border-top:1.5px dashed var(--rule-2);padding-top:var(--s4);display:grid;grid-template-columns:auto 1fr;gap:var(--s2) var(--s4);align-items:start;opacity:0;transform:translateY(6px)}
+.play .note{animation:note .5s 1.9s ease-out forwards}
+@keyframes note{to{opacity:1;transform:none}}
+.note .sid{font-weight:600;font-size:14px;direction:ltr;color:var(--ledger)}
+.note .what{font-size:14px;color:var(--ink-2)}
+.note .verdict{grid-column:1/-1;display:flex;flex-wrap:wrap;gap:var(--s2);align-items:center;font-size:13px;color:var(--ink-3)}
+@media (prefers-reduced-motion:reduce){.hl{background-size:100% 62%}.play .hl,.play .note{animation:none}.note{opacity:1;transform:none}html{scroll-behavior:auto}}
+
+/* pills */
+.pill{display:inline-flex;align-items:center;gap:6px;border-radius:999px;padding:2px 10px;font-size:13px;font-weight:500;white-space:nowrap}
+.pill::before{content:"";width:7px;height:7px;border-radius:50%;background:currentColor}
+.p-met{color:var(--met);background:var(--met-bg)}
+.p-partial{color:var(--partial);background:var(--partial-bg)}
+.p-not_met{color:var(--gap);background:var(--gap-bg)}
+.p-review{color:var(--review);background:var(--review-bg)}
+.p-review::before{border-radius:2px}
+
+/* ---------- sections ---------- */
+section.band{padding:var(--s8) 0;border-top:1px solid var(--rule)}
+.band h2{font-weight:600;font-size:clamp(26px,3vw,36px);line-height:1.3;margin:0 0 var(--s3);letter-spacing:-.01em}
+.band .sub{color:var(--ink-2);max-width:40em;margin:0 0 var(--s7);font-size:17px}
+
+.steps{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(3,1fr);gap:0;counter-reset:s;border-top:2px solid var(--ink)}
+.steps li{padding:var(--s5) 0 0;padding-inline-end:var(--s6);counter-increment:s}
+.steps li::before{content:counter(s, arabic-indic);display:block;font-size:44px;font-weight:300;color:var(--ledger);line-height:1;margin-bottom:var(--s4)}
+.steps h3{font-size:19px;font-weight:600;margin:0 0 var(--s2)}
+.steps p{margin:0;color:var(--ink-2);font-size:15.5px}
+
+.proof{display:grid;grid-template-columns:repeat(2,1fr);border-top:1px solid var(--rule)}
+.proof > div{padding:var(--s5) 0;border-bottom:1px solid var(--rule);display:grid;grid-template-columns:150px 1fr;gap:var(--s5);align-items:baseline}
+.proof > div:nth-child(odd){padding-inline-end:var(--s6);border-inline-end:1px solid var(--rule)}
+.proof > div:nth-child(even){padding-inline-start:var(--s6)}
+.proof .n{font-size:44px;font-weight:600;letter-spacing:-.02em;color:var(--ledger);line-height:1}
+.proof .n small{font-size:18px;font-weight:500}
+.proof h3{font-size:17px;font-weight:600;margin:0 0 4px}
+.proof p{margin:0;color:var(--ink-2);font-size:15px}
+.honest{margin-top:var(--s5);font-size:14px;color:var(--ink-3);max-width:60em}
+
+.indices{display:grid;grid-template-columns:1.2fr 1fr;gap:var(--s6)}
+.idx{border:1px solid var(--rule);border-radius:var(--r-m);background:var(--sheet);padding:var(--s5) var(--s6)}
+.idx.live{border-color:var(--ledger);box-shadow:inset 0 3px 0 var(--ledger)}
+.idx h3{margin:0 0 var(--s2);font-size:20px;font-weight:600}
+.idx .state{font-size:13px;font-weight:500;color:var(--ledger)}
+.idx.soon .state{color:var(--ink-3)}
+.idx ul{margin:var(--s3) 0 0;padding:0;list-style:none;font-size:15px;color:var(--ink-2)}
+.idx li{padding:6px 0;border-top:1px solid var(--rule);display:flex;justify-content:space-between;gap:var(--s3)}
+.idx li span:last-child{color:var(--ink-3);font-size:13px}
+.idx li.on span:last-child{color:var(--met)}
+
+.samples{display:grid;grid-template-columns:repeat(2,1fr);gap:var(--s4)}
+.sample{display:flex;justify-content:space-between;align-items:center;gap:var(--s4);text-align:start;border:1px solid var(--rule);background:var(--sheet);border-radius:var(--r-m);padding:var(--s5);cursor:pointer;width:100%}
+.sample:hover{border-color:var(--ink-3)}
+.sample b{display:block;font-size:17px;font-weight:600}
+.sample small{color:var(--ink-3);font-size:13px}
+.sample .go{font-size:14px;color:var(--ledger);font-weight:500;white-space:nowrap}
+
+footer{border-top:1px solid var(--rule);padding:var(--s6) 0 var(--s7);font-size:13px;color:var(--ink-3)}
+footer .wrap{display:flex;justify-content:space-between;gap:var(--s5);flex-wrap:wrap}
+
+/* ---------- start ---------- */
+.page{padding:var(--s7) 0 var(--s8)}
+.page h1{font-size:clamp(30px,3.6vw,42px);font-weight:600;margin:0 0 var(--s2);letter-spacing:-.01em}
+.page .sub{color:var(--ink-2);margin:0 0 var(--s6);max-width:42em}
+.form{display:grid;grid-template-columns:1.4fr 1fr;gap:var(--s7);align-items:start}
+.field{margin-bottom:var(--s5)}
+.field > label,.field > .label{display:block;font-weight:500;margin-bottom:var(--s2)}
+.field .hint{font-size:13px;color:var(--ink-3);margin-top:6px}
+.input{width:100%;background:var(--sheet);border:1.5px solid var(--rule-2);border-radius:var(--r-s);padding:11px 14px;font-size:16px}
+.input:focus{border-color:var(--ledger);outline:none;box-shadow:0 0 0 3px var(--ledger-tint)}
+.choices{display:grid;gap:var(--s2)}
+.choice{display:flex;gap:var(--s3);align-items:flex-start;border:1.5px solid var(--rule-2);border-radius:var(--r-s);padding:var(--s3) var(--s4);background:var(--sheet);cursor:pointer}
+.choice:has(input:checked){border-color:var(--ledger);background:var(--ledger-tint)}
+.choice:has(input:disabled){cursor:not-allowed;opacity:.6}
+.choice input{margin-top:6px;accent-color:var(--ledger)}
+.choice b{font-weight:500;display:block}
+.choice small{color:var(--ink-3);font-size:13px}
+.drop{border:2px dashed var(--rule-2);border-radius:var(--r-m);background:var(--sheet);padding:var(--s6);text-align:center;cursor:pointer;transition:border-color .15s,background .15s}
+.drop.over{border-color:var(--ledger);background:var(--ledger-tint)}
+.drop b{display:block;font-weight:500;font-size:17px}
+.drop small{color:var(--ink-3)}
+.files{list-style:none;margin:var(--s3) 0 0;padding:0}
+.files li{display:flex;align-items:center;gap:var(--s3);padding:var(--s2) 0;border-bottom:1px solid var(--rule);font-size:15px}
+.files li .nm{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;direction:ltr;text-align:right}
+.files li .sz{color:var(--ink-3);font-size:13px;direction:ltr}
+.x{border:0;background:none;cursor:pointer;color:var(--ink-3);font-size:20px;line-height:1;padding:2px 6px;border-radius:4px}
+.x:hover{color:var(--gap);background:var(--gap-bg)}
+.err{color:var(--gap);font-size:14px;margin-top:var(--s2)}
+.aside{border-inline-start:2px solid var(--rule);padding-inline-start:var(--s5);font-size:15px;color:var(--ink-2)}
+.aside h3{font-size:16px;font-weight:600;color:var(--ink);margin:0 0 var(--s2)}
+.aside p{margin:0 0 var(--s5)}
+.aside .warn{background:var(--partial-bg);color:#5E4310;border-radius:var(--r-s);padding:var(--s3) var(--s4);font-size:14px}
+
+/* ---------- progress ---------- */
+.run{max-width:760px}
+.count{font-size:clamp(48px,7vw,84px);font-weight:600;letter-spacing:-.02em;line-height:1;margin:var(--s5) 0 var(--s2)}
+.count small{font-size:.32em;font-weight:400;color:var(--ink-3);letter-spacing:0}
+.cells{display:grid;grid-template-columns:repeat(auto-fill,minmax(22px,1fr));gap:5px;margin:var(--s5) 0}
+.cells i{height:22px;border-radius:3px;background:var(--rule)}
+.cells i.on{background:var(--ledger)}
+.cells i.now{background:var(--marker);animation:pulse 1.2s ease-in-out infinite}
+@keyframes pulse{50%{opacity:.45}}
+.phase{color:var(--ink-2);min-height:1.7em}
+
+/* ---------- report ---------- */
+.rhead{padding:var(--s6) 0 var(--s5);border-bottom:1px solid var(--rule);display:flex;justify-content:space-between;align-items:flex-end;gap:var(--s5);flex-wrap:wrap}
+.rhead h1{margin:0;font-size:clamp(28px,3.4vw,40px);font-weight:600;letter-spacing:-.01em}
+.rhead .meta{color:var(--ink-3);font-size:14px;margin-top:4px}
+.rhead .acts{display:flex;gap:var(--s2)}
+.score{display:grid;grid-template-columns:280px 1fr;gap:var(--s7);padding:var(--s6) 0;border-bottom:1px solid var(--rule);align-items:center}
+.seal{position:relative;width:220px;height:220px}
+.seal svg{width:100%;height:100%;transform:rotate(-90deg)}
+.seal .v{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center}
+.seal .v b{font-size:60px;font-weight:600;letter-spacing:-.03em;line-height:1}
+.seal .v span{font-size:13px;color:var(--ink-3);margin-top:6px}
+.seal-cap{font-size:13px;color:var(--ink-3);margin-top:var(--s3);max-width:240px}
+.domains{display:grid;gap:var(--s5)}
+.dom .row1{display:flex;justify-content:space-between;align-items:baseline;gap:var(--s3)}
+.dom .row1 b{font-weight:600;font-size:17px}
+.dom .row1 span{font-size:22px;font-weight:600;color:var(--ledger)}
+.bar{height:10px;background:var(--rule);border-radius:999px;margin:var(--s2) 0;display:flex;overflow:hidden}
+.bar i{display:block;height:100%}
+.bar .met{background:var(--met)} .bar .partial{background:#D9A93C} .bar .not_met{background:#E7B4A8}
+.dom .counts{display:flex;gap:var(--s4);font-size:13px;color:var(--ink-3);flex-wrap:wrap}
+.summary{font-size:17px;color:var(--ink-2);margin:var(--s5) 0 0;max-width:52em}
+.summary b{color:var(--ink);font-weight:600}
+.tabs{display:flex;gap:var(--s5);border-bottom:1px solid var(--rule);margin-top:var(--s6)}
+.tab{border:0;background:none;padding:var(--s3) 0;cursor:pointer;font-weight:500;color:var(--ink-3);border-bottom:2.5px solid transparent;margin-bottom:-1px}
+.tab[aria-selected=true]{color:var(--ink);border-color:var(--ink)}
+.tab .c{font-size:12px;background:var(--rule);border-radius:999px;padding:1px 8px;margin-inline-start:6px;color:var(--ink-2)}
+.pane{padding:var(--s5) 0 var(--s8)}
+
+.plan{list-style:none;margin:0;padding:0;counter-reset:p}
+.plan > li{counter-increment:p;display:grid;grid-template-columns:56px 1fr 120px;gap:var(--s4);padding:var(--s5) 0;border-bottom:1px solid var(--rule)}
+.plan > li::before{content:counter(p, arabic-indic);font-size:30px;font-weight:300;color:var(--ink-3);line-height:1.2}
+.plan .t{display:flex;gap:var(--s3);align-items:baseline;flex-wrap:wrap}
+.plan .t b{font-weight:600;font-size:17px}
+.plan .sid{direction:ltr;font-size:13px;color:var(--ink-3);font-weight:500}
+.plan .gain{text-align:end}
+.plan .gain b{display:block;font-size:26px;font-weight:600;color:var(--ledger);line-height:1.1}
+.plan .gain small{font-size:12px;color:var(--ink-3)}
+.plan .cols{display:grid;grid-template-columns:1.3fr 1fr;gap:var(--s5);margin-top:var(--s3);font-size:15px}
+.plan h4{font-size:13px;font-weight:500;color:var(--ink-3);margin:0 0 4px}
+.plan ul{margin:0;padding-inline-start:1.1em;color:var(--ink-2)}
+.plan .owner{margin-top:var(--s2);font-size:14px;color:var(--ink-2)}
+.plan .owner b{font-weight:500;color:var(--ink)}
+.more{margin-top:var(--s4)}
+
+.filters{display:flex;gap:var(--s2);flex-wrap:wrap;align-items:center;margin-bottom:var(--s4)}
+.chip{border:1.5px solid var(--rule-2);background:var(--sheet);border-radius:999px;padding:4px 14px;font-size:14px;cursor:pointer}
+.chip[aria-pressed=true]{background:var(--ink);border-color:var(--ink);color:#fff}
+.filters select{border:1.5px solid var(--rule-2);background:var(--sheet);border-radius:999px;padding:4px 12px;font-size:14px;margin-inline-start:auto}
+table.specs{width:100%;border-collapse:collapse;font-size:15px}
+.specs th{font-weight:500;font-size:13px;color:var(--ink-3);text-align:start;padding:var(--s2) var(--s3);border-bottom:1.5px solid var(--ink)}
+.specs td{padding:var(--s3);border-bottom:1px solid var(--rule);vertical-align:middle}
+.specs tr.r{cursor:pointer}
+.specs tr.r:hover td{background:#EEF1ED}
+.specs .sid{direction:ltr;text-align:right;font-weight:500;color:var(--ink-2);white-space:nowrap}
+.flags{display:flex;gap:6px;flex-wrap:wrap}
+.flag{font-size:12px;border-radius:4px;padding:1px 7px;background:var(--review-bg);color:var(--review)}
+.flag.copy{background:var(--gap-bg);color:var(--gap)}
+.empty{padding:var(--s7) 0;color:var(--ink-3);text-align:center}
+
+/* drawer */
+.scrim{position:fixed;inset:0;background:rgba(20,33,43,.35);z-index:40}
+.drawer{position:fixed;top:0;bottom:0;inset-inline-end:0;width:min(640px,100%);background:var(--paper);z-index:41;overflow:auto;box-shadow:0 0 40px rgba(20,33,43,.25);animation:slide .22s ease-out}
+@keyframes slide{from{transform:translateX(-24px);opacity:.6}}
+@media (prefers-reduced-motion:reduce){.drawer{animation:none}}
+.drawer .dh{position:sticky;top:0;background:var(--paper);border-bottom:1px solid var(--rule);padding:var(--s4) var(--s5);display:flex;gap:var(--s3);align-items:flex-start}
+.drawer .dh h2{margin:0;font-size:20px;font-weight:600;line-height:1.4;flex:1}
+.drawer .dh .sid{display:flex;gap:8px;align-items:center;font-size:13px;color:var(--ink-3);font-weight:500}
+.drawer .db{padding:var(--s5)}
+.drawer .sep{width:3px;height:3px;border-radius:50%;background:var(--ink-3)}
+.drawer h3{font-size:13px;font-weight:500;color:var(--ink-3);margin:var(--s5) 0 var(--s2)}
+.req{font-size:14px;text-align:left;color:var(--ink-2);background:var(--sheet);border:1px solid var(--rule);border-radius:var(--r-s);padding:var(--s3) var(--s4)}
+.verdict-line{display:flex;gap:var(--s3);align-items:center;flex-wrap:wrap}
+.conf{font-size:13px;color:var(--ink-3)}
+.quote{background:var(--sheet);border:1px solid var(--rule);border-radius:var(--r-s);padding:var(--s4);margin-bottom:var(--s3)}
+.quote q{font-family:var(--doc);font-size:19px;line-height:1.95;quotes:none;background-image:linear-gradient(var(--marker-soft),var(--marker-soft));background-size:100% 58%;background-position:0 80%;background-repeat:no-repeat;box-decoration-break:clone;-webkit-box-decoration-break:clone;padding:0 2px}
+.quote.unverified q{background-image:none;text-decoration:underline wavy var(--gap) 1px;text-underline-offset:6px}
+.quote .src{display:flex;justify-content:space-between;gap:var(--s3);flex-wrap:wrap;font-size:13px;color:var(--ink-3);margin-top:var(--s2)}
+.ok{color:var(--met)} .no{color:var(--gap)}
+.lst{margin:0;padding-inline-start:1.1em;color:var(--ink-2);font-size:15px}
+.alert{border-radius:var(--r-s);padding:var(--s3) var(--s4);font-size:14px;margin-top:var(--s3)}
+.alert.copy{background:var(--gap-bg);color:#6E2619}
+.alert.rev{background:var(--review-bg);color:#2D3185}
+
+/* ---------- responsive ---------- */
+@media (max-width:900px){
+  .hero .wrap,.form,.indices,.score{grid-template-columns:1fr}
+  .hero{padding:var(--s7) 0}
+  .steps{grid-template-columns:1fr}
+  .steps li{padding-bottom:var(--s5);border-bottom:1px solid var(--rule)}
+  .proof{grid-template-columns:1fr}
+  .proof > div:nth-child(odd){border-inline-end:0;padding-inline-end:0}
+  .proof > div:nth-child(even){padding-inline-start:0}
+  .samples{grid-template-columns:1fr}
+  .top nav a.hide-s{display:none}
+  .seal{margin:0 auto}
+  .seal-cap{margin-inline:auto;text-align:center}
+  .sheet{padding:var(--s5) var(--s4) var(--s4)}
+  .plan > li{grid-template-columns:36px 1fr}
+  .plan .gain{grid-column:2;text-align:start}
+  .plan .cols{grid-template-columns:1fr}
+  .specs .col-p,.specs .col-f{display:none}
+}
+@media (max-width:560px){
+  .proof > div{grid-template-columns:1fr;gap:var(--s2)}
+  .brand span{display:none}
+}
+
+/* ---------- print ---------- */
+@media print{
+  body{background:#fff;font-size:12pt}
+  .top,.rhead .acts,.tabs,.filters,footer,.more,.scrim,.drawer{display:none!important}
+  .pane[hidden]{display:block!important}
+  .plan > li,.specs tr{break-inside:avoid}
+  .wrap{max-width:none;padding:0}
+}
 </style>
 </head>
 <body>
-<header><div class="wrap">
-  <span class="tag">نموذج أولي · الاسم مبدئي</span>
-  <h1>Indexa · مستشار جاهزية المؤشرات الحكومية</h1>
-  <p>يقرأ وثائق الجهة ويقيّمها مواصفةً بمواصفة مقابل معايير مكتب إدارة البيانات الوطنية في مؤشر البيانات الوطني (نضيء). كل حكم يستند إلى اقتباس حرفي برقم صفحته يتحقق منه الكود، والنص المنسوخ من المعيار لا يُحسب تطبيقاً، وما لا يمكن التحقق منه يُحال لمراجع بشري.</p>
-</div></header>
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="#/" aria-label="Indexa، الصفحة الرئيسية"><b>Inde<i>x</i>a</b><span>مستشار جاهزية المؤشرات الحكومية</span></a>
+    <nav aria-label="التنقل الرئيسي">
+      <a class="hide-s" href="#/how">كيف يعمل</a>
+      <a class="hide-s" href="#/trust">الدقة</a>
+      <a class="btn btn-primary" href="#/start">ابدأ التقييم</a>
+    </nav>
+  </div>
+</header>
 
-<main class="wrap">
-  <section class="grid">
-    <div class="card"><div class="num">40</div><div class="muted">حالة تقييم حقيقية: 20 مواصفة لجهتين حكوميتين من وثائقهما المنشورة</div></div>
-    <div class="card"><div class="num">85%</div><div class="muted">اتفاق أفضل نموذج مع التقييم المرجعي (القاعدة الأولى)، مقابل 33% للتصميم السابق على النموذج نفسه</div></div>
-    <div class="card"><div class="num">97%</div><div class="muted">من الاقتباسات موجودة فعلاً في الوثائق ويتحقق منها الكود</div></div>
-    <div class="card"><div class="num">&lt; 0.5$</div><div class="muted">تكلفة تقييم جهة كاملة على 191 مواصفة</div></div>
-  </section>
+<main id="app" tabindex="-1"></main>
 
-  <section class="card">
-    <h2>جرّب على وثائق منشورة لجهة حكومية</h2>
-    <div class="row" id="samples"></div>
-    <p id="status"></p>
-  </section>
+<footer>
+  <div class="wrap">
+    <span>Indexa نموذج أولي، والاسم مبدئي. الدرجة مؤشرية لأغراض الجاهزية وليست الدرجة الرسمية لأي مؤشر.</span>
+    <a href="https://github.com/RayidAlshammari/indexa">الشيفرة المصدرية</a>
+  </div>
+</footer>
 
-  <section class="card">
-    <h2>قيّم وثائق جهتك</h2>
-    <div class="row">
-      <input type="text" id="entity" placeholder="اسم الجهة" style="max-width:280px">
-      <input type="file" id="files" accept="application/pdf" multiple>
-      <button id="go">ابدأ التقييم</button>
+<template id="t-home">
+  <section class="hero">
+    <div class="wrap">
+      <div>
+        <h1>اعرف درجتك قبل أن تُقاس.</h1>
+        <p class="lead">يقرأ Indexa سياسات جهتك ووثائقها، ويحكم على كل مواصفة في مؤشر البيانات الوطني بدليل مقتبس من نصّها ورقم صفحته، ثم يعطيك خطة مرتبة بما يرفع درجتك أكثر.</p>
+        <div class="ctas">
+          <a class="btn btn-primary" href="#/start">ابدأ تقييم جهتك</a>
+          <a class="btn btn-quiet" href="#/samples">اطّلع على تقرير حقيقي</a>
+        </div>
+        <p class="fine">جرّبناه على السياسات المنشورة لجهتين حكوميتين. التقييم الكامل يستغرق دقائق.</p>
+      </div>
+      <figure class="sheet" id="sheet" aria-label="مثال توضيحي لحكم مبني على اقتباس من وثيقة">
+        <div class="doc-head"><span>سياسة حماية البيانات الشخصية</span><span>مثال توضيحي، صفحة ٧</span></div>
+        <div class="doc">
+          <p>تُطبَّق هذه السياسة على جميع البيانات الشخصية التي تجمعها الجهة أو تعالجها بأي وسيلة كانت.</p>
+          <p><span class="hl">تلتزم الجهة بإشعار صاحب البيانات بالغرض من جمع بياناته والأساس النظامي لمعالجتها قبل جمعها</span>، وتحدد في الإشعار مدة الاحتفاظ بها.</p>
+        </div>
+        <figcaption class="note">
+          <span class="sid">PDP.4.1</span>
+          <span class="what">إشعار الخصوصية وإدارة الموافقة</span>
+          <span class="verdict"><span class="pill p-partial">مستوفاة جزئياً</span><span>الاقتباس مطابق حرفياً لنص الوثيقة، ولا يوجد دليل على نشر الإشعار.</span></span>
+        </figcaption>
+      </figure>
     </div>
-    <p class="muted">PDF فقط، حتى 20 ملفاً. التقييم يغطي حالياً نطاقي حماية البيانات الشخصية وتصنيف البيانات.</p>
   </section>
 
-  <section id="report"></section>
-</main>
-<footer class="wrap">الدرجة مؤشرية ومرجحة بأولويات NDMO (P1=3، P2=2، P3=1)، وليست الدرجة الرسمية للمؤشر. التقييم المرجعي مسودة قيد مراجعة مختص حوكمة.</footer>
+  <section class="band" id="how">
+    <div class="wrap">
+      <h2>من الوثائق إلى خطة عمل، في ثلاث خطوات</h2>
+      <p class="sub">لا يقيّم كل ملف على حدة. يقرأ كل مواصفة على وثائق الجهة كلها، لأن الدليل على مواصفة واحدة يتوزع غالباً على أكثر من وثيقة.</p>
+      <ol class="steps">
+        <li><h3>ارفع وثائق جهتك</h3><p>السياسات والإجراءات والإشعارات بصيغة PDF، كما هي دون أي تجهيز.</p></li>
+        <li><h3>يُحكم على كل مواصفة بدليل</h3><p>كل حكم يستند إلى اقتباس ورقم صفحة، ويتحقق الكود أن الاقتباس موجود فعلاً في الوثيقة. ما لا يُثبت يُحال للمراجعة.</p></li>
+        <li><h3>تستلم درجتك وخطتك</h3><p>أين تقف في كل مجال، وما الناقص بالتحديد، وأي الإجراءات ترفع درجتك أكثر ومن المسؤول عنها.</p></li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="band" id="trust">
+    <div class="wrap">
+      <h2>لماذا تثق بالنتيجة</h2>
+      <p class="sub">قسنا المحرك على ٤٠ حالة حقيقية من وثائق منشورة لجهتين، وقارنّاه بالتصميم السابق على النموذج نفسه.</p>
+      <div class="proof">
+        <div><span class="n">٨٥<small>٪</small></span><div><h3>اتفاق مع التقييم المرجعي</h3><p>مقابل ٣٣٪ للتصميم السابق الذي كان يحكم على كل ملف منفصلاً ولا يعرف حالة «جزئي».</p></div></div>
+        <div><span class="n">٩٧<small>٪</small></span><div><h3>من الاقتباسات موجودة فعلاً</h3><p>يُطابَق كل اقتباس آلياً مع نص الوثيقة، ويُعرض بجانبه رقم الصفحة وحالة التحقق.</p></div></div>
+        <div><span class="n">٤٠</span><div><h3>حالة حقيقية قسنا عليها</h3><p>من السياسات المنشورة لجهتين حكوميتين، في مجالي حماية البيانات الشخصية وتصنيف البيانات.</p></div></div>
+        <div><span class="n">٧٠<small>٪</small></span><div><h3>تشابه يُسقط الدليل المنسوخ</h3><p>إذا طابق الدليل النموذج الوطني بهذه النسبة أو أكثر دون تفاصيل خاصة بالجهة، لا يُحتسب تطبيقاً.</p></div></div>
+      </div>
+      <p class="honest">التقييم المرجعي مسودة أعددناها من الوثائق قبل رؤية مخرجات النموذج، ويراجعها حالياً مختص حوكمة بيانات. الدرجة مرجحة بأولويات المواصفات المنشورة، وهي مؤشر جاهزية وليست الدرجة الرسمية.</p>
+    </div>
+  </section>
+
+  <section class="band" id="indices">
+    <div class="wrap">
+      <h2>مؤشر واحد نتقنه أولاً، ثم كل مؤشر</h2>
+      <p class="sub">المحرك لا يعرف مؤشراً بعينه. كل مؤشر وحدة من المعايير ومعايير القبول تُبنى مرة واحدة وتخدم كل جهة تُقاس عليه.</p>
+      <div class="indices">
+        <div class="idx live">
+          <span class="state">متاح الآن</span>
+          <h3>مؤشر البيانات الوطني (نضيء)</h3>
+          <ul>
+            <li class="on"><span>حماية البيانات الشخصية</span><span>متاح</span></li>
+            <li class="on"><span>تصنيف البيانات</span><span>متاح</span></li>
+            <li><span>بقية مجالات المؤشر</span><span>قيد البناء</span></li>
+          </ul>
+        </div>
+        <div class="idx soon">
+          <span class="state">على خارطة الطريق</span>
+          <h3>مؤشرات حكومية أخرى</h3>
+          <p style="margin:8px 0 0;color:var(--ink-2);font-size:15px">نضيف المؤشر بعد إتقان سابقه والتحقق من دقته مع مختصين، لا قبل ذلك.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="band" id="samples">
+    <div class="wrap">
+      <h2>شاهد تقريراً على وثائق منشورة</h2>
+      <p class="sub">تقييمان كاملان لسياسات نشرتها الجهتان على موقعيهما.</p>
+      <div class="samples" id="sample-list"></div>
+    </div>
+  </section>
+</template>
+
+<template id="t-start">
+  <div class="page"><div class="wrap">
+    <h1>تقييم جديد</h1>
+    <p class="sub">ارفع وثائق جهتك، وستحصل على تقرير بالحكم على كل مواصفة ودليله وخطة لرفع الدرجة.</p>
+    <form class="form" id="f" novalidate>
+      <div>
+        <div class="field">
+          <span class="label" id="l-idx">المؤشر</span>
+          <div class="choices" role="radiogroup" aria-labelledby="l-idx">
+            <label class="choice"><input type="radio" name="idx" value="NDI" checked><span><b>مؤشر البيانات الوطني (نضيء)</b><small>حماية البيانات الشخصية، وتصنيف البيانات</small></span></label>
+            <label class="choice"><input type="radio" name="idx" disabled><span><b>مؤشرات حكومية أخرى</b><small>قريباً</small></span></label>
+          </div>
+        </div>
+        <div class="field">
+          <label for="entity">اسم الجهة</label>
+          <input class="input" id="entity" name="entity" maxlength="120" autocomplete="organization" placeholder="مثال: وزارة …">
+        </div>
+        <div class="field">
+          <span class="label">الوثائق</span>
+          <div class="drop" id="drop" tabindex="0" role="button" aria-describedby="drop-hint">
+            <b>اسحب ملفات PDF هنا أو اختر من جهازك</b>
+            <small id="drop-hint">حتى ٢٠ ملفاً، وحجم كل ملف حتى ٢٥ ميغابايت</small>
+          </div>
+          <input type="file" id="file" accept="application/pdf,.pdf" multiple hidden>
+          <ul class="files" id="files"></ul>
+        </div>
+        <p class="err" id="err" role="alert"></p>
+        <button class="btn btn-primary" id="go" type="submit">ابدأ التقييم</button>
+      </div>
+      <aside class="aside">
+        <h3>ما الذي يحسّن دقة التقييم</h3>
+        <p>ارفع كل الوثائق ذات العلاقة معاً: السياسات والإجراءات والأدلة والإشعارات. المواصفة الواحدة قد يتوزع دليلها على أكثر من وثيقة.</p>
+        <h3>كم يستغرق</h3>
+        <p>من دقيقة إلى عشر دقائق حسب حجم الوثائق. تستطيع إغلاق الصفحة والعودة إلى الرابط نفسه.</p>
+        <p class="warn">هذا نموذج أولي يعالج الوثائق عبر مزود نموذج لغوي خارجي. لا ترفع وثائق مصنفة أو غير منشورة.</p>
+      </aside>
+    </form>
+  </div></div>
+</template>
+
+<template id="t-run">
+  <div class="page"><div class="wrap run">
+    <h1 id="run-title">جارٍ التقييم</h1>
+    <p class="sub" id="run-sub">تُقرأ كل مواصفة على وثائق الجهة كلها.</p>
+    <div class="count" aria-live="polite"><span id="run-done">٠</span> <small>من <span id="run-total">٠</span> مواصفة</small></div>
+    <div class="cells" id="cells" aria-hidden="true"></div>
+    <p class="phase" id="phase"></p>
+    <p class="err" id="run-err" role="alert"></p>
+  </div></div>
+</template>
+
+<template id="t-report">
+  <div class="wrap">
+    <div class="rhead">
+      <div>
+        <h1 id="r-entity"></h1>
+        <div class="meta" id="r-meta"></div>
+      </div>
+      <div class="acts">
+        <button class="btn btn-quiet" id="print" type="button">طباعة التقرير</button>
+        <a class="btn btn-primary" href="#/start">تقييم جديد</a>
+      </div>
+    </div>
+    <div class="score">
+      <div>
+        <div class="seal" id="seal"></div>
+        <p class="seal-cap">درجة جاهزية مؤشرية، مرجحة بأولويات المواصفات، وليست الدرجة الرسمية للمؤشر.</p>
+      </div>
+      <div>
+        <div class="domains" id="domains"></div>
+        <p class="summary" id="summary"></p>
+      </div>
+    </div>
+    <div class="tabs" role="tablist" aria-label="أقسام التقرير">
+      <button class="tab" role="tab" id="tab-plan" aria-controls="pane-plan" aria-selected="true">خطة رفع الدرجة</button>
+      <button class="tab" role="tab" id="tab-specs" aria-controls="pane-specs" aria-selected="false">كل المواصفات<span class="c" id="c-specs"></span></button>
+      <button class="tab" role="tab" id="tab-review" aria-controls="pane-review" aria-selected="false">تحتاج مراجعة<span class="c" id="c-review"></span></button>
+    </div>
+    <div class="pane" id="pane-plan" role="tabpanel" aria-labelledby="tab-plan"></div>
+    <div class="pane" id="pane-specs" role="tabpanel" aria-labelledby="tab-specs" hidden></div>
+    <div class="pane" id="pane-review" role="tabpanel" aria-labelledby="tab-review" hidden></div>
+  </div>
+</template>
 
 <script>
-const AR = {met: 'مستوفى', partial: 'جزئي', not_met: 'غير مستوفى'};
-const DOM = {'6_Personal_Data_Protection': 'حماية البيانات الشخصية', '7_Data_Classification': 'تصنيف البيانات'};
-const $ = s => document.querySelector(s);
-const esc = s => String(s ?? '').replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
-const status = t => $('#status').textContent = t;
-
-async function poll(key) {
-  for (;;) {
-    const r = await fetch('/api/reports/' + key);
-    if (r.status === 200) return render(await r.json());
-    const s = await r.json();
-    if (s.status === 'error') return status('تعذّر التقييم: ' + s.error);
-    if (s.status === 'none') return status('لا توجد نتيجة محفوظة بعد.');
-    status('جارٍ التقييم… يقرأ الوثائق ويحكم على كل مواصفة (' + Math.round((Date.now()/1000 - (s.started||Date.now()/1000))) + ' ث)');
-    await new Promise(res => setTimeout(res, 5000));
-  }
-}
-
-async function loadSamples() {
-  const list = await (await fetch('/api/samples')).json();
-  for (const s of list) {
-    const b = document.createElement('button'); b.className = 'ghost'; b.textContent = s.entity;
-    b.onclick = async () => {
-      status('…');
-      const r = await fetch('/api/reports/' + s.id);
-      if (r.status === 200) return render(await r.json());
-      const run = await fetch('/api/samples/' + s.id + '/run', {method: 'POST', headers: {'x-demo-token': new URLSearchParams(location.search).get('token') || ''}});
-      if (!run.ok) return status('لا توجد نتيجة جاهزة لهذه الجهة بعد.');
-      poll(s.id);
-    };
-    $('#samples').appendChild(b);
-  }
-}
-
-$('#go').onclick = async () => {
-  const fd = new FormData(); fd.append('entity_name', $('#entity').value || 'جهة');
-  for (const f of $('#files').files) fd.append('files', f);
-  if (!$('#files').files.length) return status('اختر ملفات PDF أولاً.');
-  const r = await fetch('/api/assess', {method: 'POST', body: fd});
-  if (!r.ok) return status('تعذّر رفع الملفات: ' + (await r.text()));
-  poll((await r.json()).key);
+(() => {
+const $ = (s, el = document) => el.querySelector(s);
+const app = $('#app');
+const AR = n => String(n).replace(/\d/g, d => '٠١٢٣٤٥٦٧٨٩'[d]).replace('.', '٫');
+const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const DEC = {met:'مستوفاة', partial:'مستوفاة جزئياً', not_met:'غير مستوفاة'};
+const PRI = {P1:'أولوية أولى', P2:'أولوية ثانية', P3:'أولوية ثالثة'};
+const REASON = [
+  [/model call failed/, 'تعذّر الحصول على حكم من النموذج اللغوي، أعد التقييم'],
+  [/national template/, 'الدليل منسوخ من النموذج الوطني دون تفاصيل خاصة بالجهة'],
+  [/restating/, 'الدليل يكرر نص المعيار ولا يصف تطبيقاً فعلياً'],
+  [/defers the mechanism/, 'الدليل يحيل الآلية إلى الجهة المنظمة بدل أن يحددها'],
+  [/no verifiable quote/, 'لا يوجد اقتباس قابل للتحقق يدعم الحكم'],
+  [/unverified quote/, 'أحد الاقتباسات لم يُعثر عليه في الوثيقة'],
+  [/low confidence/, 'ثقة النموذج في الحكم منخفضة'],
+  [/unparseable/, 'تعذّر قراءة رد النموذج'],
+  [/invalid decision/, 'حكم غير صالح من النموذج'],
+];
+const reason = r => (REASON.find(([re]) => re.test(r)) || [0, r])[1];
+const api = async (path, opt) => {
+  const r = await fetch(path, opt);
+  let body = null; try { body = await r.json(); } catch (_) {}
+  return {status: r.status, ok: r.ok, body};
 };
-
-function render(rep) {
-  status('');
-  const byId = Object.fromEntries(rep.judgements.map(j => [j.control_id, j]));
-  let h = `<div class="card"><h2>تقرير الجاهزية: ${esc(rep.entity)}</h2><div class="grid">`;
-  for (const s of rep.scores) h += `<div><div class="muted">${DOM[s.domain] || s.domain}</div><div class="num">${s.score}%</div>
-     <div class="bar"><i style="width:${s.score}%"></i></div>
-     <div class="muted">مستوفى ${s.met} · جزئي ${s.partial} · غير مستوفى ${s.not_met} · للمراجعة ${s.needs_review}</div></div>`;
-  h += `</div><p class="muted">${esc(rep.notice)} النموذج: ${esc(rep.model)}.</p></div>`;
-  h += `<div class="card"><h2>خطة رفع التقييم: أهم 5 إجراءات</h2>`;
-  rep.gaps.slice(0, 5).forEach((g, i) => {
-    h += `<div class="spec"><div class="row"><h3>${i + 1}. ${g.control_id} ${esc(g.title)}</h3>
-      <span class="badge ${g.decision}">${AR[g.decision]}</span><span class="badge met">+${g.points} نقطة في ${DOM[g.domain] || ''}</span></div>`;
-    if ((g.actions||[]).length) h += `<ol>${g.actions.map(a => `<li>${esc(a)}</li>`).join('')}</ol>`;
-    if ((g.evidence_to_prepare||[]).length) h += `<div class="muted">الدليل المطلوب للقياس: ${g.evidence_to_prepare.map(esc).join(' · ')}</div>`;
-    if (g.owner) h += `<div class="muted">المسؤول المقترح: ${esc(g.owner)}</div>`;
-    h += `</div>`;
-  });
-  h += `</div><div class="card"><h2>كل الفجوات مرتبة حسب الأثر</h2><table><tr><th>المواصفة</th><th>الأولوية</th><th>الحالة</th><th>الأثر</th><th>أبرز ما ينقص</th></tr>`;
-  for (const g of rep.gaps) h += `<tr><td>${g.control_id} ${esc(g.title)}</td><td>${g.priority}</td><td><span class="badge ${g.decision}">${AR[g.decision]}</span></td><td>+${g.points}</td><td>${esc((g.missing||[])[0] || '')}</td></tr>`;
-  h += `</table></div><div class="card"><h2>الحكم على كل مواصفة</h2>`;
-  for (const j of rep.judgements) {
-    h += `<div class="spec"><div class="row"><h3>${j.control_id}</h3><span class="badge ${j.decision}">${AR[j.decision]}</span>
-      ${j.needs_review ? '<span class="flag">⚑ يحتاج مراجعة</span>' : ''}
-      ${j.decision_before_template_rule ? '<span class="flag">نص منسوخ من النموذج الوطني</span>' : ''}</div>
-      <div>${esc(j.rationale)}</div>`;
-    for (const c of j.citations) h += `<blockquote>«${esc(c.quote)}»<div class="src">${esc(c.doc_title)} · صفحة ${c.page} · ${c.verified ? (c.match === 'near' ? 'متحقق (مطابقة تقريبية)' : 'متحقق حرفياً') : 'غير متحقق'}</div></blockquote>`;
-    if ((j.missing||[]).length) h += `<div class="muted">ينقص: ${j.missing.map(esc).join(' · ')}</div>`;
-    if ((j.actions||[]).length) h += `<div class="muted">لرفع التقييم: ${j.actions.map(esc).join(' ← ')}</div>`;
-    h += `</div>`;
-  }
-  $('#report').innerHTML = h + '</div>';
-  $('#report').scrollIntoView({behavior: 'smooth'});
+const store = {
+  get(k) { try { return JSON.parse(localStorage.getItem(k)); } catch (_) { return null; } },
+  set(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch (_) {} },
+};
+let timer = null;
+function mount(id) {
+  clearTimeout(timer);
+  app.replaceChildren($(id).content.cloneNode(true));
+  window.scrollTo(0, 0);
 }
-loadSamples();
+
+/* ---------------- routes ---------------- */
+async function route() {
+  closeDrawer();
+  const h = location.hash.replace(/^#\/?/, '');
+  const [name, arg] = h.split('/');
+  if (name === 'start') return start();
+  if (name === 'run' && arg) return run(arg);
+  if (name === 'report' && arg) return report(arg);
+  home(['how', 'trust', 'indices', 'samples'].includes(name) ? name : null);
+}
+window.addEventListener('hashchange', route);
+
+/* ---------------- home ---------------- */
+async function home(anchor) {
+  mount('#t-home');
+  requestAnimationFrame(() => $('#sheet').classList.add('play'));
+  if (anchor) requestAnimationFrame(() => document.getElementById(anchor)?.scrollIntoView());
+  const list = $('#sample-list');
+  const r = await api('/api/samples');
+  if (!r.ok) { list.innerHTML = '<p class="empty">تعذّر تحميل العينات.</p>'; return; }
+  list.innerHTML = r.body.map(s => `
+    <button class="sample" data-id="${esc(s.id)}" type="button">
+      <span><b>${esc(s.entity)}</b><small>${esc(s.documents.join('، '))}</small></span>
+      <span class="go">افتح التقرير</span>
+    </button>`).join('');
+  list.onclick = async e => {
+    const b = e.target.closest('.sample'); if (!b) return;
+    const id = b.dataset.id;
+    b.querySelector('.go').textContent = 'جارٍ الفتح…';
+    const rep = await api('/api/reports/' + id);
+    if (rep.status === 200) { location.hash = '#/report/' + id; return; }
+    if (rep.body?.status !== 'running') {
+      const token = new URLSearchParams(location.search).get('token') || '';
+      const go = await api('/api/samples/' + id + '/run', {method: 'POST', headers: {'x-demo-token': token}});
+      if (!go.ok) { b.querySelector('.go').textContent = go.status === 403 ? 'التشغيل يتطلب رمز العرض' : 'تعذّر بدء التقييم'; return; }
+    }
+    store.set('run:' + id, {entity: b.querySelector('b').textContent});
+    location.hash = '#/run/' + id;
+  };
+}
+
+/* ---------------- start ---------------- */
+function start() {
+  mount('#t-start');
+  const files = [];
+  const drop = $('#drop'), input = $('#file'), list = $('#files'), err = $('#err');
+  const MB = 1024 * 1024;
+  const render = () => {
+    list.innerHTML = files.map((f, i) => `<li><span class="nm">${esc(f.name)}</span><span class="sz">${(f.size / MB).toFixed(1)} MB</span><button class="x" type="button" data-i="${i}" aria-label="إزالة ${esc(f.name)}">×</button></li>`).join('');
+  };
+  const add = fl => {
+    err.textContent = '';
+    for (const f of fl) {
+      if (!/\.pdf$/i.test(f.name) && f.type !== 'application/pdf') { err.textContent = `«${f.name}» ليس ملف PDF.`; continue; }
+      if (f.size > 25 * MB) { err.textContent = `«${f.name}» أكبر من ٢٥ ميغابايت.`; continue; }
+      if (files.length >= 20) { err.textContent = 'الحد الأقصى ٢٠ ملفاً.'; break; }
+      if (!files.some(x => x.name === f.name && x.size === f.size)) files.push(f);
+    }
+    render();
+  };
+  drop.onclick = () => input.click();
+  drop.onkeydown = e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); input.click(); } };
+  input.onchange = () => { add(input.files); input.value = ''; };
+  drop.ondragover = e => { e.preventDefault(); drop.classList.add('over'); };
+  drop.ondragleave = () => drop.classList.remove('over');
+  drop.ondrop = e => { e.preventDefault(); drop.classList.remove('over'); add(e.dataTransfer.files); };
+  list.onclick = e => { const b = e.target.closest('.x'); if (b) { files.splice(+b.dataset.i, 1); render(); } };
+  $('#f').onsubmit = async e => {
+    e.preventDefault();
+    const name = $('#entity').value.trim();
+    if (!name) { err.textContent = 'اكتب اسم الجهة.'; $('#entity').focus(); return; }
+    if (!files.length) { err.textContent = 'أضف ملف PDF واحداً على الأقل.'; drop.focus(); return; }
+    const go = $('#go'); go.disabled = true; go.textContent = 'جارٍ رفع الوثائق…';
+    const fd = new FormData(); fd.append('entity_name', name); files.forEach(f => fd.append('files', f));
+    const r = await api('/api/assess', {method: 'POST', body: fd}).catch(() => ({ok: false, body: null}));
+    if (!r.ok) {
+      go.disabled = false; go.textContent = 'ابدأ التقييم';
+      err.textContent = r.body?.detail ? `تعذّر بدء التقييم: ${r.body.detail}` : 'تعذّر رفع الوثائق. تحقق من الاتصال وأعد المحاولة.';
+      return;
+    }
+    store.set('run:' + r.body.key, {entity: name});
+    location.hash = '#/run/' + r.body.key;
+  };
+}
+
+/* ---------------- run ---------------- */
+const PHASES = [
+  'تُستخرج نصوص الوثائق وتُقسَّم إلى مقاطع مرقمة بالصفحات.',
+  'يُبحث لكل مواصفة عن أقرب المقاطع في كل الوثائق.',
+  'يُحكم على المواصفة من المقاطع وحدها، باقتباس ورقم صفحة.',
+  'يُطابَق كل اقتباس مع نص الوثيقة للتحقق منه.',
+  'يُفحص الدليل: هل هو منسوخ من النموذج الوطني؟',
+];
+async function run(key) {
+  mount('#t-run');
+  const meta = store.get('run:' + key);
+  if (meta?.entity) $('#run-title').textContent = meta.entity;
+  let tick = 0;
+  const poll = async () => {
+    const r = await api('/api/reports/' + key).catch(() => null);
+    if (!r) { $('#run-err').textContent = 'انقطع الاتصال بالخادم. نعيد المحاولة…'; timer = setTimeout(poll, 4000); return; }
+    $('#run-err').textContent = '';
+    if (r.status === 200) { location.hash = '#/report/' + key; return; }
+    const s = r.body || {};
+    if (s.status === 'error') { $('#run-err').textContent = 'توقف التقييم: ' + (s.error || 'خطأ غير معروف') + '. أعد المحاولة من صفحة تقييم جديد.'; return; }
+    if (s.status === 'none') { $('#run-err').textContent = 'لا يوجد تقييم بهذا الرابط. ربما أُعيد تشغيل الخادم؛ ابدأ تقييماً جديداً.'; return; }
+    const total = s.total || 20, done = s.done || 0;
+    $('#run-done').textContent = AR(done); $('#run-total').textContent = AR(total);
+    const cells = $('#cells');
+    if (cells.children.length !== total) cells.innerHTML = '<i></i>'.repeat(total);
+    [...cells.children].forEach((c, i) => { c.className = i < done ? 'on' : (i === done ? 'now' : ''); });
+    $('#phase').textContent = PHASES[tick++ % PHASES.length];
+    timer = setTimeout(poll, 2500);
+  };
+  poll();
+}
+
+/* ---------------- report ---------------- */
+let R = null;
+async function report(key) {
+  const r = await api('/api/reports/' + key);
+  if (r.status !== 200) { location.hash = '#/run/' + key; return; }
+  R = r.body; R.key = key;
+  mount('#t-report');
+  const cat = R.catalogue || {};
+  const J = R.judgements.map(j => ({...j, ...(cat[j.control_id] || {})}));
+  R.J = J;
+  document.title = `${R.entity} | تقرير الجاهزية | Indexa`;
+  $('#r-entity').textContent = R.entity;
+  const date = R.created ? new Date(R.created).toLocaleDateString('ar-SA-u-ca-gregory', {year: 'numeric', month: 'long', day: 'numeric'}) : '';
+  $('#r-meta').textContent = [R.index?.name, date, `${AR(J.length)} مواصفة`, R.seconds ? `اكتمل في ${AR(Math.max(1, Math.round(R.seconds / 60)))} دقيقة` : ''].filter(Boolean).join('، ');
+
+  // seal
+  const v = R.overall ?? 0, C = 2 * Math.PI * 92;
+  $('#seal').innerHTML = `<svg viewBox="0 0 220 220" role="img" aria-label="درجة الجاهزية ${v} من 100">
+    <circle cx="110" cy="110" r="92" fill="none" stroke="var(--rule)" stroke-width="14"/>
+    <circle cx="110" cy="110" r="92" fill="none" stroke="var(--ledger)" stroke-width="14" stroke-linecap="round" stroke-dasharray="${C * v / 100} ${C}"/>
+    </svg><div class="v"><b>${AR(Math.round(v))}</b><span>من ١٠٠</span></div>`;
+
+  $('#domains').innerHTML = R.scores.map(s => {
+    const n = s.met + s.partial + s.not_met || 1;
+    return `<div class="dom">
+      <div class="row1"><b>${esc(s.domain_name || s.domain)}</b><span>${AR(Math.round(s.score))}</span></div>
+      <div class="bar" aria-hidden="true"><i class="met" style="width:${100 * s.met / n}%"></i><i class="partial" style="width:${100 * s.partial / n}%"></i><i class="not_met" style="width:${100 * s.not_met / n}%"></i></div>
+      <div class="counts"><span>مستوفاة ${AR(s.met)}</span><span>جزئياً ${AR(s.partial)}</span><span>غير مستوفاة ${AR(s.not_met)}</span>${s.needs_review ? `<span>تحتاج مراجعة ${AR(s.needs_review)}</span>` : ''}</div>
+    </div>`;
+  }).join('');
+
+  const cnt = d => J.filter(j => j.decision === d).length;
+  const top = R.gaps[0];
+  $('#summary').innerHTML = `من ${AR(J.length)} مواصفة: <b>${AR(cnt('met'))} مستوفاة</b>، و<b>${AR(cnt('partial'))} جزئياً</b>، و<b>${AR(cnt('not_met'))} غير مستوفاة</b>.` +
+    (top ? ` أعلى أثر الآن: إغلاق «${esc(cat[top.control_id]?.title || top.title)}» يرفع مجال ${esc(cat[top.control_id]?.domain_name || '')} بمقدار <b>${AR(top.points)} نقطة</b>.` : '');
+
+  const review = J.filter(j => j.needs_review);
+  $('#c-specs').textContent = AR(J.length);
+  $('#c-review').textContent = AR(review.length);
+  renderPlan(); renderSpecs($('#pane-specs'), J, true); renderSpecs($('#pane-review'), review, false);
+
+  const tabs = [...document.querySelectorAll('.tab')];
+  tabs.forEach(t => t.onclick = () => select(t));
+  tabs.forEach((t, i) => t.onkeydown = e => {
+    const d = e.key === 'ArrowLeft' ? 1 : e.key === 'ArrowRight' ? -1 : 0;
+    if (d) { const n = tabs[(i + d + tabs.length) % tabs.length]; select(n); n.focus(); }
+  });
+  function select(t) {
+    tabs.forEach(x => { x.setAttribute('aria-selected', x === t); x.tabIndex = x === t ? 0 : -1; $('#' + x.getAttribute('aria-controls')).hidden = x !== t; });
+  }
+  select(tabs[0]);
+  $('#print').onclick = () => window.print();
+}
+
+function renderPlan() {
+  const pane = $('#pane-plan'), cat = R.catalogue || {};
+  if (!R.gaps.length) { pane.innerHTML = '<p class="empty">كل المواصفات مستوفاة. لا توجد فجوات لإغلاقها.</p>'; return; }
+  const item = g => {
+    const c = cat[g.control_id] || {};
+    const acts = (g.actions || []).length ? g.actions : (g.missing || []);
+    return `<li>
+      <div>
+        <div class="t"><b>${esc(c.title || g.title)}</b><span class="sid">${esc(g.control_id)}</span><span class="pill p-${g.decision}">${DEC[g.decision]}</span></div>
+        <div class="cols">
+          <div><h4>ما يجب فعله</h4><ul>${acts.map(a => `<li>${esc(a)}</li>`).join('') || '<li>راجع المواصفة لتحديد الإجراء.</li>'}</ul></div>
+          ${(g.evidence_to_prepare || []).length ? `<div><h4>الدليل الذي تجهزه</h4><ul>${g.evidence_to_prepare.map(a => `<li>${esc(a)}</li>`).join('')}</ul></div>` : ''}
+        </div>
+        ${g.owner ? `<p class="owner">المسؤول المقترح: <b>${esc(g.owner)}</b></p>` : ''}
+        <button class="btn btn-quiet more-detail" type="button" data-id="${esc(g.control_id)}" style="margin-top:12px;padding:6px 14px;font-size:14px">التفاصيل والأدلة</button>
+      </div>
+      <div class="gain"><b>${AR(g.points)}</b><small>نقطة تضيفها إلى ${esc(c.domain_name || '')}</small></div>
+    </li>`;
+  };
+  const first = R.gaps.slice(0, 5), rest = R.gaps.slice(5);
+  pane.innerHTML = `<ol class="plan" id="plan">${first.map(item).join('')}</ol>` +
+    (rest.length ? `<button class="btn btn-quiet more" id="more" type="button">عرض بقية الخطة (${AR(rest.length)})</button>` : '');
+  pane.onclick = e => {
+    const d = e.target.closest('.more-detail'); if (d) return openDrawer(d.dataset.id);
+    if (e.target.id === 'more') { $('#plan').insertAdjacentHTML('beforeend', rest.map(item).join('')); e.target.remove(); }
+  };
+}
+
+function renderSpecs(pane, list, withFilters) {
+  const state = {dec: 'all', dom: 'all'};
+  const doms = [...new Map(list.map(j => [j.domain, j.domain_name || j.domain])).entries()];
+  const flags = j => [
+    j.template_copy >= 0.7 ? '<span class="flag copy">نص منسوخ</span>' : '',
+    j.defers_to_regulator ? '<span class="flag">يحيل للمنظم</span>' : '',
+    j.needs_review ? '<span class="flag">تحتاج مراجعة</span>' : '',
+  ].join('');
+  const draw = () => {
+    const rows = list.filter(j => (state.dec === 'all' || j.decision === state.dec) && (state.dom === 'all' || j.domain === state.dom));
+    $('.tb', pane).innerHTML = rows.length ? rows.map(j => `
+      <tr class="r" tabindex="0" data-id="${esc(j.control_id)}">
+        <td class="sid">${esc(j.control_id)}</td>
+        <td>${esc(j.title || '')}</td>
+        <td class="col-p">${PRI[j.priority] || ''}</td>
+        <td><span class="pill p-${j.decision}">${DEC[j.decision]}</span></td>
+        <td class="col-f"><div class="flags">${flags(j)}</div></td>
+      </tr>`).join('') : `<tr><td colspan="5" class="empty">${withFilters ? 'لا توجد مواصفات بهذا التصفية.' : 'لا توجد أحكام تحتاج مراجعة.'}</td></tr>`;
+  };
+  pane.innerHTML = (withFilters ? `<div class="filters" role="group" aria-label="تصفية حسب الحكم">
+      ${[['all', 'الكل'], ['not_met', DEC.not_met], ['partial', DEC.partial], ['met', DEC.met]].map(([k, l]) => `<button class="chip" type="button" data-dec="${k}" aria-pressed="${k === 'all'}">${l}</button>`).join('')}
+      ${doms.length > 1 ? `<select aria-label="المجال"><option value="all">كل المجالات</option>${doms.map(([k, n]) => `<option value="${esc(k)}">${esc(n)}</option>`).join('')}</select>` : ''}
+    </div>` : (list.length ? '<p class="sub" style="margin:0 0 16px">أحكام لم يُحسم دليلها بما يكفي. راجعها قبل الاعتماد على الدرجة.</p>' : '')) +
+    `<table class="specs"><thead><tr><th>الرمز</th><th>المواصفة</th><th class="col-p">الأولوية</th><th>الحكم</th><th class="col-f">ملاحظات</th></tr></thead><tbody class="tb"></tbody></table>`;
+  draw();
+  pane.onclick = e => {
+    const chip = e.target.closest('.chip');
+    if (chip) { state.dec = chip.dataset.dec; pane.querySelectorAll('.chip').forEach(c => c.setAttribute('aria-pressed', c === chip)); draw(); return; }
+    const tr = e.target.closest('tr.r'); if (tr) openDrawer(tr.dataset.id);
+  };
+  pane.onkeydown = e => { const tr = e.target.closest('tr.r'); if (tr && e.key === 'Enter') openDrawer(tr.dataset.id); };
+  const sel = $('select', pane); if (sel) sel.onchange = () => { state.dom = sel.value; draw(); };
+}
+
+/* ---------------- drawer ---------------- */
+let lastFocus = null;
+function openDrawer(id) {
+  const j = R.J.find(x => x.control_id === id); if (!j) return;
+  lastFocus = document.activeElement;
+  closeDrawer(true);
+  const MATCH = {exact: ['ok', 'مطابق حرفياً لنص الوثيقة'], near: ['ok', 'مطابق مع اختلاف طفيف في الصياغة'], none: ['no', 'لم يُعثر عليه في الوثيقة']};
+  const cites = (j.citations || []).map(c => {
+    const [cls, label] = MATCH[c.match] || MATCH.none;
+    return `<div class="quote ${c.match === 'none' ? 'unverified' : ''}"><q>${esc(c.quote)}</q>
+      <div class="src"><span>${esc(c.doc_title)}${c.page ? `، صفحة ${AR(c.page)}` : ''}</span><span class="${cls}">${label}</span></div></div>`;
+  }).join('');
+  const L = (t, a) => (a && a.length) ? `<h3>${t}</h3><ul class="lst">${a.map(x => `<li>${esc(x)}</li>`).join('')}</ul>` : '';
+  const scrim = document.createElement('div'); scrim.className = 'scrim'; scrim.onclick = () => closeDrawer();
+  const d = document.createElement('aside'); d.className = 'drawer'; d.setAttribute('role', 'dialog'); d.setAttribute('aria-modal', 'true'); d.setAttribute('aria-labelledby', 'dt');
+  d.innerHTML = `<div class="dh"><h2 id="dt"><span class="sid"><bdi>${esc(j.control_id)}</bdi><span class="sep"></span>${esc(j.domain_name || '')}<span class="sep"></span>${PRI[j.priority] || ''}</span>${esc(j.title || '')}</h2><button class="x" type="button" aria-label="إغلاق" id="dx">×</button></div>
+    <div class="db">
+      <div class="verdict-line"><span class="pill p-${j.decision}">${DEC[j.decision]}</span>${j.confidence ? `<span class="conf">ثقة النموذج ${AR(Math.round(j.confidence * 100))}٪</span>` : ''}${j.needs_review ? '<span class="pill p-review">تحتاج مراجعة</span>' : ''}</div>
+      ${j.template_copy >= 0.7 ? `<div class="alert copy">الدليل منسوخ من النموذج الوطني بنسبة ${AR(Math.round(j.template_copy * 100))}٪ دون تفاصيل خاصة بالجهة، فلا يُحتسب تطبيقاً.${j.decision_before_template_rule ? ` كان الحكم قبل هذا الفحص: ${DEC[j.decision_before_template_rule] || ''}.` : ''}</div>` : ''}
+      ${(() => { const rs = (j.review_reasons || []).filter(r => !(j.template_copy >= 0.7 && /national template/.test(r))); return rs.length ? `<div class="alert rev">${rs.map(reason).map(esc).join('<br>')}</div>` : ''; })()}
+      ${j.rationale ? `<h3>سبب الحكم</h3><p style="margin:0">${esc(j.rationale)}</p>` : ''}
+      ${cites ? `<h3>الأدلة من وثائق الجهة</h3>${cites}` : ''}
+      ${L('ما ينقص', j.missing)}
+      ${L('ما يجب فعله', j.actions)}
+      ${L('الدليل الذي تجهزه', j.evidence_to_prepare)}
+      ${j.owner ? `<h3>المسؤول المقترح</h3><p style="margin:0">${esc(j.owner)}</p>` : ''}
+      ${j.criteria?.met ? `<h3>متى تُعد مستوفاة</h3><p style="margin:0">${esc(j.criteria.met)}</p>` : ''}
+      ${j.criteria?.partial ? `<h3>متى تُعد مستوفاة جزئياً</h3><p style="margin:0">${esc(j.criteria.partial)}</p>` : ''}
+      <h3>النص الأصلي للمواصفة</h3><div class="req" lang="en" dir="ltr">${j.title_en ? `<b>${esc(j.title_en)}.</b> ` : ''}${esc(j.requirement || '')}</div>
+    </div>`;
+  document.body.append(scrim, d);
+  document.body.style.overflow = 'hidden';
+  $('#dx').onclick = () => closeDrawer();
+  $('#dx').focus();
+  d.onkeydown = e => {
+    if (e.key === 'Escape') closeDrawer();
+    if (e.key === 'Tab') {
+      const f = [...d.querySelectorAll('button,[href],[tabindex]:not([tabindex="-1"])')];
+      if (e.shiftKey && document.activeElement === f[0]) { e.preventDefault(); f.at(-1).focus(); }
+      else if (!e.shiftKey && document.activeElement === f.at(-1)) { e.preventDefault(); f[0].focus(); }
+    }
+  };
+}
+function closeDrawer(silent) {
+  document.querySelectorAll('.scrim,.drawer').forEach(x => x.remove());
+  document.body.style.overflow = '';
+  if (!silent && lastFocus) { lastFocus.focus(); lastFocus = null; }
+}
+
+route();
+})();
 </script>
 </body>
 </html>

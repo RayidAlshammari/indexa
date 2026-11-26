@@ -34,7 +34,13 @@ DATA = Path(os.getenv("INDEXA_DATA_DIR", str(Path.home() / ".cache" / "indexa"))
 # Sample reports shipped with the code, so the demo answers at once on hosts without a disk.
 BUNDLED = ROOT / "config" / "reports"
 DOMAINS = ["6_Personal_Data_Protection", "7_Data_Classification"]
+DOMAIN_NAMES = {
+    "6_Personal_Data_Protection": "حماية البيانات الشخصية",
+    "7_Data_Classification": "تصنيف البيانات",
+}
 MAX_FILES, MAX_BYTES = 20, 25 * 1024 * 1024
+# Parallel model calls per assessment: keep low on rate-limited free tiers, raise on paid ones.
+CONCURRENCY = int(os.getenv("INDEXA_CONCURRENCY", "2"))
 
 # Public policies used for the live sample (the same documents as the evaluation).
 SAMPLES = json.loads((ROOT / "config" / "samples.json").read_text(encoding="utf-8"))
@@ -61,10 +67,50 @@ def _pdf_pages(data: bytes) -> list[str]:
         return [repair_text(p.extract_text() or "") for p in pdf.pages]
 
 
+TITLES_AR = {
+    k: v
+    for k, v in json.loads((FRAMEWORK / "titles_ar.json").read_text(encoding="utf-8")).items()
+    if not k.startswith("_")
+}
+
+
+def _catalogue() -> dict:
+    """What the page needs to show each specification: title, requirement, priority, domain."""
+    return {
+        c.control_id: {
+            "title": TITLES_AR.get(c.control_id, c.title),
+            "title_en": c.title,
+            "criteria": {k: v for k, v in c.criteria.items() if k in ("met", "partial", "not_met")},
+            "requirement": c.requirement,
+            "priority": c.priority,
+            "domain": c.domain,
+            "domain_name": DOMAIN_NAMES.get(c.domain, c.domain),
+            "evidence_kind": c.evidence_kind,
+        }
+        for c in _controls()
+    }
+
+
+def _overall(scores: list[dict]) -> float:
+    """Indicative overall readiness: domain scores averaged (each domain counts once)."""
+    return round(sum(s["score"] for s in scores) / len(scores), 1) if scores else 0.0
+
+
+def _enrich(report: dict) -> dict:
+    """Reports cached before these fields existed still render fully."""
+    report.setdefault("index", {"id": "NDI", "name": "مؤشر البيانات الوطني (نضيء)"})
+    report.setdefault("catalogue", _catalogue())
+    report.setdefault("overall", _overall(report.get("scores", [])))
+    for s in report.get("scores", []):
+        s.setdefault("domain_name", DOMAIN_NAMES.get(s["domain"], s["domain"]))
+    return report
+
+
 def _report(result, started: float, model: str) -> dict:
     return {
         "entity": result.entity,
         "model": model,
+        "created": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
         "seconds": round(time.time() - started),
         "scores": [s.__dict__ for s in result.scores],
         "gaps": result.gaps,
@@ -75,13 +121,19 @@ def _report(result, started: float, model: str) -> dict:
 
 async def _run(key: str, entity: str, docs: list[Document]) -> None:
     global _templates
-    _runs[key] = {"status": "running", "started": time.time()}
+    _runs[key] = {"status": "running", "started": time.time(), "done": 0, "total": len(_controls())}
     client = ChatClient()
+
+    def progress(done: int, total: int) -> None:
+        _runs[key].update(done=done, total=total)
+
     try:
         if _templates is None:
             _templates = await asyncio.to_thread(load_template_index)
-        res = await assess(entity, _controls(), docs, client, concurrency=2, templates=_templates)
-        report = _report(res, _runs[key]["started"], client.model)
+        res = await assess(
+            entity, _controls(), docs, client, concurrency=CONCURRENCY, templates=_templates, on_progress=progress
+        )
+        report = _enrich(_report(res, _runs[key]["started"], client.model))
         DATA.mkdir(parents=True, exist_ok=True)
         (DATA / f"{key}.json").write_text(json.dumps(report, ensure_ascii=False), encoding="utf-8")
         _runs[key] = {"status": "done"}
@@ -134,7 +186,7 @@ def report(key: str) -> JSONResponse:
         raise HTTPException(400, "bad key")
     for f in (DATA / f"{key}.json", BUNDLED / f"{key}.json"):
         if f.exists():
-            return JSONResponse(json.loads(f.read_text(encoding="utf-8")))
+            return JSONResponse(_enrich(json.loads(f.read_text(encoding="utf-8"))))
     return JSONResponse(_runs.get(key, {"status": "none"}), status_code=202)
 
 
