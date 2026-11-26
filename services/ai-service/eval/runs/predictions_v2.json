@@ -1,0 +1,772 @@
+{
+ "runs": {
+  "v2|qwen/qwen3.8-27b": {
+   "items": {
+    "mewa|PDP.1.1": {
+     "decision": "not_met",
+     "needs_review": false,
+     "restates": false,
+     "defers": false,
+     "n_cit": 68,
+     "n_ver": 66
+    },
+    "mewa|PDP.1.2": {
+     "decision": "not_met",
+     "needs_review": false,
+     "restates": false,
+     "defers": false
+    },
+    "mewa|PDP.2.1": {
+     "decision": "partial",
+     "needs_review": false,
+     "restates": false,
+     "defers": false
+    },
+    "mewa|PDP.3.2": {
+     "decision": "partial",
+     "needs_review": false,
+     "restates": false,
+     "defers": false
+    },
+    "mewa|PDP.3.1": {
+     "decision": "partial",
+     "needs_review": false,
+     "restates": false,
+     "defers": false
+    },
+    "mewa|PDP.4.1": {
+     "decision": "met",
+     "needs_review": false,
+     "restates": false,
+     "defers": false
+    },
+    "mewa|PDP.4.2": {
+     "decision": "partial",
+     "needs_review": false,
+     "restates": false,
+     "defers": false
+    },
+    "mewa|PDP.4.4": {
+     "decision": "partial",
+     "needs_review": false,
+     "restates": false,
+     "defers": false
+    },
+    "mewa|PDP.5.1": {
+     "decision": "partial",
+     "needs_review": false,
+     "restates": false,
+     "defers": false
+    },
+    "mewa|PDP.4.3": {
+     "decision": "partial",
+     "needs_review": false,
+     "restates": false,
+     "defers": false
+    },
+    "mewa|DC.1.1": {
+     "decision": "partial",
+     "needs_review": false,
+     "restates": false,
+     "defers": false
+    },
+    "mewa|DC.1.2": {
+     "decision": "partial",
+     "needs_review": false,
+     "restates": false,
+     "defers": false
+    },
+    "mewa|DC.3.1": {
+     "decision": "not_met",
+     "needs_review": false,
+     "restates": false,
+     "defers": false
+    },
+    "mewa|DC.3.2": {
+     "decision": "partial",
+     "needs_review": false,
+     "restates": false,
+     "defers": false
+    },
+    "mewa|DC.3.3": {
+     "decision": "partial",
+     "needs_review": true,
+     "restates": false,
+     "defers": false
+    },
+    "mewa|DC.3.4": {
+     "decision": "partial",
+     "needs_review": false,
+     "restates": false,
+     "defers": false
+    },
+    "mewa|DC.3.5": {
+     "decision": "partial",
+     "needs_review": true,
+     "restates": false,
+     "defers": false
+    },
+    "mewa|DC.4.1": {
+     "decision": "not_met",
+     "needs_review": false,
+     "restates": false,
+     "defers": false
+    },
+    "mewa|DC.5.1": {
+     "decision": "partial",
+     "needs_review": false,
+     "restates": false,
+     "defers": false
+    },
+    "mewa|DC.2.1": {
+     "decision": "met",
+     "needs_review": false,
+     "restates": false,
+     "defers": false
+    },
+    "iu|PDP.1.1": {
+     "decision": "partial",
+     "needs_review": false,
+     "restates": false,
+     "defers": false
+    },
+    "iu|PDP.1.2": {
+     "decision": "not_met",
+     "needs_review": false,
+     "restates": false,
+     "defers": false
+    },
+    "iu|PDP.2.1": {
+     "decision": "partial",
+     "needs_review": false,
+     "restates": false,
+     "defers": false
+    },
+    "iu|PDP.3.2": {
+     "decision": "partial",
+     "needs_review": false,
+     "restates": false,
+     "defers": false
+    },
+    "iu|PDP.3.1": {
+     "decision": "partial",
+     "needs_review": false,
+     "restates": false,
+     "defers": false
+    },
+    "iu|PDP.4.1": {
+     "decision": "partial",
+     "needs_review": false,
+     "restates": false,
+     "defers": false
+    },
+    "iu|PDP.4.2": {
+     "decision": "partial",
+     "needs_review": false,
+     "restates": false,
+     "defers": false
+    },
+    "iu|PDP.4.4": {
+     "decision": "partial",
+     "needs_review": false,
+     "restates": false,
+     "defers": false
+    },
+    "iu|PDP.5.1": {
+     "decision": "partial",
+     "needs_review": false,
+     "restates": false,
+     "defers": false
+    },
+    "iu|PDP.4.3": {
+     "decision": "partial",
+     "needs_review": false,
+     "restates": false,
+     "defers": false
+    },
+    "iu|DC.1.1": {
+     "decision": "partial",
+     "needs_review": false,
+     "restates": false,
+     "defers": false
+    },
+    "iu|DC.1.2": {
+     "decision": "partial",
+     "needs_review": false,
+     "restates": false,
+     "defers": false
+    },
+    "iu|DC.3.1": {
+     "decision": "partial",
+     "needs_review": false,
+     "restates": false,
+     "defers": false
+    },
+    "iu|DC.3.2": {
+     "decision": "partial",
+     "needs_review": false,
+     "restates": false,
+     "defers": false
+    },
+    "iu|DC.3.3": {
+     "decision": "partial",
+     "needs_review": false,
+     "restates": false,
+     "defers": false
+    },
+    "iu|DC.3.4": {
+     "decision": "partial",
+     "needs_review": false,
+     "restates": false,
+     "defers": false
+    },
+    "iu|DC.3.5": {
+     "decision": "not_met",
+     "needs_review": false,
+     "restates": false,
+     "defers": false
+    },
+    "iu|DC.4.1": {
+     "decision": "not_met",
+     "needs_review": false,
+     "restates": false,
+     "defers": false
+    },
+    "iu|DC.5.1": {
+     "decision": "partial",
+     "needs_review": false,
+     "restates": false,
+     "defers": false
+    },
+    "iu|DC.2.1": {
+     "decision": "met",
+     "needs_review": false,
+     "restates": false,
+     "defers": false
+    }
+   },
+   "telemetry": {
+    "calls": 40,
+    "errors": 0,
+    "prompt_tokens": 76796,
+    "completion_tokens": 11037,
+    "median_ms": 1085,
+    "finish": {
+     "stop": 40
+    }
+   }
+  },
+  "v2|openai/gpt-oss-120b": {
+   "items": {
+    "mewa|PDP.1.1": {
+     "decision": "not_met",
+     "needs_review": false,
+     "restates": false,
+     "defers": false,
+     "n_cit": 49,
+     "n_ver": 45
+    },
+    "mewa|PDP.1.2": {
+     "decision": "not_met",
+     "needs_review": false,
+     "restates": false,
+     "defers": false
+    },
+    "mewa|PDP.2.1": {
+     "decision": "not_met",
+     "needs_review": false,
+     "restates": true,
+     "defers": false
+    },
+    "mewa|PDP.3.2": {
+     "decision": "partial",
+     "needs_review": false,
+     "restates": false,
+     "defers": false
+    },
+    "mewa|PDP.3.1": {
+     "decision": "partial",
+     "needs_review": false,
+     "restates": false,
+     "defers": false
+    },
+    "mewa|PDP.4.1": {
+     "decision": "partial",
+     "needs_review": false,
+     "restates": false,
+     "defers": false
+    },
+    "mewa|PDP.4.2": {
+     "decision": "not_met",
+     "needs_review": false,
+     "restates": true,
+     "defers": false
+    },
+    "mewa|PDP.4.4": {
+     "decision": "partial",
+     "needs_review": false,
+     "restates": false,
+     "defers": false
+    },
+    "mewa|PDP.5.1": {
+     "decision": "not_met",
+     "needs_review": false,
+     "restates": false,
+     "defers": false
+    },
+    "mewa|PDP.4.3": {
+     "decision": "partial",
+     "needs_review": false,
+     "restates": false,
+     "defers": false
+    },
+    "mewa|DC.1.1": {
+     "decision": "not_met",
+     "needs_review": false,
+     "restates": false,
+     "defers": false
+    },
+    "mewa|DC.1.2": {
+     "decision": "partial",
+     "needs_review": false,
+     "restates": false,
+     "defers": false
+    },
+    "mewa|DC.3.1": {
+     "decision": "not_met",
+     "needs_review": false,
+     "restates": false,
+     "defers": false
+    },
+    "mewa|DC.3.2": {
+     "decision": "partial",
+     "needs_review": false,
+     "restates": false,
+     "defers": false
+    },
+    "mewa|DC.3.3": {
+     "decision": "partial",
+     "needs_review": false,
+     "restates": false,
+     "defers": false
+    },
+    "mewa|DC.3.4": {
+     "decision": "partial",
+     "needs_review": false,
+     "restates": false,
+     "defers": false
+    },
+    "mewa|DC.3.5": {
+     "decision": "not_met",
+     "needs_review": false,
+     "restates": false,
+     "defers": false
+    },
+    "mewa|DC.4.1": {
+     "decision": "not_met",
+     "needs_review": false,
+     "restates": false,
+     "defers": false
+    },
+    "mewa|DC.5.1": {
+     "decision": "not_met",
+     "needs_review": false,
+     "restates": false,
+     "defers": false
+    },
+    "mewa|DC.2.1": {
+     "decision": "met",
+     "needs_review": true,
+     "restates": false,
+     "defers": false
+    },
+    "iu|PDP.1.1": {
+     "decision": "not_met",
+     "needs_review": false,
+     "restates": false,
+     "defers": false
+    },
+    "iu|PDP.1.2": {
+     "decision": "not_met",
+     "needs_review": false,
+     "restates": false,
+     "defers": false
+    },
+    "iu|PDP.2.1": {
+     "decision": "partial",
+     "needs_review": false,
+     "restates": false,
+     "defers": false
+    },
+    "iu|PDP.3.2": {
+     "decision": "partial",
+     "needs_review": false,
+     "restates": false,
+     "defers": false
+    },
+    "iu|PDP.3.1": {
+     "decision": "not_met",
+     "needs_review": false,
+     "restates": true,
+     "defers": false
+    },
+    "iu|PDP.4.1": {
+     "decision": "partial",
+     "needs_review": false,
+     "restates": false,
+     "defers": false
+    },
+    "iu|PDP.4.2": {
+     "decision": "partial",
+     "needs_review": false,
+     "restates": false,
+     "defers": false
+    },
+    "iu|PDP.4.4": {
+     "decision": "partial",
+     "needs_review": false,
+     "restates": false,
+     "defers": false
+    },
+    "iu|PDP.5.1": {
+     "decision": "not_met",
+     "needs_review": false,
+     "restates": false,
+     "defers": false
+    },
+    "iu|PDP.4.3": {
+     "decision": "partial",
+     "needs_review": false,
+     "restates": false,
+     "defers": false
+    },
+    "iu|DC.1.1": {
+     "decision": "not_met",
+     "needs_review": false,
+     "restates": false,
+     "defers": false
+    },
+    "iu|DC.1.2": {
+     "decision": "partial",
+     "needs_review": true,
+     "restates": false,
+     "defers": false
+    },
+    "iu|DC.3.1": {
+     "decision": "partial",
+     "needs_review": false,
+     "restates": false,
+     "defers": false
+    },
+    "iu|DC.3.2": {
+     "decision": "partial",
+     "needs_review": false,
+     "restates": false,
+     "defers": false
+    },
+    "iu|DC.3.3": {
+     "decision": "partial",
+     "needs_review": false,
+     "restates": false,
+     "defers": false
+    },
+    "iu|DC.3.4": {
+     "decision": "not_met",
+     "needs_review": false,
+     "restates": false,
+     "defers": false
+    },
+    "iu|DC.3.5": {
+     "decision": "not_met",
+     "needs_review": false,
+     "restates": false,
+     "defers": false
+    },
+    "iu|DC.4.1": {
+     "decision": "not_met",
+     "needs_review": false,
+     "restates": false,
+     "defers": false
+    },
+    "iu|DC.5.1": {
+     "decision": "not_met",
+     "needs_review": false,
+     "restates": false,
+     "defers": false
+    },
+    "iu|DC.2.1": {
+     "decision": "partial",
+     "needs_review": true,
+     "restates": false,
+     "defers": false
+    }
+   },
+   "telemetry": {
+    "calls": 40,
+    "errors": 0,
+    "prompt_tokens": 78629,
+    "completion_tokens": 27471,
+    "median_ms": 2558,
+    "finish": {
+     "stop": 40
+    }
+   }
+  },
+  "v2|openai/gpt-oss-20b": {
+   "items": {
+    "mewa|PDP.1.1": {
+     "decision": "not_met",
+     "needs_review": false,
+     "restates": false,
+     "defers": false,
+     "n_cit": 40,
+     "n_ver": 38
+    },
+    "mewa|PDP.1.2": {
+     "decision": "not_met",
+     "needs_review": false,
+     "restates": false,
+     "defers": false
+    },
+    "mewa|PDP.2.1": {
+     "decision": "not_met",
+     "needs_review": false,
+     "restates": true,
+     "defers": false
+    },
+    "mewa|PDP.3.2": {
+     "decision": "not_met",
+     "needs_review": false,
+     "restates": true,
+     "defers": false
+    },
+    "mewa|PDP.3.1": {
+     "decision": "partial",
+     "needs_review": false,
+     "restates": false,
+     "defers": true
+    },
+    "mewa|PDP.4.1": {
+     "decision": "partial",
+     "needs_review": false,
+     "restates": false,
+     "defers": false
+    },
+    "mewa|PDP.4.2": {
+     "decision": "not_met",
+     "needs_review": false,
+     "restates": false,
+     "defers": false
+    },
+    "mewa|PDP.4.4": {
+     "decision": "not_met",
+     "needs_review": false,
+     "restates": true,
+     "defers": false
+    },
+    "mewa|PDP.5.1": {
+     "decision": "not_met",
+     "needs_review": false,
+     "restates": false,
+     "defers": false
+    },
+    "mewa|PDP.4.3": {
+     "decision": "partial",
+     "needs_review": false,
+     "restates": false,
+     "defers": false
+    },
+    "mewa|DC.1.1": {
+     "decision": "not_met",
+     "needs_review": false,
+     "restates": false,
+     "defers": false
+    },
+    "mewa|DC.1.2": {
+     "decision": "not_met",
+     "needs_review": false,
+     "restates": true,
+     "defers": false
+    },
+    "mewa|DC.3.1": {
+     "decision": "not_met",
+     "needs_review": false,
+     "restates": false,
+     "defers": false
+    },
+    "mewa|DC.3.2": {
+     "decision": "partial",
+     "needs_review": false,
+     "restates": false,
+     "defers": false
+    },
+    "mewa|DC.3.3": {
+     "decision": "partial",
+     "needs_review": false,
+     "restates": false,
+     "defers": false
+    },
+    "mewa|DC.3.4": {
+     "decision": "partial",
+     "needs_review": false,
+     "restates": false,
+     "defers": false
+    },
+    "mewa|DC.3.5": {
+     "decision": "not_met",
+     "needs_review": false,
+     "restates": false,
+     "defers": false
+    },
+    "mewa|DC.4.1": {
+     "decision": "not_met",
+     "needs_review": false,
+     "restates": false,
+     "defers": false
+    },
+    "mewa|DC.5.1": {
+     "decision": "not_met",
+     "needs_review": false,
+     "restates": false,
+     "defers": false
+    },
+    "mewa|DC.2.1": {
+     "decision": "met",
+     "needs_review": false,
+     "restates": false,
+     "defers": false
+    },
+    "iu|PDP.1.1": {
+     "decision": "not_met",
+     "needs_review": false,
+     "restates": false,
+     "defers": false
+    },
+    "iu|PDP.1.2": {
+     "decision": "not_met",
+     "needs_review": false,
+     "restates": false,
+     "defers": false
+    },
+    "iu|PDP.2.1": {
+     "decision": "not_met",
+     "needs_review": false,
+     "restates": false,
+     "defers": false
+    },
+    "iu|PDP.3.2": {
+     "decision": "partial",
+     "needs_review": false,
+     "restates": false,
+     "defers": false
+    },
+    "iu|PDP.3.1": {
+     "decision": "partial",
+     "needs_review": false,
+     "restates": false,
+     "defers": true
+    },
+    "iu|PDP.4.1": {
+     "decision": "partial",
+     "needs_review": false,
+     "restates": false,
+     "defers": false
+    },
+    "iu|PDP.4.2": {
+     "decision": "partial",
+     "needs_review": false,
+     "restates": false,
+     "defers": false
+    },
+    "iu|PDP.4.4": {
+     "decision": "partial",
+     "needs_review": false,
+     "restates": false,
+     "defers": false
+    },
+    "iu|PDP.5.1": {
+     "decision": "not_met",
+     "needs_review": false,
+     "restates": false,
+     "defers": false
+    },
+    "iu|PDP.4.3": {
+     "decision": "not_met",
+     "needs_review": false,
+     "restates": true,
+     "defers": false
+    },
+    "iu|DC.1.1": {
+     "decision": "not_met",
+     "needs_review": false,
+     "restates": false,
+     "defers": false
+    },
+    "iu|DC.1.2": {
+     "decision": "partial",
+     "needs_review": true,
+     "restates": false,
+     "defers": false
+    },
+    "iu|DC.3.1": {
+     "decision": "not_met",
+     "needs_review": false,
+     "restates": true,
+     "defers": false
+    },
+    "iu|DC.3.2": {
+     "decision": "partial",
+     "needs_review": false,
+     "restates": false,
+     "defers": false
+    },
+    "iu|DC.3.3": {
+     "decision": "partial",
+     "needs_review": false,
+     "restates": false,
+     "defers": false
+    },
+    "iu|DC.3.4": {
+     "decision": "not_met",
+     "needs_review": false,
+     "restates": false,
+     "defers": false
+    },
+    "iu|DC.3.5": {
+     "decision": "not_met",
+     "needs_review": false,
+     "restates": false,
+     "defers": false
+    },
+    "iu|DC.4.1": {
+     "decision": "not_met",
+     "needs_review": false,
+     "restates": false,
+     "defers": false
+    },
+    "iu|DC.5.1": {
+     "decision": "not_met",
+     "needs_review": false,
+     "restates": false,
+     "defers": false
+    },
+    "iu|DC.2.1": {
+     "decision": "met",
+     "needs_review": true,
+     "restates": false,
+     "defers": false
+    }
+   },
+   "telemetry": {
+    "calls": 40,
+    "errors": 0,
+    "prompt_tokens": 78629,
+    "completion_tokens": 31231,
+    "median_ms": 1502,
+    "finish": {
+     "stop": 40
+    }
+   }
+  }
+ }
+}

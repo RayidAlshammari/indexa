@@ -23,6 +23,7 @@ from indexa.evaluation import summarize  # noqa: E402
 
 
 def load_gold(path: Path = HERE / "gold" / "labels_v1.json") -> dict[str, dict]:
+    path = Path(path)
     labels = json.loads(path.read_text(encoding="utf-8"))["labels"]
     return {f"{x['entity']}|{x['control_id']}": x for x in labels}
 
@@ -67,7 +68,7 @@ def score_run(
 
 def main() -> None:
     data = json.loads(Path(sys.argv[1]).read_text(encoding="utf-8"))
-    gold = load_gold()
+    gold = load_gold(sys.argv[2]) if len(sys.argv) > 2 else load_gold()
     result = {"all_items": {}, "paired_subsets": {}}
     for key, run in data["runs"].items():
         result["all_items"][key] = score_run(run["items"], gold) | {

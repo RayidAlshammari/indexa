@@ -1,0 +1,521 @@
+{
+ "all_items": {
+  "v2|qwen/qwen3.8-27b": {
+   "n": 40,
+   "accuracy": 0.45,
+   "macro_f1": 0.45197132616487457,
+   "kappa": 0.10112359550561778,
+   "weighted_kappa": 0.13043478260869568,
+   "over_claim": 20,
+   "critical_over_claim": 1,
+   "under_claim": 2,
+   "confusion": {
+    "not_met": {
+     "not_met": 5,
+     "partial": 18,
+     "met": 1
+    },
+    "partial": {
+     "not_met": 2,
+     "partial": 12,
+     "met": 1
+    },
+    "met": {
+     "not_met": 0,
+     "partial": 0,
+     "met": 1
+    }
+   },
+   "accuracy_clear_items": 0.7647058823529411,
+   "auto_accepted": 38,
+   "auto_accepted_accuracy": 0.42105263157894735,
+   "auto_accepted_over_claim": 20,
+   "citations": 68,
+   "citation_verified_rate": 0.9705882352941176,
+   "failed_calls": 0,
+   "unparseable": 0,
+   "errors": [
+    {
+     "item": "iu|DC.1.1",
+     "gold": "not_met",
+     "pred": "partial",
+     "certainty": "borderline"
+    },
+    {
+     "item": "iu|DC.1.2",
+     "gold": "not_met",
+     "pred": "partial",
+     "certainty": "clear"
+    },
+    {
+     "item": "iu|DC.2.1",
+     "gold": "not_met",
+     "pred": "met",
+     "certainty": "borderline"
+    },
+    {
+     "item": "iu|DC.3.1",
+     "gold": "not_met",
+     "pred": "partial",
+     "certainty": "borderline"
+    },
+    {
+     "item": "iu|DC.3.2",
+     "gold": "not_met",
+     "pred": "partial",
+     "certainty": "borderline"
+    },
+    {
+     "item": "iu|DC.3.3",
+     "gold": "not_met",
+     "pred": "partial",
+     "certainty": "borderline"
+    },
+    {
+     "item": "iu|DC.3.4",
+     "gold": "not_met",
+     "pred": "partial",
+     "certainty": "borderline"
+    },
+    {
+     "item": "iu|DC.5.1",
+     "gold": "not_met",
+     "pred": "partial",
+     "certainty": "borderline"
+    },
+    {
+     "item": "iu|PDP.1.1",
+     "gold": "not_met",
+     "pred": "partial",
+     "certainty": "clear"
+    },
+    {
+     "item": "iu|PDP.2.1",
+     "gold": "not_met",
+     "pred": "partial",
+     "certainty": "borderline"
+    },
+    {
+     "item": "iu|PDP.3.1",
+     "gold": "not_met",
+     "pred": "partial",
+     "certainty": "clear"
+    },
+    {
+     "item": "iu|PDP.3.2",
+     "gold": "not_met",
+     "pred": "partial",
+     "certainty": "borderline"
+    },
+    {
+     "item": "iu|PDP.4.1",
+     "gold": "not_met",
+     "pred": "partial",
+     "certainty": "borderline"
+    },
+    {
+     "item": "iu|PDP.4.2",
+     "gold": "not_met",
+     "pred": "partial",
+     "certainty": "borderline"
+    },
+    {
+     "item": "iu|PDP.4.3",
+     "gold": "not_met",
+     "pred": "partial",
+     "certainty": "borderline"
+    },
+    {
+     "item": "iu|PDP.4.4",
+     "gold": "not_met",
+     "pred": "partial",
+     "certainty": "borderline"
+    },
+    {
+     "item": "iu|PDP.5.1",
+     "gold": "not_met",
+     "pred": "partial",
+     "certainty": "borderline"
+    },
+    {
+     "item": "mewa|DC.1.1",
+     "gold": "not_met",
+     "pred": "partial",
+     "certainty": "borderline"
+    },
+    {
+     "item": "mewa|DC.2.1",
+     "gold": "partial",
+     "pred": "met",
+     "certainty": "borderline"
+    },
+    {
+     "item": "mewa|DC.3.1",
+     "gold": "partial",
+     "pred": "not_met",
+     "certainty": "clear"
+    },
+    {
+     "item": "mewa|DC.5.1",
+     "gold": "not_met",
+     "pred": "partial",
+     "certainty": "borderline"
+    },
+    {
+     "item": "mewa|PDP.1.1",
+     "gold": "partial",
+     "pred": "not_met",
+     "certainty": "borderline"
+    }
+   ],
+   "telemetry": {
+    "calls": 40,
+    "errors": 0,
+    "prompt_tokens": 76796,
+    "completion_tokens": 11037,
+    "median_ms": 1085,
+    "finish": {
+     "stop": 40
+    }
+   }
+  },
+  "v2|openai/gpt-oss-120b": {
+   "n": 40,
+   "accuracy": 0.525,
+   "macro_f1": 0.3539313399778516,
+   "kappa": 0.0984578884934757,
+   "weighted_kappa": 0.14221218961625282,
+   "over_claim": 12,
+   "critical_over_claim": 0,
+   "under_claim": 7,
+   "confusion": {
+    "not_met": {
+     "not_met": 13,
+     "partial": 11,
+     "met": 0
+    },
+    "partial": {
+     "not_met": 6,
+     "partial": 8,
+     "met": 1
+    },
+    "met": {
+     "not_met": 0,
+     "partial": 1,
+     "met": 0
+    }
+   },
+   "accuracy_clear_items": 0.7647058823529411,
+   "auto_accepted": 37,
+   "auto_accepted_accuracy": 0.5675675675675675,
+   "auto_accepted_over_claim": 9,
+   "citations": 49,
+   "citation_verified_rate": 0.9183673469387755,
+   "failed_calls": 0,
+   "unparseable": 0,
+   "errors": [
+    {
+     "item": "iu|DC.1.2",
+     "gold": "not_met",
+     "pred": "partial",
+     "certainty": "clear"
+    },
+    {
+     "item": "iu|DC.2.1",
+     "gold": "not_met",
+     "pred": "partial",
+     "certainty": "borderline"
+    },
+    {
+     "item": "iu|DC.3.1",
+     "gold": "not_met",
+     "pred": "partial",
+     "certainty": "borderline"
+    },
+    {
+     "item": "iu|DC.3.2",
+     "gold": "not_met",
+     "pred": "partial",
+     "certainty": "borderline"
+    },
+    {
+     "item": "iu|DC.3.3",
+     "gold": "not_met",
+     "pred": "partial",
+     "certainty": "borderline"
+    },
+    {
+     "item": "iu|PDP.2.1",
+     "gold": "not_met",
+     "pred": "partial",
+     "certainty": "borderline"
+    },
+    {
+     "item": "iu|PDP.3.2",
+     "gold": "not_met",
+     "pred": "partial",
+     "certainty": "borderline"
+    },
+    {
+     "item": "iu|PDP.4.1",
+     "gold": "not_met",
+     "pred": "partial",
+     "certainty": "borderline"
+    },
+    {
+     "item": "iu|PDP.4.2",
+     "gold": "not_met",
+     "pred": "partial",
+     "certainty": "borderline"
+    },
+    {
+     "item": "iu|PDP.4.3",
+     "gold": "not_met",
+     "pred": "partial",
+     "certainty": "borderline"
+    },
+    {
+     "item": "iu|PDP.4.4",
+     "gold": "not_met",
+     "pred": "partial",
+     "certainty": "borderline"
+    },
+    {
+     "item": "mewa|DC.2.1",
+     "gold": "partial",
+     "pred": "met",
+     "certainty": "borderline"
+    },
+    {
+     "item": "mewa|DC.3.1",
+     "gold": "partial",
+     "pred": "not_met",
+     "certainty": "clear"
+    },
+    {
+     "item": "mewa|DC.3.5",
+     "gold": "partial",
+     "pred": "not_met",
+     "certainty": "borderline"
+    },
+    {
+     "item": "mewa|PDP.1.1",
+     "gold": "partial",
+     "pred": "not_met",
+     "certainty": "borderline"
+    },
+    {
+     "item": "mewa|PDP.2.1",
+     "gold": "partial",
+     "pred": "not_met",
+     "certainty": "clear"
+    },
+    {
+     "item": "mewa|PDP.4.1",
+     "gold": "met",
+     "pred": "partial",
+     "certainty": "borderline"
+    },
+    {
+     "item": "mewa|PDP.4.2",
+     "gold": "partial",
+     "pred": "not_met",
+     "certainty": "borderline"
+    },
+    {
+     "item": "mewa|PDP.5.1",
+     "gold": "partial",
+     "pred": "not_met",
+     "certainty": "clear"
+    }
+   ],
+   "telemetry": {
+    "calls": 40,
+    "errors": 0,
+    "prompt_tokens": 78629,
+    "completion_tokens": 27471,
+    "median_ms": 2558,
+    "finish": {
+     "stop": 40
+    }
+   }
+  },
+  "v2|openai/gpt-oss-20b": {
+   "n": 40,
+   "accuracy": 0.5,
+   "macro_f1": 0.3232758620689655,
+   "kappa": 0.01477832512315258,
+   "weighted_kappa": 0.04977375565610853,
+   "over_claim": 10,
+   "critical_over_claim": 1,
+   "under_claim": 10,
+   "confusion": {
+    "not_met": {
+     "not_met": 15,
+     "partial": 8,
+     "met": 1
+    },
+    "partial": {
+     "not_met": 9,
+     "partial": 5,
+     "met": 1
+    },
+    "met": {
+     "not_met": 0,
+     "partial": 1,
+     "met": 0
+    }
+   },
+   "accuracy_clear_items": 0.5294117647058824,
+   "auto_accepted": 38,
+   "auto_accepted_accuracy": 0.5263157894736842,
+   "auto_accepted_over_claim": 8,
+   "citations": 40,
+   "citation_verified_rate": 0.95,
+   "failed_calls": 0,
+   "unparseable": 0,
+   "errors": [
+    {
+     "item": "iu|DC.1.2",
+     "gold": "not_met",
+     "pred": "partial",
+     "certainty": "clear"
+    },
+    {
+     "item": "iu|DC.2.1",
+     "gold": "not_met",
+     "pred": "met",
+     "certainty": "borderline"
+    },
+    {
+     "item": "iu|DC.3.2",
+     "gold": "not_met",
+     "pred": "partial",
+     "certainty": "borderline"
+    },
+    {
+     "item": "iu|DC.3.3",
+     "gold": "not_met",
+     "pred": "partial",
+     "certainty": "borderline"
+    },
+    {
+     "item": "iu|PDP.3.1",
+     "gold": "not_met",
+     "pred": "partial",
+     "certainty": "clear"
+    },
+    {
+     "item": "iu|PDP.3.2",
+     "gold": "not_met",
+     "pred": "partial",
+     "certainty": "borderline"
+    },
+    {
+     "item": "iu|PDP.4.1",
+     "gold": "not_met",
+     "pred": "partial",
+     "certainty": "borderline"
+    },
+    {
+     "item": "iu|PDP.4.2",
+     "gold": "not_met",
+     "pred": "partial",
+     "certainty": "borderline"
+    },
+    {
+     "item": "iu|PDP.4.4",
+     "gold": "not_met",
+     "pred": "partial",
+     "certainty": "borderline"
+    },
+    {
+     "item": "mewa|DC.1.2",
+     "gold": "partial",
+     "pred": "not_met",
+     "certainty": "clear"
+    },
+    {
+     "item": "mewa|DC.2.1",
+     "gold": "partial",
+     "pred": "met",
+     "certainty": "borderline"
+    },
+    {
+     "item": "mewa|DC.3.1",
+     "gold": "partial",
+     "pred": "not_met",
+     "certainty": "clear"
+    },
+    {
+     "item": "mewa|DC.3.5",
+     "gold": "partial",
+     "pred": "not_met",
+     "certainty": "borderline"
+    },
+    {
+     "item": "mewa|PDP.1.1",
+     "gold": "partial",
+     "pred": "not_met",
+     "certainty": "borderline"
+    },
+    {
+     "item": "mewa|PDP.2.1",
+     "gold": "partial",
+     "pred": "not_met",
+     "certainty": "clear"
+    },
+    {
+     "item": "mewa|PDP.3.2",
+     "gold": "partial",
+     "pred": "not_met",
+     "certainty": "clear"
+    },
+    {
+     "item": "mewa|PDP.4.1",
+     "gold": "met",
+     "pred": "partial",
+     "certainty": "borderline"
+    },
+    {
+     "item": "mewa|PDP.4.2",
+     "gold": "partial",
+     "pred": "not_met",
+     "certainty": "borderline"
+    },
+    {
+     "item": "mewa|PDP.4.4",
+     "gold": "partial",
+     "pred": "not_met",
+     "certainty": "clear"
+    },
+    {
+     "item": "mewa|PDP.5.1",
+     "gold": "partial",
+     "pred": "not_met",
+     "certainty": "clear"
+    }
+   ],
+   "telemetry": {
+    "calls": 40,
+    "errors": 0,
+    "prompt_tokens": 78629,
+    "completion_tokens": 31231,
+    "median_ms": 1502,
+    "finish": {
+     "stop": 40
+    }
+   }
+  }
+ },
+ "paired_subsets": {},
+ "retrieval": {
+  "items": 15,
+  "recall_at_6": 0.8,
+  "misses": [
+   "mewa|PDP.5.1",
+   "mewa|DC.3.1",
+   "mewa|DC.3.5"
+  ]
+ }
+}
