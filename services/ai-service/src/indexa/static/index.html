@@ -483,6 +483,7 @@ const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt
 const DEC = {met:'مستوفاة', partial:'مستوفاة جزئياً', not_met:'غير مستوفاة'};
 const PRI = {P1:'أولوية أولى', P2:'أولوية ثانية', P3:'أولوية ثالثة'};
 const REASON = [
+  [/provider limit/, 'تجاوز التقييم حد الاستخدام لدى مزود النموذج اللغوي، أعد التقييم لاحقاً'],
   [/model call failed/, 'تعذّر الحصول على حكم من النموذج اللغوي، أعد التقييم'],
   [/national template/, 'الدليل منسوخ من النموذج الوطني دون تفاصيل خاصة بالجهة'],
   [/restating/, 'الدليل يكرر نص المعيار ولا يصف تطبيقاً فعلياً'],
@@ -614,7 +615,13 @@ async function run(key) {
     $('#run-err').textContent = '';
     if (r.status === 200) { location.hash = '#/report/' + key; return; }
     const s = r.body || {};
-    if (s.status === 'error') { $('#run-err').textContent = 'توقف التقييم: ' + (s.error || 'خطأ غير معروف') + '. أعد المحاولة من صفحة تقييم جديد.'; return; }
+    if (s.status === 'error') {
+      const e = s.error || '';
+      $('#run-err').textContent = /provider|rate limited|429|413/.test(e)
+        ? 'توقف التقييم: رفض مزود النموذج اللغوي معظم الطلبات، غالباً لأن حد الاستخدام نفد. أعد المحاولة لاحقاً.'
+        : 'توقف التقييم بسبب خطأ في الخادم. أعد المحاولة من صفحة تقييم جديد.';
+      return;
+    }
     if (s.status === 'none') { $('#run-err').textContent = 'لا يوجد تقييم بهذا الرابط. ربما أُعيد تشغيل الخادم؛ ابدأ تقييماً جديداً.'; return; }
     const total = s.total || 20, done = s.done || 0;
     $('#run-done').textContent = AR(done); $('#run-total').textContent = AR(total);

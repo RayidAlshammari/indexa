@@ -18,8 +18,14 @@ import random
 import httpx
 
 
+class ProviderLimit(RuntimeError):
+    """The provider asked us to wait longer than an assessment can (e.g. a daily token cap)."""
+
+
 class RequestTooLarge(RuntimeError):
     """The provider refused the request size (Groq: prompt + max_tokens above the TPM limit)."""
+
+MAX_WAIT = 90.0  # seconds; a longer retry-after means a quota, not a burst
 
 DEFAULTS = {
     "base_url": "https://api.groq.com/openai/v1",
@@ -63,6 +69,8 @@ class ChatClient:
                 raise RequestTooLarge(r.text[:300])
             if r.status_code in (429, 500, 502, 503) and attempt < attempts - 1:
                 wait = float(r.headers.get("retry-after") or min(30, 2 * (attempt + 1)))
+                if wait > MAX_WAIT:
+                    raise ProviderLimit(f"provider limit reached, retry after {wait:.0f}s")
                 await asyncio.sleep(wait + random.uniform(0.5, 2.0))
                 continue
             r.raise_for_status()

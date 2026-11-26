@@ -353,3 +353,33 @@ def test_engine_shrinks_evidence_when_request_too_large():
     j = res.judgements["PDP.1.1"]
     assert sizes[0] > 3 and sizes[-1] <= 3
     assert not any("model call failed" in r for r in j.review_reasons)
+
+
+def test_failed_run_is_an_error_not_a_report(tmp_path, monkeypatch):
+    import asyncio
+
+    from indexa import server
+    from indexa.documents import Document
+
+    monkeypatch.setattr(server, "DATA", tmp_path)
+
+    class Down:
+        model = "m"
+
+        def __init__(self, *a, **k):
+            pass
+
+        async def __call__(self, messages):
+            raise RuntimeError("provider limit reached, retry after 3600s")
+
+        async def aclose(self):
+            pass
+
+    monkeypatch.setattr(server, "ChatClient", Down)
+    monkeypatch.setattr(server, "_templates", object())
+    monkeypatch.setattr(server, "apply_template_rule", lambda j, t: j, raising=False)
+    doc = Document("doc1", "سياسة", ["حماية البيانات الشخصية " * 40])
+    asyncio.run(server._run("k1", "e", [doc]))
+    assert server._runs["k1"]["status"] == "error"
+    assert "provider limit" in server._runs["k1"]["error"]
+    assert not (tmp_path / "k1.json").exists()

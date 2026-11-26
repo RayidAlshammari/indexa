@@ -133,12 +133,16 @@ async def _run(key: str, entity: str, docs: list[Document]) -> None:
         res = await assess(
             entity, _controls(), docs, client, concurrency=CONCURRENCY, templates=_templates, on_progress=progress
         )
+        failed = [j for j in res.judgements.values() if any("model call failed" in r for r in j.review_reasons)]
+        if len(failed) * 2 > len(res.judgements):  # a mostly-failed run is not an assessment
+            reason = failed[0].review_reasons[0].replace("model call failed: ", "")
+            raise RuntimeError(f"model provider refused {len(failed)} of {len(res.judgements)} requests ({reason[:160]})")
         report = _enrich(_report(res, _runs[key]["started"], client.model))
         DATA.mkdir(parents=True, exist_ok=True)
         (DATA / f"{key}.json").write_text(json.dumps(report, ensure_ascii=False), encoding="utf-8")
         _runs[key] = {"status": "done"}
     except Exception as e:  # surfaced to the page, never swallowed
-        _runs[key] = {"status": "error", "error": str(e)[:300]}
+        _runs[key] = {**_runs[key], "status": "error", "error": str(e)[:300]}
     finally:
         await client.aclose()
 
