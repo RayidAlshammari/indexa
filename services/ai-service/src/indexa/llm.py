@@ -40,7 +40,7 @@ class ChatClient:
         api_key: str | None = None,
         model: str | None = None,
         temperature: float = 0.0,
-        max_tokens: int = 900,
+        max_tokens: int | None = None,
         timeout: float = 90.0,
     ):
         self.base_url = (
@@ -48,7 +48,9 @@ class ChatClient:
         ).rstrip("/")
         self.api_key = api_key or os.getenv("INDEXA_LLM_API_KEY") or os.getenv("GROQ_API_KEY", "")
         self.model = model or os.getenv("INDEXA_LLM_MODEL") or DEFAULTS["model"]
-        self.temperature, self.max_tokens = temperature, max_tokens
+        # Reasoning models spend output tokens thinking first; give them room on paid providers.
+        self.temperature = temperature
+        self.max_tokens = max_tokens or int(os.getenv("INDEXA_LLM_MAX_TOKENS", "900"))
         self._client = httpx.AsyncClient(timeout=timeout)
 
     async def __call__(self, messages: list[dict]) -> str:
