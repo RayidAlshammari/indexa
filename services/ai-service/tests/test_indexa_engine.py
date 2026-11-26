@@ -348,7 +348,9 @@ def test_engine_shrinks_evidence_when_request_too_large():
 
     pages = [f"سياسة حماية البيانات الشخصية البند {i} " * 30 for i in range(8)]
     doc = Document("doc1", "سياسة", pages)
-    c = Control("PDP.1.1", "t", "حماية البيانات الشخصية", "P1", "6_PDP", ["البيانات"], "process", {})
+    c = Control(
+        "PDP.1.1", "t", "حماية البيانات الشخصية", "P1", "6_PDP", ["البيانات"], "process", {}
+    )
     res = asyncio.run(assess("e", [c], [doc], llm))
     j = res.judgements["PDP.1.1"]
     assert sizes[0] > 3 and sizes[-1] <= 3
@@ -383,3 +385,17 @@ def test_failed_run_is_an_error_not_a_report(tmp_path, monkeypatch):
     assert server._runs["k1"]["status"] == "error"
     assert "provider limit" in server._runs["k1"]["error"]
     assert not (tmp_path / "k1.json").exists()
+
+
+def test_repair_text_restores_visual_order_arabic():
+    from indexa.documents import repair_text
+
+    visual = "تﺎﻧﺎﻴﺒﻟا ةرادإ ﺐﺘﻜﻣ\n3.3 :راﺪﺻﻹا\n2025 ﺮﺒﻤﺘﺒﺳ :ﺪﻨﺘﺴﻤﻟا تﺎﻣﻮﻠﻌﻣ\n(PDPL) مﺎﻈﻧ"
+    assert repair_text(visual).split("\n") == [
+        "مكتب إدارة البيانات",
+        "الإصدار: 3.3",
+        "معلومات المستند: سبتمبر 2025",
+        "نظام (PDPL)",
+    ]
+    logical = "سياسة حماية البيانات الشخصية الإصدار 3.3 وفق نظام (PDPL)"
+    assert repair_text(logical) == logical

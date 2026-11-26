@@ -7,14 +7,47 @@ point a reviewer to the exact page that supports it.
 from __future__ import annotations
 
 import re
+import unicodedata
 from dataclasses import dataclass, field
 
 _BROKEN_LAM_HAMZA = re.compile(r"ا([إأآ])ل")
 
 
+_ARABIC_WORD = re.compile(r"[\u0600-\u06ff]+")
+_LTR_RUN = re.compile(
+    r"[0-9A-Za-z\u0660-\u0669](?:[0-9A-Za-z\u0660-\u0669.,:/%_@-]*[0-9A-Za-z\u0660-\u0669])?"
+)
+_MIRROR = str.maketrans("()[]{}<>«»", ")(][}{><»«")
+
+
+def _article_balance(text: str) -> int:
+    """Words that start with the article "ال" minus words that end with it reversed ("لا")."""
+    words = _ARABIC_WORD.findall(text)
+    return sum(w.startswith("ال") for w in words) - sum(
+        w.endswith("لا") and len(w) > 3 for w in words
+    )
+
+
+def _logical_line(line: str) -> str:
+    """Turn one visually ordered line into reading order; digits and Latin keep their direction."""
+    rev = line[::-1].translate(_MIRROR)
+    return _LTR_RUN.sub(lambda m: m.group(0)[::-1], rev)
+
+
 def repair_text(text: str) -> str:
-    """Undo the unambiguous lam-alef reversal some PDF producers emit ("اإل" -> "الإ")."""
-    return _BROKEN_LAM_HAMZA.sub(r"ال\1", text)
+    """Normalise PDF text to logical-order Arabic.
+
+    Some producers store Arabic in visual order with presentation-form glyphs, so a
+    line reads backwards ("تﺎﻧﺎﻴﺒﻟا" for "البيانات"). Reversing each line before NFKC keeps
+    ligatures such as lam-alef in the right order. The page is flipped only when that
+    makes far more words start with the article "ال" than end with its mirror.
+    Also undoes the lam-alef reversal some producers emit ("اإل" -> "الإ").
+    """
+    forward = unicodedata.normalize("NFKC", text)
+    flipped = unicodedata.normalize("NFKC", "\n".join(_logical_line(ln) for ln in text.split("\n")))
+    if _article_balance(flipped) > _article_balance(forward) + 2:
+        forward = flipped
+    return _BROKEN_LAM_HAMZA.sub(r"ال\1", forward)
 
 
 @dataclass(frozen=True)
