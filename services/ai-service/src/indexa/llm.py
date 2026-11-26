@@ -12,6 +12,7 @@ model can be swapped by configuration without touching the engine.
 from __future__ import annotations
 
 import asyncio
+import json
 import os
 import random
 
@@ -24,6 +25,7 @@ class ProviderLimit(RuntimeError):
 
 class RequestTooLarge(RuntimeError):
     """The provider refused the request size (Groq: prompt + max_tokens above the TPM limit)."""
+
 
 MAX_WAIT = 90.0  # seconds; a longer retry-after means a quota, not a burst
 
@@ -59,6 +61,8 @@ class ChatClient:
             "messages": messages,
             "temperature": self.temperature,
             "max_tokens": self.max_tokens,
+            # Provider-specific options, e.g. OpenRouter {"reasoning": {"effort": "low"}}.
+            **json.loads(os.getenv("INDEXA_LLM_EXTRA") or "{}"),
         }
         attempts = 10  # free tiers rate-limit hard; waiting is cheaper than a failed judgement
         for attempt in range(attempts):
@@ -76,7 +80,11 @@ class ChatClient:
                 await asyncio.sleep(wait + random.uniform(0.5, 2.0))
                 continue
             r.raise_for_status()
-            return r.json()["choices"][0]["message"]["content"] or ""
+            choice = r.json()["choices"][0]
+            content = choice["message"].get("content") or ""
+            if not content.strip() and choice.get("finish_reason") == "length":
+                raise RuntimeError("model output truncated before the answer (raise max tokens)")
+            return content
         raise RuntimeError("rate limited")
 
     async def aclose(self) -> None:

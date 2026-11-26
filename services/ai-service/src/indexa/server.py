@@ -131,12 +131,25 @@ async def _run(key: str, entity: str, docs: list[Document]) -> None:
         if _templates is None:
             _templates = await asyncio.to_thread(load_template_index)
         res = await assess(
-            entity, _controls(), docs, client, concurrency=CONCURRENCY, templates=_templates, on_progress=progress
+            entity,
+            _controls(),
+            docs,
+            client,
+            concurrency=CONCURRENCY,
+            templates=_templates,
+            on_progress=progress,
         )
-        failed = [j for j in res.judgements.values() if any("model call failed" in r for r in j.review_reasons)]
+        failed = [
+            j
+            for j in res.judgements.values()
+            if any(("model call failed" in r or "unparseable" in r) for r in j.review_reasons)
+        ]
         if len(failed) * 2 > len(res.judgements):  # a mostly-failed run is not an assessment
             reason = failed[0].review_reasons[0].replace("model call failed: ", "")
-            raise RuntimeError(f"model provider refused {len(failed)} of {len(res.judgements)} requests ({reason[:160]})")
+            # e.g. "unparseable model output": the model answered, but not with a judgement
+            raise RuntimeError(
+                f"model provider refused {len(failed)} of {len(res.judgements)} requests ({reason[:160]})"
+            )
         report = _enrich(_report(res, _runs[key]["started"], client.model))
         DATA.mkdir(parents=True, exist_ok=True)
         (DATA / f"{key}.json").write_text(json.dumps(report, ensure_ascii=False), encoding="utf-8")
@@ -182,6 +195,32 @@ async def run_sample(sample_id: str, x_demo_token: str | None = Header(default=N
             docs.append(Document(f"doc{i + 1}", d["title"], _pdf_pages(data)))
     asyncio.create_task(_run(sample_id, s["entity"], docs))
     return {"status": "running"}
+
+
+@app.get("/api/samples/{sample_id}/inspect")
+async def inspect_sample(sample_id: str) -> list[dict]:
+    """What the server actually reads from a sample's public PDFs (pages, characters, opening text)."""
+    s = next((s for s in SAMPLES if s["id"] == sample_id), None)
+    if not s:
+        raise HTTPException(404, "unknown sample")
+    out = []
+    async with httpx.AsyncClient(timeout=120, follow_redirects=True) as http:
+        for d in s["documents"]:
+            r = await http.get(d["url"])
+            info = {
+                "title": d["title"],
+                "status": r.status_code,
+                "type": r.headers.get("content-type", ""),
+                "bytes": len(r.content),
+                "is_pdf": r.content.startswith(b"%PDF"),
+            }
+            if info["is_pdf"]:
+                pages = _pdf_pages(r.content)
+                info.update(
+                    pages=len(pages), chars=sum(map(len, pages)), start=" ".join(pages)[:300]
+                )
+            out.append(info)
+    return out
 
 
 @app.get("/api/reports/{key}")
