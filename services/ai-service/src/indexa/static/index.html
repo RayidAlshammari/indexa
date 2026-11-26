@@ -129,8 +129,17 @@ function render(rep) {
      <div class="bar"><i style="width:${s.score}%"></i></div>
      <div class="muted">مستوفى ${s.met} · جزئي ${s.partial} · غير مستوفى ${s.not_met} · للمراجعة ${s.needs_review}</div></div>`;
   h += `</div><p class="muted">${esc(rep.notice)} النموذج: ${esc(rep.model)}.</p></div>`;
-  h += `<div class="card"><h2>أولويات الإغلاق</h2><table><tr><th>المواصفة</th><th>الأولوية</th><th>الحالة</th><th>أبرز ما ينقص</th></tr>`;
-  for (const g of rep.gaps.slice(0, 10)) h += `<tr><td>${g.control_id} ${esc(g.title)}</td><td>${g.priority}</td><td><span class="badge ${g.decision}">${AR[g.decision]}</span></td><td>${esc((g.missing||[])[0] || '')}</td></tr>`;
+  h += `<div class="card"><h2>خطة رفع التقييم: أهم 5 إجراءات</h2>`;
+  rep.gaps.slice(0, 5).forEach((g, i) => {
+    h += `<div class="spec"><div class="row"><h3>${i + 1}. ${g.control_id} ${esc(g.title)}</h3>
+      <span class="badge ${g.decision}">${AR[g.decision]}</span><span class="badge met">+${g.points} نقطة في ${DOM[g.domain] || ''}</span></div>`;
+    if ((g.actions||[]).length) h += `<ol>${g.actions.map(a => `<li>${esc(a)}</li>`).join('')}</ol>`;
+    if ((g.evidence_to_prepare||[]).length) h += `<div class="muted">الدليل المطلوب للقياس: ${g.evidence_to_prepare.map(esc).join(' · ')}</div>`;
+    if (g.owner) h += `<div class="muted">المسؤول المقترح: ${esc(g.owner)}</div>`;
+    h += `</div>`;
+  });
+  h += `</div><div class="card"><h2>كل الفجوات مرتبة حسب الأثر</h2><table><tr><th>المواصفة</th><th>الأولوية</th><th>الحالة</th><th>الأثر</th><th>أبرز ما ينقص</th></tr>`;
+  for (const g of rep.gaps) h += `<tr><td>${g.control_id} ${esc(g.title)}</td><td>${g.priority}</td><td><span class="badge ${g.decision}">${AR[g.decision]}</span></td><td>+${g.points}</td><td>${esc((g.missing||[])[0] || '')}</td></tr>`;
   h += `</table></div><div class="card"><h2>الحكم على كل مواصفة</h2>`;
   for (const j of rep.judgements) {
     h += `<div class="spec"><div class="row"><h3>${j.control_id}</h3><span class="badge ${j.decision}">${AR[j.decision]}</span>
@@ -139,6 +148,7 @@ function render(rep) {
       <div>${esc(j.rationale)}</div>`;
     for (const c of j.citations) h += `<blockquote>«${esc(c.quote)}»<div class="src">${esc(c.doc_title)} · صفحة ${c.page} · ${c.verified ? (c.match === 'near' ? 'متحقق (مطابقة تقريبية)' : 'متحقق حرفياً') : 'غير متحقق'}</div></blockquote>`;
     if ((j.missing||[]).length) h += `<div class="muted">ينقص: ${j.missing.map(esc).join(' · ')}</div>`;
+    if ((j.actions||[]).length) h += `<div class="muted">لرفع التقييم: ${j.actions.map(esc).join(' ← ')}</div>`;
     h += `</div>`;
   }
   $('#report').innerHTML = h + '</div>';

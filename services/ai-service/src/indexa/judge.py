@@ -41,6 +41,9 @@ Return ONLY a JSON object:
  "evidence": [{"excerpt": "<excerpt id, e.g. E2>", "quote": "<exact words copied from that excerpt, 5-25 words>"}],
  "missing": ["<missing minimum element, in Arabic>"],
  "restates_requirement": <true|false>,
+ "actions": ["<when not met: concrete step the entity should take to close the gap, in Arabic, most important first, max 3>"],
+ "evidence_to_prepare": ["<when not met: the document or record an assessor would accept as proof, in Arabic, max 2>"],
+ "owner": "<when not met: the internal function best placed to own the fix, in Arabic>",
  "entity_specific_details": ["<entity-specific detail found in the evidence, in Arabic>"]}
 Quotes must be copied character-for-character from the excerpt. Use an empty evidence list when decision is not_met."""
 
@@ -148,6 +151,9 @@ class Judgement:
     restates_requirement: bool = False
     specific_details: list[str] = field(default_factory=list)
     defers_to_regulator: bool = False
+    actions: list[str] = field(default_factory=list)
+    evidence_to_prepare: list[str] = field(default_factory=list)
+    owner: str = ""
     template_copy: float = 0.0
     decision_before_template_rule: str = ""
     raw: str = ""
@@ -259,6 +265,11 @@ def parse_judgement(control: Control, raw: str, excerpts: list[Chunk]) -> Judgem
         needs_review=bool(reasons),
         review_reasons=reasons,
         restates_requirement=restates,
+        actions=[str(x) for x in (data.get("actions") or []) if str(x).strip()][:3],
+        evidence_to_prepare=[
+            str(x) for x in (data.get("evidence_to_prepare") or []) if str(x).strip()
+        ][:2],
+        owner=str(data.get("owner") or "").strip(),
         specific_details=details,
         defers_to_regulator=defers,
         raw=raw,

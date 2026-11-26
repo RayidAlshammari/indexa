@@ -57,7 +57,12 @@ def prioritised_gaps(controls: list[Control], judgements: dict[str, Judgement]) 
 
     Gain = weight x missing credit, so a P1 that is not met (3.0) ranks above a
     P1 that is partial (1.5), which ranks above a P3 that is not met (1.0).
+    "points" is the same gain on the 0-100 domain scale: how far closing this
+    gap alone would raise the domain's indicative score.
     """
+    totals: dict[str, float] = {}
+    for c in controls:
+        totals[c.domain] = totals.get(c.domain, 0.0) + c.weight
     gaps = []
     for c in controls:
         j = judgements.get(c.control_id)
@@ -68,10 +73,15 @@ def prioritised_gaps(controls: list[Control], judgements: dict[str, Judgement]) 
             {
                 "control_id": c.control_id,
                 "title": c.title,
+                "domain": c.domain,
                 "priority": c.priority,
                 "decision": j.decision,
                 "gain": gain,
+                "points": round(100 * gain / (totals[c.domain] or 1.0), 1),
                 "missing": j.missing,
+                "actions": getattr(j, "actions", []),
+                "evidence_to_prepare": getattr(j, "evidence_to_prepare", []),
+                "owner": getattr(j, "owner", ""),
                 "needs_review": j.needs_review,
             }
         )

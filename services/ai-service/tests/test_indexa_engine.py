@@ -287,3 +287,26 @@ def test_server_serves_page_and_samples():
         ).status_code
         == 400
     )
+
+
+def test_improvement_plan_is_parsed_and_gaps_carry_points():
+    from indexa.judge import Judgement
+
+    raw = json.dumps(
+        {
+            "decision": "not_met",
+            "confidence": 0.9,
+            "rationale": "x",
+            "evidence": [],
+            "actions": ["أعدّ خطة", "اعتمدها", "تابعها", "زائد"],
+            "evidence_to_prepare": ["الخطة المعتمدة"],
+            "owner": "مكتب إدارة البيانات",
+        },
+        ensure_ascii=False,
+    )
+    j = parse_judgement(ctrl(), raw, [])
+    assert len(j.actions) == 3 and j.owner == "مكتب إدارة البيانات"
+    cs = [Control("A", "a", "", "P1", "PDP"), Control("B", "b", "", "P3", "PDP")]
+    js = {"A": j, "B": Judgement("B", "met", 1, "")}
+    (g,) = prioritised_gaps(cs, js)
+    assert g["points"] == 75.0 and g["actions"][0] == "أعدّ خطة"
