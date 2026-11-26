@@ -34,6 +34,8 @@ def _gpu_unused():
 service = fetch_service()
 sys.path.insert(0, str(service / "src"))
 os.environ.setdefault("INDEXA_DATA_DIR", "/tmp/indexa-data")
+# Gradio 6 otherwise starts a Node SSR server that takes port 7860 before uvicorn binds it.
+os.environ["GRADIO_SSR_MODE"] = "false"
 
 import gradio as gr  # noqa: E402
 import uvicorn  # noqa: E402
@@ -41,7 +43,7 @@ from indexa.server import app  # noqa: E402
 
 with gr.Blocks() as status:
     gr.Markdown("Indexa API is running. The demo page is at `/`.")
-app = gr.mount_gradio_app(app, status, path="/gradio")
+app = gr.mount_gradio_app(app, status, path="/gradio", ssr_mode=False)
 
 if __name__ == "__main__":
     uvicorn.run(app, host="0.0.0.0", port=7860)
