@@ -16,7 +16,7 @@ from pathlib import Path
 from .controls import load_controls
 from .documents import Document, repair_text
 from .engine import assess
-from .keywords import load_keywords
+from .keywords import load_criteria, load_keywords
 from .llm import ChatClient
 
 FRAMEWORK_DIR = Path(__file__).resolve().parents[2] / "config" / "frameworks" / "NDI"
@@ -67,8 +67,10 @@ async def main_async(args) -> None:
     for name in args.domains.split(","):
         controls += load_controls(FRAMEWORK_DIR / f"{name.strip()}.json", domain=name.strip())
     kw = load_keywords()
+    crit = load_criteria()
     for c in controls:
         c.keywords = kw.get(c.control_id, [])
+        c.criteria = crit.get(c.control_id, {})
     docs = [
         Document(f"doc{i + 1}", Path(f).stem, read_pages(Path(f))) for i, f in enumerate(args.files)
     ]

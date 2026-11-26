@@ -195,3 +195,42 @@ def test_quote_matching_grades():
     )
     # fabricated statement built from common words does not pass
     assert match_quote("تلتزم الجهة بإجراء تدقيق داخلي سنوي على الامتثال", src) == "none"
+
+
+def test_restatement_and_deferral_are_flagged():
+    from indexa.judge import defers_to_regulator
+
+    iu = "إبالغ الجهات التنظيمية فورا ً ودون تأخير، بما ال يتجاوز 72 ساعة، وفقا ً لآلليات والإجراءات التي تحددها الجهات التنظيمية."
+    assert defers_to_regulator(iu)
+    assert not defers_to_regulator(
+        "يتولى مسؤول حماية البيانات إبلاغ سدايا عبر منصة الإبلاغ خلال 72 ساعة"
+    )
+    ex = chunk_document(Document("d", "t", [iu]))
+    raw = json.dumps(
+        {
+            "decision": "met",
+            "confidence": 0.9,
+            "rationale": "x",
+            "evidence": [
+                {
+                    "excerpt": "E1",
+                    "quote": "بما ال يتجاوز 72 ساعة، وفقا ً لآلليات والإجراءات التي تحددها الجهات التنظيمية",
+                }
+            ],
+            "restates_requirement": True,
+            "entity_specific_details": [],
+        },
+        ensure_ascii=False,
+    )
+    j = parse_judgement(ctrl(), raw, ex)
+    assert j.restates_requirement and j.defers_to_regulator and j.needs_review
+
+
+def test_criteria_load_and_reach_the_prompt():
+    from indexa.keywords import load_criteria
+
+    crit = load_criteria()
+    assert len(crit) == 20 and all({"met", "partial", "not_met"} <= set(v) for v in crit.values())
+    c = ctrl()
+    c.criteria = crit["PDP.3.1"]
+    assert "Acceptance criteria" in build_messages(c, [])[1]["content"]

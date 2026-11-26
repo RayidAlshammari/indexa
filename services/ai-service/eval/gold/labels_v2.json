@@ -1,0 +1,448 @@
+{
+ "version": "v2-draft",
+ "status": "AI-assisted DRAFT v2 by the Indexa team. Applies the specialist's review of 3 sample items and the two rules it implies: (1) copying or restating the requirement without entity-specific implementation is not_met; (2) related entity work without the required element is partial. Changed items carry label_v1. Under specialist review.",
+ "written_before_model_outputs": true,
+ "rubric": {
+  "met": "process spec: policy/procedure defines the requirement with its minimum elements; artifact spec: the artifact itself is in the evidence",
+  "partial": "addressed but minimum elements missing, or an artifact spec is only mandated by policy",
+  "not_met": "not addressed"
+ },
+ "corpus": {
+  "mewa": [
+   "MEWA Personal Data Protection Policy v3.3 (Sep 2025)",
+   "MEWA Data Classification Policy v2.2 (Jan 2026)",
+   "MEWA Privacy Notice v1.0 (Aug 2026)"
+  ],
+  "iu": [
+   "Islamic University of Madinah Personal Data Protection Policy v1.0 (Apr 2025)",
+   "Islamic University of Madinah Data Classification Policy v1.0 (Apr 2025)"
+  ]
+ },
+ "labels": [
+  {
+   "entity": "mewa",
+   "control_id": "PDP.1.1",
+   "label": "partial",
+   "certainty": "borderline",
+   "evidence": "pdp p12 (تقييم الأثر), p14 (خارطة مسار البيانات)",
+   "note": "عمل مرتبط دون التقييم الأولي نفسه: ضابط تقييم الأثر، ودور إنشاء خارطة مسار البيانات، وعناصر سجل المعالجة.",
+   "reviewer_label": null,
+   "reviewer_note": null,
+   "label_v1": "not_met"
+  },
+  {
+   "entity": "mewa",
+   "control_id": "PDP.1.2",
+   "label": "not_met",
+   "certainty": "clear",
+   "evidence": "—",
+   "note": "لا توجد خطة حماية بيانات بخارطة طريق ومعالم وموارد وميزانية.",
+   "reviewer_label": null,
+   "reviewer_note": null
+  },
+  {
+   "entity": "mewa",
+   "control_id": "PDP.2.1",
+   "label": "partial",
+   "certainty": "clear",
+   "evidence": "pdp p6, p12, p16, p18",
+   "note": "السياسة تلزم بالتدريب والتوعية لجميع الموظفين وتذكر إعداد برامج توعوية، دون محتوى التدريب الإلزامي ودون دليل على تنفيذه.",
+   "reviewer_label": null,
+   "reviewer_note": null
+  },
+  {
+   "entity": "mewa",
+   "control_id": "PDP.3.1",
+   "label": "partial",
+   "certainty": "borderline",
+   "evidence": "pdp p12, p21",
+   "note": "التزام بمدة 72 ساعة مع عناصر خاصة بالوزارة (الأمن السيبراني يبلّغ مسؤول حماية البيانات، ووحدة حماية البيانات ترسل الإخطار، والإحالة لإجراءات الاستجابة للحوادث الخاصة بها) دون قناة أو نموذج إبلاغ.",
+   "reviewer_label": null,
+   "reviewer_note": null,
+   "label_v1": "met"
+  },
+  {
+   "entity": "mewa",
+   "control_id": "PDP.3.2",
+   "label": "partial",
+   "certainty": "clear",
+   "evidence": "pdp p12-p14, p18",
+   "note": "أدوار تقييم الخرق واعتماد تقريره محددة، والإجراءات مُحالة لإجراءات الاستجابة للحوادث؛ لا تغطي مراجعة الحادثة مع الجهة التنظيمية ولا اختبار الإجراءات التصحيحية.",
+   "reviewer_label": null,
+   "reviewer_note": null
+  },
+  {
+   "entity": "mewa",
+   "control_id": "PDP.4.1",
+   "label": "met",
+   "certainty": "borderline",
+   "evidence": "notice p1-p3, p26-27; pdp p11, p15, p19",
+   "note": "إشعار خصوصية منشور ومفصل، وآليات الموافقة والخيارات محددة في السياسة. الحد الفاصل: لا يظهر في الأدلة رابط الإشعار في الموقع بشكل صريح.",
+   "reviewer_label": null,
+   "reviewer_note": null
+  },
+  {
+   "entity": "mewa",
+   "control_id": "PDP.4.2",
+   "label": "partial",
+   "certainty": "borderline",
+   "evidence": "pdp p15, p17; notice p37-p39",
+   "note": "الحقوق: العلم، الوصول، النسخة، التصحيح، الإتلاف، التقييد، العدول، مع قنوات وخطوات تسجيل الطلب. ينقص حقا الاعتراض ونقل البيانات بحسب نص مواصفة NDMO؛ إذا اعتُمد نظام حماية البيانات الشخصية مرجعاً فقد تعد مستوفاة.",
+   "reviewer_label": null,
+   "reviewer_note": null
+  },
+  {
+   "entity": "mewa",
+   "control_id": "PDP.4.3",
+   "label": "partial",
+   "certainty": "clear",
+   "evidence": "pdp p12, p14, p19",
+   "note": "تلزم بتقييم المخاطر وعرضه على الوزير، دون دورية سنوية ودون تحليل الأثر والاحتمالية ودون تقرير تقييم.",
+   "reviewer_label": null,
+   "reviewer_note": null
+  },
+  {
+   "entity": "mewa",
+   "control_id": "PDP.4.4",
+   "label": "partial",
+   "certainty": "clear",
+   "evidence": "pdp p12, p20",
+   "note": "مراقبة امتثال دورية مع إجراءات تصحيحية ورفعها لمكتب إدارة البيانات الوطنية؛ لا يوجد تقرير تدقيق داخلي.",
+   "reviewer_label": null,
+   "reviewer_note": null
+  },
+  {
+   "entity": "mewa",
+   "control_id": "PDP.5.1",
+   "label": "partial",
+   "certainty": "clear",
+   "evidence": "pdp p12, p15; notice p22",
+   "note": "تُلزم بسجل أنشطة المعالجة وبعناصره ويشير الإشعار إلى الاحتفاظ بالسجلات؛ لا يوجد السجل نفسه ولا مدة 24 شهراً.",
+   "reviewer_label": null,
+   "reviewer_note": null
+  },
+  {
+   "entity": "mewa",
+   "control_id": "DC.1.1",
+   "label": "not_met",
+   "certainty": "borderline",
+   "evidence": "dc p23",
+   "note": "جملة الخطة منقولة من اللائحة كما هي (نفس نص الجامعة) دون خطة أو عناصر خاصة بالوزارة.",
+   "reviewer_label": null,
+   "reviewer_note": null,
+   "label_v1": "partial"
+  },
+  {
+   "entity": "mewa",
+   "control_id": "DC.1.2",
+   "label": "partial",
+   "certainty": "clear",
+   "evidence": "—",
+   "note": "مراجعة المختص: صنّفت الوزارة نطاقات بياناتها (مصفوفة التصنيف) لكن دون ترتيب أولويات أو تبرير له.",
+   "reviewer_label": null,
+   "reviewer_note": null,
+   "label_v1": "not_met"
+  },
+  {
+   "entity": "mewa",
+   "control_id": "DC.2.1",
+   "label": "partial",
+   "certainty": "borderline",
+   "evidence": "dc p17-p18, p23-p24",
+   "note": "الضوابط مذكورة كأمثلة منقولة من اللائحة ('أمثلة على الضوابط التي يمكن استخدامها') مع أدوار خاصة بالوزارة لتحديدها وتطبيقها؛ لا ضوابط ملزمة لكل مستوى.",
+   "reviewer_label": null,
+   "reviewer_note": null,
+   "label_v1": "met"
+  },
+  {
+   "entity": "mewa",
+   "control_id": "DC.3.1",
+   "label": "partial",
+   "certainty": "clear",
+   "evidence": "dc p16",
+   "note": "جرد البيانات خطوة أولى في العملية؛ لا يوجد الجرد نفسه.",
+   "reviewer_label": null,
+   "reviewer_note": null
+  },
+  {
+   "entity": "mewa",
+   "control_id": "DC.3.2",
+   "label": "partial",
+   "certainty": "borderline",
+   "evidence": "dc p13, p16, p20-p22",
+   "note": "منهجية تقييم الأثر مكتملة (الفئات، المستويات، الربط بالتصنيف)؛ لا توجد نتائج تقييم لمجموعات البيانات.",
+   "reviewer_label": null,
+   "reviewer_note": null
+  },
+  {
+   "entity": "mewa",
+   "control_id": "DC.3.3",
+   "label": "partial",
+   "certainty": "clear",
+   "evidence": "dc p16-p17",
+   "note": "خطوات تقييم البيانات منخفضة الأثر (تعارض الأنظمة، المزايا مقابل الآثار) محددة؛ لا توجد نتائج.",
+   "reviewer_label": null,
+   "reviewer_note": null
+  },
+  {
+   "entity": "mewa",
+   "control_id": "DC.3.4",
+   "label": "partial",
+   "certainty": "clear",
+   "evidence": "dc p17, p24",
+   "note": "مراجعة خلال شهر من التصنيف الأولي ودورية حسب المستوى مع تقرير سنوي؛ لا يوجد دليل على المراجعة.",
+   "reviewer_label": null,
+   "reviewer_note": null
+  },
+  {
+   "entity": "mewa",
+   "control_id": "DC.3.5",
+   "label": "partial",
+   "certainty": "borderline",
+   "evidence": "dc p19",
+   "note": "تحديث كتالوج البيانات مذكور ضمن إعادة التصنيف فقط؛ لا نشر لمستويات التصنيف كبيانات وصفية.",
+   "reviewer_label": null,
+   "reviewer_note": null
+  },
+  {
+   "entity": "mewa",
+   "control_id": "DC.4.1",
+   "label": "not_met",
+   "certainty": "clear",
+   "evidence": "—",
+   "note": "لا توجد مؤشرات أداء للتصنيف.",
+   "reviewer_label": null,
+   "reviewer_note": null
+  },
+  {
+   "entity": "mewa",
+   "control_id": "DC.5.1",
+   "label": "not_met",
+   "certainty": "borderline",
+   "evidence": "dc p23-p24",
+   "note": "ذكر سجل أصول البيانات وسجل الإتلاف منقول من اللائحة كما هو؛ لا سجل ولا عناصر خاصة بالوزارة.",
+   "reviewer_label": null,
+   "reviewer_note": null,
+   "label_v1": "partial"
+  },
+  {
+   "entity": "iu",
+   "control_id": "PDP.1.1",
+   "label": "not_met",
+   "certainty": "clear",
+   "evidence": "—",
+   "note": "لا يوجد تقييم أولي.",
+   "reviewer_label": null,
+   "reviewer_note": null
+  },
+  {
+   "entity": "iu",
+   "control_id": "PDP.1.2",
+   "label": "not_met",
+   "certainty": "clear",
+   "evidence": "—",
+   "note": "لا توجد خطة حماية بيانات.",
+   "reviewer_label": null,
+   "reviewer_note": null
+  },
+  {
+   "entity": "iu",
+   "control_id": "PDP.2.1",
+   "label": "not_met",
+   "certainty": "borderline",
+   "evidence": "pdp p7",
+   "note": "نقل لنص الالتزام (إعداد برامج توعوية) دون أي تفصيل خاص بالجامعة.",
+   "reviewer_label": null,
+   "reviewer_note": null,
+   "label_v1": "partial"
+  },
+  {
+   "entity": "iu",
+   "control_id": "PDP.3.1",
+   "label": "not_met",
+   "certainty": "clear",
+   "evidence": "pdp p9",
+   "note": "مراجعة المختص: النص ينقل المتطلب (72 ساعة) ويحيل الآلية للجهات التنظيمية دون أي آلية خاصة بالجامعة.",
+   "reviewer_label": null,
+   "reviewer_note": null,
+   "label_v1": "met"
+  },
+  {
+   "entity": "iu",
+   "control_id": "PDP.3.2",
+   "label": "not_met",
+   "certainty": "borderline",
+   "evidence": "pdp p7",
+   "note": "نقل لنص المتطلب (إعداد إجراءات التعامل مع الانتهاكات) دون الإجراء أو أدوار أو خطوات خاصة بالجامعة.",
+   "reviewer_label": null,
+   "reviewer_note": null,
+   "label_v1": "partial"
+  },
+  {
+   "entity": "iu",
+   "control_id": "PDP.4.1",
+   "label": "not_met",
+   "certainty": "borderline",
+   "evidence": "pdp p5, p7",
+   "note": "المبادئ والالتزامات منقولة من النص الوطني كما هي (مطابقة لنص الوزارة)؛ لا إشعار خصوصية للجامعة ولا نقاط جمع أو نماذج موافقة خاصة بها.",
+   "reviewer_label": null,
+   "reviewer_note": null,
+   "label_v1": "partial"
+  },
+  {
+   "entity": "iu",
+   "control_id": "PDP.4.2",
+   "label": "not_met",
+   "certainty": "borderline",
+   "evidence": "pdp p6, p8",
+   "note": "سرد الحقوق من النظام دون أي قناة أو وسيلة لممارستها.",
+   "reviewer_label": null,
+   "reviewer_note": null,
+   "label_v1": "partial"
+  },
+  {
+   "entity": "iu",
+   "control_id": "PDP.4.3",
+   "label": "not_met",
+   "certainty": "borderline",
+   "evidence": "pdp p7",
+   "note": "نقل لنص الالتزام بتقييم المخاطر دون منهجية أو نتائج خاصة بالجامعة.",
+   "reviewer_label": null,
+   "reviewer_note": null,
+   "label_v1": "partial"
+  },
+  {
+   "entity": "iu",
+   "control_id": "PDP.4.4",
+   "label": "not_met",
+   "certainty": "borderline",
+   "evidence": "pdp p9",
+   "note": "نقل لنص الالتزام بمراقبة الامتثال دون تدقيق أو تقرير.",
+   "reviewer_label": null,
+   "reviewer_note": null,
+   "label_v1": "partial"
+  },
+  {
+   "entity": "iu",
+   "control_id": "PDP.5.1",
+   "label": "not_met",
+   "certainty": "borderline",
+   "evidence": "pdp p9",
+   "note": "يذكر توثيق الامتثال بشكل عام فقط؛ لا إلزام بسجل لعمليات جمع ومعالجة البيانات.",
+   "reviewer_label": null,
+   "reviewer_note": null
+  },
+  {
+   "entity": "iu",
+   "control_id": "DC.1.1",
+   "label": "not_met",
+   "certainty": "borderline",
+   "evidence": "dc p11",
+   "note": "جملة خطة العمل منقولة من اللائحة كما هي.",
+   "reviewer_label": null,
+   "reviewer_note": null,
+   "label_v1": "partial"
+  },
+  {
+   "entity": "iu",
+   "control_id": "DC.1.2",
+   "label": "not_met",
+   "certainty": "clear",
+   "evidence": "—",
+   "note": "لا توجد أولويات تصنيف.",
+   "reviewer_label": null,
+   "reviewer_note": null
+  },
+  {
+   "entity": "iu",
+   "control_id": "DC.2.1",
+   "label": "not_met",
+   "certainty": "borderline",
+   "evidence": "dc p10-p12, p15",
+   "note": "ضوابط مذكورة كأمثلة منقولة من اللائحة دون إلزام أو تطبيق خاص بالجامعة.",
+   "reviewer_label": null,
+   "reviewer_note": null,
+   "label_v1": "met"
+  },
+  {
+   "entity": "iu",
+   "control_id": "DC.3.1",
+   "label": "not_met",
+   "certainty": "borderline",
+   "evidence": "dc p13",
+   "note": "خطوة الجرد منقولة من خطوات اللائحة دون جرد أو أداة.",
+   "reviewer_label": null,
+   "reviewer_note": null,
+   "label_v1": "partial"
+  },
+  {
+   "entity": "iu",
+   "control_id": "DC.3.2",
+   "label": "not_met",
+   "certainty": "borderline",
+   "evidence": "dc p9-p10, p13-p14",
+   "note": "منهجية تقييم الأثر منقولة من اللائحة بأمثلتها الوطنية العامة؛ لا تطبيق على بيانات الجامعة.",
+   "reviewer_label": null,
+   "reviewer_note": null,
+   "label_v1": "partial"
+  },
+  {
+   "entity": "iu",
+   "control_id": "DC.3.3",
+   "label": "not_met",
+   "certainty": "borderline",
+   "evidence": "dc p14-p15",
+   "note": "خطوات تقييم البيانات منخفضة الأثر منقولة من اللائحة.",
+   "reviewer_label": null,
+   "reviewer_note": null,
+   "label_v1": "partial"
+  },
+  {
+   "entity": "iu",
+   "control_id": "DC.3.4",
+   "label": "not_met",
+   "certainty": "borderline",
+   "evidence": "dc p15",
+   "note": "خطوة المراجعة منقولة من اللائحة دون جدول أو مسؤول خاص بالجامعة.",
+   "reviewer_label": null,
+   "reviewer_note": null,
+   "label_v1": "partial"
+  },
+  {
+   "entity": "iu",
+   "control_id": "DC.3.5",
+   "label": "not_met",
+   "certainty": "clear",
+   "evidence": "—",
+   "note": "لا ذكر لنشر التصنيف في كتالوج البيانات.",
+   "reviewer_label": null,
+   "reviewer_note": null
+  },
+  {
+   "entity": "iu",
+   "control_id": "DC.4.1",
+   "label": "not_met",
+   "certainty": "clear",
+   "evidence": "—",
+   "note": "لا توجد مؤشرات أداء.",
+   "reviewer_label": null,
+   "reviewer_note": null
+  },
+  {
+   "entity": "iu",
+   "control_id": "DC.5.1",
+   "label": "not_met",
+   "certainty": "borderline",
+   "evidence": "dc p12",
+   "note": "ذكر سجل الأصول منقول من اللائحة.",
+   "reviewer_label": null,
+   "reviewer_note": null,
+   "label_v1": "partial"
+  }
+ ],
+ "rubric_v2": {
+  "restatement": "evidence that only restates the specification or national regulation, with no entity-specific role, step, channel, system, template, timeline or result, is not_met",
+  "related_work": "entity work related to the specification but lacking its required element is partial",
+  "artifact": "artifact specifications need the artifact for met"
+ }
+}

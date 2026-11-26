@@ -19,7 +19,7 @@ from fastapi import APIRouter, File, Form, HTTPException, UploadFile
 
 from src.indexa import Document, assess, load_controls
 from src.indexa.documents import repair_text
-from src.indexa.keywords import load_keywords
+from src.indexa.keywords import load_criteria, load_keywords
 from src.indexa.llm import ChatClient
 
 router = APIRouter(prefix="/api/v2/assessments", tags=["assessments"])
@@ -60,8 +60,10 @@ async def create_assessment(
     for n in names:
         controls += load_controls(_FRAMEWORK_DIR / f"{n}.json", domain=n)
     keywords = load_keywords()
+    criteria = load_criteria()
     for c in controls:
         c.keywords = keywords.get(c.control_id, [])
+        c.criteria = criteria.get(c.control_id, {})
 
     documents = []
     with tempfile.TemporaryDirectory() as tmp:

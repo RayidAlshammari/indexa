@@ -55,6 +55,7 @@ class Control:
     domain: str = ""
     keywords: list[str] = field(default_factory=list)
     evidence_kind: str = "process"
+    criteria: dict = field(default_factory=dict)
 
     @property
     def weight(self) -> float:

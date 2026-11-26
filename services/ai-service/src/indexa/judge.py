@@ -29,6 +29,9 @@ Decision rubric:
 Evidence type (given with each specification):
 - PROCESS: a documented policy or procedure that defines the requirement with its minimum elements is enough for "met".
 - ARTIFACT: the requirement is an activity or output (assessment, plan, register, delivered training, audit report, KPIs). If the evidence only mandates or describes it, the decision is at most "partial"; "met" requires the artifact itself (e.g. the register, the report, the plan with milestones and budget).
+Restated requirements: if the evidence only restates the specification or the national regulation (for example "notify the regulator within 72 hours according to the mechanisms set by the regulator") and adds nothing specific to the entity - no named role or unit, steps, channel, system, template, timeline or results - the decision is "not_met" and "restates_requirement" is true. Copying the standard is not implementing it.
+Related work: if the entity has done related work but not the specific required element, the decision is "partial", not "not_met".
+When acceptance criteria are given for the specification, apply them; they take precedence over the general rubric.
 Do not infer compliance from general statements or from the entity's name for a topic.
 
 Return ONLY a JSON object:
@@ -36,8 +39,39 @@ Return ONLY a JSON object:
  "confidence": <0.0-1.0>,
  "rationale": "<2-3 sentences in Arabic>",
  "evidence": [{"excerpt": "<excerpt id, e.g. E2>", "quote": "<exact words copied from that excerpt, 5-25 words>"}],
- "missing": ["<missing minimum element, in Arabic>"]}
+ "missing": ["<missing minimum element, in Arabic>"],
+ "restates_requirement": <true|false>,
+ "entity_specific_details": ["<entity-specific detail found in the evidence, in Arabic>"]}
 Quotes must be copied character-for-character from the excerpt. Use an empty evidence list when decision is not_met."""
+
+
+def _criteria_block(control: Control) -> str:
+    c = control.criteria or {}
+    if not c:
+        return ""
+    lines = ["Acceptance criteria:"]
+    for key in ("met", "partial", "not_met"):
+        if c.get(key):
+            lines.append(f"- {key}: {c[key]}")
+    if c.get("entity_specific"):
+        lines.append("- entity-specific details look like: " + "، ".join(c["entity_specific"]))
+    return "\n".join(lines) + "\n"
+
+
+# Phrases that hand the mechanism back to the regulator instead of defining it.
+# Matched on normalised, space-free text so PDF glyph and spacing noise do not matter.
+DEFERRAL_PHRASES = (
+    "والإجراءات التي تحددها",
+    "حسب ما تحدده الجهات التنظيمية",
+    "وفقا لما تحدده الجهة التنظيمية",
+    "as specified by the regulatory authority",
+)
+_DEFERRAL_KEYS = [squash(p) for p in DEFERRAL_PHRASES]
+
+
+def defers_to_regulator(text: str) -> bool:
+    t = squash(text)
+    return any(k in t for k in _DEFERRAL_KEYS)
 
 
 def build_messages(control: Control, excerpts: list[Chunk], max_chars: int = 650) -> list[dict]:
@@ -49,7 +83,8 @@ def build_messages(control: Control, excerpts: list[Chunk], max_chars: int = 650
     user = (
         f"Specification {control.control_id} ({control.priority}) — {control.title}\n"
         f"Evidence type: {control.evidence_kind.upper()}\n"
-        f"Requirement: {control.requirement}\n\n"
+        f"Requirement: {control.requirement}\n"
+        f"{_criteria_block(control)}\n"
         f"Evidence excerpts:\n{evidence}"
     )
     return [{"role": "system", "content": SYSTEM_PROMPT}, {"role": "user", "content": user}]
@@ -110,6 +145,9 @@ class Judgement:
     missing: list[str] = field(default_factory=list)
     needs_review: bool = False
     review_reasons: list[str] = field(default_factory=list)
+    restates_requirement: bool = False
+    specific_details: list[str] = field(default_factory=list)
+    defers_to_regulator: bool = False
     raw: str = ""
 
     def to_dict(self) -> dict:
@@ -177,6 +215,13 @@ def parse_judgement(control: Control, raw: str, excerpts: list[Chunk]) -> Judgem
         reasons.append("unverified quote")
     if confidence < REVIEW_CONFIDENCE:
         reasons.append("low confidence")
+    restates = bool(data.get("restates_requirement"))
+    details = [str(x) for x in (data.get("entity_specific_details") or []) if str(x).strip()]
+    defers = any(defers_to_regulator(c.quote) for c in citations if c.verified)
+    if restates and decision != "not_met":
+        reasons.append("flagged as restating the requirement but not judged not_met")
+    if decision == "met" and defers and not details:
+        reasons.append("evidence defers the mechanism to the regulator")
     return Judgement(
         control_id=control.control_id,
         decision=decision,
@@ -186,5 +231,8 @@ def parse_judgement(control: Control, raw: str, excerpts: list[Chunk]) -> Judgem
         missing=[str(x) for x in (data.get("missing") or []) if str(x).strip()],
         needs_review=bool(reasons),
         review_reasons=reasons,
+        restates_requirement=restates,
+        specific_details=details,
+        defers_to_regulator=defers,
         raw=raw,
     )
