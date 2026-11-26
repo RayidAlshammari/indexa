@@ -32,6 +32,11 @@ def _gpu_unused():
 
 
 service = fetch_service()
+# Finished reports committed to the Space under reports/ are served at once after every restart.
+bundled = service / "config" / "reports"
+for f in (Path(__file__).parent / "reports").glob("*.json"):
+    bundled.mkdir(parents=True, exist_ok=True)
+    shutil.copy(f, bundled / f.name)
 sys.path.insert(0, str(service / "src"))
 os.environ.setdefault("INDEXA_DATA_DIR", "/tmp/indexa-data")
 # Gradio 6 otherwise starts a Node SSR server that takes port 7860 before uvicorn binds it.
