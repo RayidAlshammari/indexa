@@ -268,3 +268,22 @@ def test_template_copy_downgrades_copied_evidence():
     )
     j2 = apply_template_rule(parse_judgement(ctrl(), raw2, ex), idx)
     assert j2.decision == "met"
+
+
+def test_server_serves_page_and_samples():
+    from fastapi.testclient import TestClient
+
+    from indexa.server import app
+
+    c = TestClient(app)
+    assert c.get("/health").json()["ok"]
+    assert "Indexa" in c.get("/").text
+    ids = [s["id"] for s in c.get("/api/samples").json()]
+    assert ids == ["mewa", "iu"]
+    assert c.get("/api/reports/none-yet").status_code == 202
+    assert (
+        c.post(
+            "/api/assess", data={"entity_name": "x"}, files=[("files", ("a.txt", b"hello"))]
+        ).status_code
+        == 400
+    )

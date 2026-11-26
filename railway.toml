@@ -1,0 +1,9 @@
+# Railway: Indexa service (engine + demo page).
+[build]
+builder = "DOCKERFILE"
+dockerfilePath = "services/ai-service/indexa.dockerfile"
+
+[deploy]
+healthcheckPath = "/health"
+healthcheckTimeout = 60
+restartPolicyType = "ON_FAILURE"

@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Indexa · مستشار جاهزية المؤشرات الحكومية</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root { --ink:#0f1f1c; --muted:#5b6b67; --line:#e3e8e6; --bg:#f7f9f8; --card:#fff; --brand:#0d6b58; --brand2:#e7f3ef;
+          --met:#1f7a4d; --met-bg:#e5f4ec; --part:#9a6a00; --part-bg:#fdf3dc; --not:#a33a2f; --not-bg:#fbe9e6; }
+  * { box-sizing: border-box; }
+  body { margin:0; font-family:'IBM Plex Sans Arabic', system-ui, sans-serif; background:var(--bg); color:var(--ink); line-height:1.7; }
+  .wrap { max-width:1080px; margin:0 auto; padding:0 20px; }
+  header { background:var(--ink); color:#fff; padding:44px 0 36px; }
+  header .tag { display:inline-block; font-size:13px; padding:3px 10px; border:1px solid #ffffff40; border-radius:20px; color:#cfe7df; }
+  h1 { font-size:34px; margin:12px 0 6px; font-weight:700; letter-spacing:-.5px; }
+  header p { color:#c9d6d2; max-width:720px; margin:0; }
+  section { margin:28px 0; }
+  h2 { font-size:20px; margin:0 0 12px; }
+  .grid { display:grid; gap:14px; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); }
+  .card { background:var(--card); border:1px solid var(--line); border-radius:12px; padding:18px; }
+  .num { font-size:30px; font-weight:700; color:var(--brand); }
+  .muted { color:var(--muted); font-size:14px; }
+  button, .btn { font:inherit; border:0; border-radius:8px; padding:9px 16px; cursor:pointer; background:var(--brand); color:#fff; }
+  button.ghost { background:var(--brand2); color:var(--brand); }
+  button:disabled { opacity:.5; cursor:default; }
+  input[type=text] { font:inherit; padding:8px 10px; border:1px solid var(--line); border-radius:8px; width:100%; }
+  .row { display:flex; gap:10px; align-items:center; flex-wrap:wrap; }
+  .badge { font-size:13px; font-weight:600; padding:2px 10px; border-radius:20px; white-space:nowrap; }
+  .met { color:var(--met); background:var(--met-bg); } .partial { color:var(--part); background:var(--part-bg); } .not_met { color:var(--not); background:var(--not-bg); }
+  .spec { border-top:1px solid var(--line); padding:14px 0; }
+  .spec h3 { font-size:16px; margin:0; }
+  blockquote { margin:8px 0; padding:8px 12px; background:#f2f5f4; border-right:3px solid var(--brand); border-radius:6px; font-size:14px; }
+  .src { font-size:12px; color:var(--muted); }
+  .flag { font-size:12px; color:var(--not); }
+  .bar { height:8px; background:#e9eeec; border-radius:6px; overflow:hidden; margin-top:8px; }
+  .bar > i { display:block; height:100%; background:var(--brand); }
+  table { width:100%; border-collapse:collapse; font-size:14px; }
+  td, th { text-align:right; padding:8px; border-bottom:1px solid var(--line); }
+  footer { color:var(--muted); font-size:13px; padding:30px 0 50px; }
+  #status { font-size:14px; color:var(--muted); }
+</style>
+</head>
+<body>
+<header><div class="wrap">
+  <span class="tag">نموذج أولي · الاسم مبدئي</span>
+  <h1>Indexa · مستشار جاهزية المؤشرات الحكومية</h1>
+  <p>يقرأ وثائق الجهة ويقيّمها مواصفةً بمواصفة مقابل معايير مكتب إدارة البيانات الوطنية في مؤشر البيانات الوطني (نضيء). كل حكم يستند إلى اقتباس حرفي برقم صفحته يتحقق منه الكود، والنص المنسوخ من المعيار لا يُحسب تطبيقاً، وما لا يمكن التحقق منه يُحال لمراجع بشري.</p>
+</div></header>
+
+<main class="wrap">
+  <section class="grid">
+    <div class="card"><div class="num">40</div><div class="muted">حالة تقييم حقيقية: 20 مواصفة لجهتين حكوميتين من وثائقهما المنشورة</div></div>
+    <div class="card"><div class="num">85%</div><div class="muted">اتفاق أفضل نموذج مع التقييم المرجعي (القاعدة الأولى)، مقابل 33% للتصميم السابق على النموذج نفسه</div></div>
+    <div class="card"><div class="num">97%</div><div class="muted">من الاقتباسات موجودة فعلاً في الوثائق ويتحقق منها الكود</div></div>
+    <div class="card"><div class="num">&lt; 0.5$</div><div class="muted">تكلفة تقييم جهة كاملة على 191 مواصفة</div></div>
+  </section>
+
+  <section class="card">
+    <h2>جرّب على وثائق منشورة لجهة حكومية</h2>
+    <div class="row" id="samples"></div>
+    <p id="status"></p>
+  </section>
+
+  <section class="card">
+    <h2>قيّم وثائق جهتك</h2>
+    <div class="row">
+      <input type="text" id="entity" placeholder="اسم الجهة" style="max-width:280px">
+      <input type="file" id="files" accept="application/pdf" multiple>
+      <button id="go">ابدأ التقييم</button>
+    </div>
+    <p class="muted">PDF فقط، حتى 20 ملفاً. التقييم يغطي حالياً نطاقي حماية البيانات الشخصية وتصنيف البيانات.</p>
+  </section>
+
+  <section id="report"></section>
+</main>
+<footer class="wrap">الدرجة مؤشرية ومرجحة بأولويات NDMO (P1=3، P2=2، P3=1)، وليست الدرجة الرسمية للمؤشر. التقييم المرجعي مسودة قيد مراجعة مختص حوكمة.</footer>
+
+<script>
+const AR = {met: 'مستوفى', partial: 'جزئي', not_met: 'غير مستوفى'};
+const DOM = {'6_Personal_Data_Protection': 'حماية البيانات الشخصية', '7_Data_Classification': 'تصنيف البيانات'};
+const $ = s => document.querySelector(s);
+const esc = s => String(s ?? '').replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const status = t => $('#status').textContent = t;
+
+async function poll(key) {
+  for (;;) {
+    const r = await fetch('/api/reports/' + key);
+    if (r.status === 200) return render(await r.json());
+    const s = await r.json();
+    if (s.status === 'error') return status('تعذّر التقييم: ' + s.error);
+    if (s.status === 'none') return status('لا توجد نتيجة محفوظة بعد.');
+    status('جارٍ التقييم… يقرأ الوثائق ويحكم على كل مواصفة (' + Math.round((Date.now()/1000 - (s.started||Date.now()/1000))) + ' ث)');
+    await new Promise(res => setTimeout(res, 5000));
+  }
+}
+
+async function loadSamples() {
+  const list = await (await fetch('/api/samples')).json();
+  for (const s of list) {
+    const b = document.createElement('button'); b.className = 'ghost'; b.textContent = s.entity;
+    b.onclick = async () => {
+      status('…');
+      const r = await fetch('/api/reports/' + s.id);
+      if (r.status === 200) return render(await r.json());
+      const run = await fetch('/api/samples/' + s.id + '/run', {method: 'POST', headers: {'x-demo-token': new URLSearchParams(location.search).get('token') || ''}});
+      if (!run.ok) return status('لا توجد نتيجة جاهزة لهذه الجهة بعد.');
+      poll(s.id);
+    };
+    $('#samples').appendChild(b);
+  }
+}
+
+$('#go').onclick = async () => {
+  const fd = new FormData(); fd.append('entity_name', $('#entity').value || 'جهة');
+  for (const f of $('#files').files) fd.append('files', f);
+  if (!$('#files').files.length) return status('اختر ملفات PDF أولاً.');
+  const r = await fetch('/api/assess', {method: 'POST', body: fd});
+  if (!r.ok) return status('تعذّر رفع الملفات: ' + (await r.text()));
+  poll((await r.json()).key);
+};
+
+function render(rep) {
+  status('');
+  const byId = Object.fromEntries(rep.judgements.map(j => [j.control_id, j]));
+  let h = `<div class="card"><h2>تقرير الجاهزية: ${esc(rep.entity)}</h2><div class="grid">`;
+  for (const s of rep.scores) h += `<div><div class="muted">${DOM[s.domain] || s.domain}</div><div class="num">${s.score}%</div>
+     <div class="bar"><i style="width:${s.score}%"></i></div>
+     <div class="muted">مستوفى ${s.met} · جزئي ${s.partial} · غير مستوفى ${s.not_met} · للمراجعة ${s.needs_review}</div></div>`;
+  h += `</div><p class="muted">${esc(rep.notice)} النموذج: ${esc(rep.model)}.</p></div>`;
+  h += `<div class="card"><h2>أولويات الإغلاق</h2><table><tr><th>المواصفة</th><th>الأولوية</th><th>الحالة</th><th>أبرز ما ينقص</th></tr>`;
+  for (const g of rep.gaps.slice(0, 10)) h += `<tr><td>${g.control_id} ${esc(g.title)}</td><td>${g.priority}</td><td><span class="badge ${g.decision}">${AR[g.decision]}</span></td><td>${esc((g.missing||[])[0] || '')}</td></tr>`;
+  h += `</table></div><div class="card"><h2>الحكم على كل مواصفة</h2>`;
+  for (const j of rep.judgements) {
+    h += `<div class="spec"><div class="row"><h3>${j.control_id}</h3><span class="badge ${j.decision}">${AR[j.decision]}</span>
+      ${j.needs_review ? '<span class="flag">⚑ يحتاج مراجعة</span>' : ''}
+      ${j.decision_before_template_rule ? '<span class="flag">نص منسوخ من النموذج الوطني</span>' : ''}</div>
+      <div>${esc(j.rationale)}</div>`;
+    for (const c of j.citations) h += `<blockquote>«${esc(c.quote)}»<div class="src">${esc(c.doc_title)} · صفحة ${c.page} · ${c.verified ? (c.match === 'near' ? 'متحقق (مطابقة تقريبية)' : 'متحقق حرفياً') : 'غير متحقق'}</div></blockquote>`;
+    if ((j.missing||[]).length) h += `<div class="muted">ينقص: ${j.missing.map(esc).join(' · ')}</div>`;
+    h += `</div>`;
+  }
+  $('#report').innerHTML = h + '</div>';
+  $('#report').scrollIntoView({behavior: 'smooth'});
+}
+loadSamples();
+</script>
+</body>
+</html>

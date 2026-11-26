@@ -213,3 +213,23 @@ Worth knowing before someone asks during the demo:
 - Domain scoring in the dashboard is an unweighted average of the model's
   decisions. It is not the weighted NDI OE formula in `src/Tools/oe.py`, which
   is not wired into this path.
+
+---
+
+## Indexa service on Railway (recommended for the demo)
+
+The Indexa service is the assessment engine plus a no-login demo page. It needs no
+torch, vector DB, auth provider or database.
+
+1. Railway → New Project → Deploy from GitHub repo → `RayidAlshammari/indexa`.
+   `railway.toml` at the repo root selects `services/ai-service/indexa.dockerfile`.
+2. Variables:
+   - `INDEXA_LLM_BASE_URL` = `https://api.groq.com/openai/v1` (or any OpenAI-compatible endpoint)
+   - `INDEXA_LLM_API_KEY` = your provider key
+   - `INDEXA_LLM_MODEL` = `qwen/qwen3.8-27b` (best agreement in the evaluation) or `openai/gpt-oss-120b`
+   - `INDEXA_DEMO_TOKEN` = any secret; needed to start a sample run (`/?token=...`)
+3. Add a Volume mounted at `/data`, so finished reports survive restarts.
+4. Settings → Networking → Generate Domain. Health check: `/health`.
+5. Warm the samples once: open `https://<domain>/?token=<INDEXA_DEMO_TOKEN>` and press
+   each entity. On Groq's free tier a full run takes roughly 15–25 minutes. The result is then
+   cached and loads instantly for everyone.
